@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 7/09/2018 12:22:45 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="mx.model.Polizapagos" table="polizapagos" schema="dbo" catalog="gastos" optimistic-lock="version">
+        <id name="idVoucher" type="int">
+            <column name="idVoucher" />
+            <generator class="native" />
+        </id>
+        <property name="voucherNo" type="string">
+            <column name="voucherNo" length="5" />
+        </property>
+        <property name="entryDate" type="string">
+            <column name="entryDate" length="10" />
+        </property>
+        <property name="transactionDate" type="string">
+            <column name="transactionDate" length="10" />
+        </property>
+        <property name="currency" type="string">
+            <column name="currency" length="10" />
+        </property>
+        <property name="rate" type="string">
+            <column name="rate" length="50" />
+        </property>
+        <property name="remarks" type="string">
+            <column name="remarks" length="250" />
+        </property>
+        <property name="drcr" type="string">
+            <column name="drcr" length="10" />
+        </property>
+        <property name="unit" type="string">
+            <column name="unit" length="50" />
+        </property>
+        <property name="account" type="string">
+            <column name="account" length="50" />
+        </property>
+        <property name="taxCode" type="string">
+            <column name="taxCode" length="10" />
+        </property>
+        <property name="tf" type="string">
+            <column name="tf" length="10" />
+        </property>
+        <property name="subAccount" type="string">
+            <column name="subAccount" length="50" />
+        </property>
+        <property name="contractNo" type="string">
+            <column name="contractNo" length="50" />
+        </property>
+        <property name="referenceNo" type="string">
+            <column name="referenceNo" length="250" />
+        </property>
+        <property name="dueDate" type="string">
+            <column name="dueDate" length="10" />
+        </property>
+        <property name="amount" type="string">
+            <column name="amount" length="50" />
+        </property>
+        <property name="userFolio" type="string">
+            <column name="userFolio" length="30" />
+        </property>
+        <property name="userName" type="string">
+            <column name="userName" length="50" />
+        </property>
+        <property name="processed" type="java.lang.Boolean">
+            <column name="processed" />
+        </property>
+    </class>
+</hibernate-mapping>

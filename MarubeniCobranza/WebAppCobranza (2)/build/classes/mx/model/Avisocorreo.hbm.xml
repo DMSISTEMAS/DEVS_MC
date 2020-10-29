@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 7/09/2018 01:01:18 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="mx.model.Avisocorreo" table="avisocorreo" schema="dbo" catalog="gastos" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="departamento" type="string">
+            <column name="departamento" length="50" />
+        </property>
+        <property name="correo" type="string">
+            <column name="correo" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

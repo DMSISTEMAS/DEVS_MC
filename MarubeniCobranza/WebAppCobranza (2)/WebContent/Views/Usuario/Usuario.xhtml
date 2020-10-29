@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+
+        <ui:composition template="./../../plantilla/plantilla.xhtml">
+            <ui:define name="content">
+                <h2>Datos de usuario</h2>
+                <h:form>
+                    <p:commandButton id="user" style="height: 35px; width: 60px; background-image: url('../..//Images/usuarios.png');background-size: 25px; background-repeat: no-repeat" value=""
+                                     actionListener="#{usuarioBean.prepararNuevoUsuario()}"
+                                     oncomplete="PF('dialogNuevoUsuario').show();"
+                                     update=":frmNuevoUsuario">
+                    </p:commandButton>
+                    <p:tooltip id="toolTipTrackUser" for="user" trackMouse="true" value="Agregar usuario"></p:tooltip>
+                </h:form>
+                <br></br>
+
+                <h:form id="frmUsuario">                  
+                    <p:dataTable id="tablaUsuario" 
+                                 paginator="true" 
+                                 sortMode="multiple" 
+                                 rows="10" 
+                                 paginatorPosition="top" 
+                                 var="tbl" 
+                                 value="#{usuarioBean.listaUsuario}">
+                        <p:ajax event="sort" skipChildren="false" />
+                        <p:column filterBy="#{tbl.nombre}" sortBy="#{tbl.nombre}" style="width: 150px" headerText="Nombre">
+                            <h:outputText value="#{tbl.nombre}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Correo" sortBy="#{tbl.correo}" style="width: 110px">
+                            <h:outputText value="#{tbl.correo}"></h:outputText>
+                        </p:column>
+                        <p:column filterBy="#{tbl.codigoPerfil}" sortBy="#{tbl.codigoPerfil}" style="width: 100px" headerText="Perfil">
+                            <h:outputText value="#{tbl.codigoPerfil}"></h:outputText>
+                        </p:column>
+                        <p:column filterBy="#{tbl.codigoDepartamento}" sortBy="#{tbl.codigoDepartamento}" style="width: 100px" headerText="Departamento">
+                            <h:outputText value="#{tbl.codigoDepartamento}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Código SAP" sortBy="#{tbl.codigoSap}" >
+                            <h:outputText value="#{tbl.codigoSap}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Asignación MXN" sortBy="#{tbl.asignacion}">
+                            <h:outputText value="#{tbl.asignacion}" ></h:outputText>
+                        </p:column>
+                        <p:column headerText="Asignación USD" sortBy="#{tbl.asignacionusd}">
+                            <h:outputText value="#{tbl.asignacionusd}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Folio" sortBy="#{tbl.folioUsuario}" style="width: 30px">
+                            <h:outputText value="#{tbl.folioUsuario}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Password" sortBy="#{tbl.clave}" >
+                            <h:outputText value="#{tbl.clave}"></h:outputText>
+                        </p:column>                       
+                        <p:column headerText="Fecha Alta" sortBy="#{tbl.fechaAlta}">
+                            <h:outputText value="#{tbl.fechaAlta}"></h:outputText>
+                        </p:column>                       
+                        <p:column headerText="Vigencia contraseña" sortBy="#{tbl.vigencia}">
+                            <h:outputText value="#{tbl.vigencia}"></h:outputText>
+                        </p:column>                       
+                        <p:column headerText="T. Coorp." filterBy="#{tbl.tarjetaCoorporativa}" sortBy="#{tbl.tarjetaCoorporativa}">
+                            <h:outputText value="#{tbl.tarjetaCoorporativa}"></h:outputText>
+                        </p:column>                       
+                        <p:column headerText="T. Gasolina" filterBy="#{tbl.tarjetaGasolina}" sortBy="#{tbl.tarjetaGasolina}">
+                            <h:outputText value="#{tbl.tarjetaGasolina}"></h:outputText>
+                        </p:column>                       
+                        <p:column headerText="Editar" style="width: 65px;">
+                            <p:commandButton value="Modificar" oncomplete="PF('dialogModificarUsuario').show();"
+                                             update="frmModificarUsuario">
+                                <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{tbl}"></f:setPropertyActionListener>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" style="width: 65px;">
+                            <p:commandButton value="Eliminar" oncomplete="PF('dialogEliminarUsuario').show();"
+                                             update="frmElimiarUsuario">
+                                <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{tbl}"></f:setPropertyActionListener>                  
+                            </p:commandButton>
+                        </p:column> 
+                    </p:dataTable>
+                </h:form>
+
+                <h:form id="frmNuevoUsuario">
+                    <p:growl id="mensaje" showSummary="true" showDetail="true"></p:growl>                   
+                    <p:dialog id="dlgnuevoUsuario" header="Agregar usuario" widgetVar="dialogNuevoUsuario" resizable="false" 
+                              showEffect="puff" hideEffect="puff" modal="true">
+                        <p:panelGrid columns="2" style="margin: 0 auto">
+                            <p:outputLabel value="Nombre"></p:outputLabel>
+                            <p:inputText style="width: 200px;" value="#{usuarioBean.usuario.nombre}" required="true" placeholder="Ingrese nombre y apellidos" onkeyup="javascript:this.value = this.value.toUpperCase();"></p:inputText>
+
+                            <p:outputLabel value="Correo"></p:outputLabel>
+                            <p:inputText id="email" required="false" label="email" size="40" requiredMessage="Por favor ingrese su correo" validatorMessage="Formato inválido de correo" value="#{usuarioBean.usuario.correo}">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                <p:ajax update="mensaje" event="keyup" />
+                                <p:watermark for="email" value="Ingrese correo" />
+                                <p:message for="email" />
+                            </p:inputText>
+
+                            <p:outputLabel value="Perfil"></p:outputLabel>
+                            <p:selectOneMenu required="true" style="width: 200px;" value="#{usuarioBean.usuario.codigoPerfil}">
+                                <f:selectItem itemLabel="Selecione opcion" itemValue=""></f:selectItem>
+                                <f:selectItem itemLabel="Administrador" itemValue="Administrador"></f:selectItem>
+                                <f:selectItem itemLabel="Supervisor" itemValue="Supervisor"></f:selectItem>
+                                <f:selectItem itemLabel="Usuario" itemValue="Usuario"></f:selectItem>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Código departamento"></p:outputLabel>
+                            <p:selectOneMenu required="true" style="width: 200px;" value="#{usuarioBean.usuario.codigoDepartamento}">
+                                <f:selectItem itemLabel="Selecione opcion" itemValue=""></f:selectItem>
+                                <f:selectItem itemLabel="Administración" itemValue="Administración"></f:selectItem>
+                                <f:selectItem itemLabel="Maquinaria" itemValue="Maquinaria"></f:selectItem>
+                                <f:selectItem itemLabel="Metales" itemValue="Metales"></f:selectItem>
+                                <f:selectItem itemLabel="Life Style" itemValue="Life Style"></f:selectItem>
+                                <f:selectItem itemLabel="Químicos" itemValue="Químicos"></f:selectItem>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Código sap"></p:outputLabel>
+                            <p:inputText style="width: 150px;" value="#{usuarioBean.usuario.codigoSap}" required="true" placeholder="Ingrese código sap" onkeyup="javascript:this.value = this.value.toUpperCase();"></p:inputText>
+
+                            <p:outputLabel value="Asignación MXN"></p:outputLabel>
+                            <p:inputNumber style="width: 150px;" value="#{usuarioBean.usuario.asignacion}" required="true" placeholder="Ingrese asignación MXN"></p:inputNumber>
+
+                            <p:outputLabel value="Asignación USD"></p:outputLabel>
+                            <p:inputNumber style="width: 150px;" value="#{usuarioBean.usuario.asignacionusd}" required="true" placeholder="Ingrese asignación USD"></p:inputNumber>
+
+                            <p:outputLabel value="Password"></p:outputLabel>
+                            <p:password style="width: 150px;" value="#{usuarioBean.usuario.clave}" id="spanishFeedback" required="true" weakLabel="Contraseña débil" goodLabel="Contraseña aceptable" strongLabel="Contraseña fuerte" requiredMessage="Campo contraseña requerida" feedback="true" promptLabel="Ingrese contraseña" placeholder="Ingrese contraseña">
+                                <f:validateLength minimum="3" maximum="20" />
+                                <p:ajax update="mensaje" event="keyup" />
+                            </p:password>
+
+                            <p:outputLabel value="Tarjeta Coorporativa"></p:outputLabel>
+                            <p:selectOneMenu required="true" style="width: 200px;" value="#{usuarioBean.usuario.tarjetaCoorporativa}">
+                                <f:selectItem itemLabel="Selecione opcion" itemValue=""></f:selectItem>
+                                <f:selectItem itemLabel="Si" itemValue="Si"></f:selectItem>
+                                <f:selectItem itemLabel="No" itemValue="No"></f:selectItem>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+
+                        <p:commandButton  value="Guardar" 
+                                          actionListener="#{usuarioBean.nuevoUsuario()}" 
+                                          update="frmUsuario:tablaUsuario,mensaje" 
+                                          oncomplete="PF('dialogNuevoUsuario').hide();">
+                        </p:commandButton>
+                        <p:commandButton value="Cancelar" 
+                                         update="mensaje" 
+                                         oncomplete="PF('dialogNuevoUsuario').hide();">                                             
+                        </p:commandButton>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="frmModificarUsuario">              
+                    <p:growl id="mensaje" showSummary="true" showDetail="true"></p:growl> 
+                    <p:dialog id="dlgModificarUsuario" header="Modificar usuario" widgetVar="dialogModificarUsuario" resizable="false" 
+                              showEffect="clip" hideEffect="clip" modal="true">
+                        <p:panelGrid columns="2" style="margin: 0 auto">
+
+                            <p:outputLabel value="Nombre"></p:outputLabel>
+                            <p:inputText style="width: 200px;" value="#{usuarioBean.usuario.nombre}" required="true" placeholder="Ingrese nombre y apellidos" onkeyup="javascript:this.value = this.value.toUpperCase();"></p:inputText>
+
+                            <p:outputLabel value="Correo"></p:outputLabel>
+                            <p:inputText id="email" required="false" label="email" requiredMessage="Por favor ingrese su correo" validatorMessage="Formato inválido de correo" value="#{usuarioBean.usuario.correo}">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+                                <p:ajax update="mensaje" event="keyup" />
+                                <p:watermark for="email" value="Ingrese correo" />
+                                <p:message for="email" />
+                            </p:inputText>
+
+                            <p:outputLabel value="Perfil"></p:outputLabel>
+                            <p:selectOneMenu required="true" style="width: 200px;" value="#{usuarioBean.usuario.codigoPerfil}">
+                                <f:selectItem itemLabel="Selecione opcion" itemValue=""></f:selectItem>
+                                <f:selectItem itemLabel="Administrador" itemValue="Administrador"></f:selectItem>
+                                <f:selectItem itemLabel="Usuario" itemValue="Usuario"></f:selectItem>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Código departamento"></p:outputLabel>
+                            <p:selectOneMenu required="true" style="width: 200px;" value="#{usuarioBean.usuario.codigoDepartamento}">
+                                <f:selectItem itemLabel="Selecione opcion" itemValue=""></f:selectItem>
+                                <f:selectItem itemLabel="Administración" itemValue="Administración"></f:selectItem>
+                                <f:selectItem itemLabel="Maquinaria" itemValue="Maquinaria"></f:selectItem>
+                                <f:selectItem itemLabel="Metales" itemValue="Metales"></f:selectItem>
+                                <f:selectItem itemLabel="Life Style" itemValue="Life Style"></f:selectItem>
+                                <f:selectItem itemLabel="Químicos" itemValue="Químicos"></f:selectItem>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Código sap"></p:outputLabel>
+                            <p:inputText style="width: 150px;" value="#{usuarioBean.usuario.codigoSap}" required="true" placeholder="Ingrese código sap" onkeyup="javascript:this.value = this.value.toUpperCase();"></p:inputText>
+
+                            <p:outputLabel value="Asignación MXN"></p:outputLabel>
+                            <p:inputNumber style="width: 150px;" value="#{usuarioBean.usuario.asignacion}" required="true" placeholder="Ingrese asignación MXN"></p:inputNumber>
+
+                            <p:outputLabel value="Asignación USD"></p:outputLabel>
+                            <p:inputNumber style="width: 150px;" value="#{usuarioBean.usuario.asignacionusd}" required="true" placeholder="Ingrese asignación USD"></p:inputNumber>
+
+                            <p:outputLabel value="Vigencia contraseña"></p:outputLabel>
+                            <p:inputNumber style="width: 150px;" value="#{usuarioBean.usuario.vigencia}" required="true" placeholder="Ingrese vigencia"></p:inputNumber>
+
+                            <p:outputLabel value="Password"></p:outputLabel>
+                            <p:inputText style="width: 150px;" value="#{usuarioBean.usuario.clave}" id="spanishFeedback" required="true" requiredMessage="Campo contraseña requerida" placeholder="Ingrese contraseña" onchange="validarSiNumero(this.value);">
+                                <f:validateLength minimum="3" maximum="20" />
+                                <p:ajax update="mensaje" event="keyup" />
+                            </p:inputText>
+
+                            <p:outputLabel value="Tarjeta Coorporativa"></p:outputLabel>
+                            <p:selectOneMenu required="true" style="width: 200px;" value="#{usuarioBean.usuario.tarjetaCoorporativa}">
+                                <f:selectItem itemLabel="Selecione opcion" itemValue=""></f:selectItem>
+                                <f:selectItem itemLabel="Si" itemValue="Si"></f:selectItem>
+                                <f:selectItem itemLabel="No" itemValue="No"></f:selectItem>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Tarjeta Gasolina"></p:outputLabel>
+                            <p:selectOneMenu required="true" style="width: 200px;" value="#{usuarioBean.usuario.tarjetaGasolina}">
+                                <f:selectItem itemLabel="Selecione opcion" itemValue=""></f:selectItem>
+                                <f:selectItem itemLabel="Si" itemValue="Si"></f:selectItem>
+                                <f:selectItem itemLabel="No" itemValue="No"></f:selectItem>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <br></br>
+
+                        <p:commandButton value="Cancelar"  style="width: 100px;" oncomplete="PF('dialogModificarUsuario').hide();"></p:commandButton>
+                        <p:commandButton value="Guardar" actionListener="#{usuarioBean.modificarUsuario}" update="frmUsuario:tablaUsuario, mensaje" style="width: 100px;" oncomplete="PF('dialogModificarUsuario').hide();"></p:commandButton>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="frmElimiarUsuario">
+                    <p:growl id="mensaje" showSummary="true" showDetail="true"></p:growl>
+                    <p:dialog id="dlgEliminarUsuario" header="Eliminar usuario" widgetVar="dialogEliminarUsuario" resizable="false" showEffect="clip" hideEffect="clip" modal="true">
+                        <h:outputText value="¿Desea eliminar este registro?   "></h:outputText>
+                        <p:commandButton value="Si" actionListener="#{usuarioBean.eliminarUsuario()}" update="frmUsuario:tablaUsuario, mensaje" oncomplete="PF('dialogEliminarUsuario').hide();"></p:commandButton>
+                        <p:commandButton value="No" oncomplete="PF('dialogEliminarUsuario').hide();"></p:commandButton>
+                    </p:dialog>
+                </h:form>
+
+            </ui:define>
+        </ui:composition>        
+    </h:body>
+</html>

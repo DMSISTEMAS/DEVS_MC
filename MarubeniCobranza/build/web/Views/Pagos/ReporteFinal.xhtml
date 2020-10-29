@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../../plantilla/Template.xhtml">
+            <ui:define name="content">
+                <p:idleMonitor  onactive="PF('sessionTimeOutDialog').show()" timeout="600000" />
+                <p:dialog style="font-size: 15px;" header="Sistema de Pagos Marubeni México" widgetVar="sessionTimeOutDialog" 
+                          modal="true" closable="false" width="775" height="280" resizable="false" visible="false">                    
+                    <img src="../../Images/expired.png" style="width: 160px; height: 160px" alt=""/><br></br><br></br><br></br>
+                    <h:outputText style="color: #CC0505; font-size: 16px; " value="Tu sesión actual ha expirado, para continuar cierra esta ventana o presiona F5 y vuelve a iniciar sesión." />
+                </p:dialog>
+                <h2>
+                    <img src="../../Images/analisis.png" style="width: 140px; height: 120px" alt=""/>
+                    ADMINISTRACIÓN DE PÓLIZAS DE PAGOS
+                </h2>
+
+                <h:form id="frmTest">
+                    <!--                    <p:blockUI block="ReportePagos" trigger="track">   
+                                            <h4 style="font-size: 15px; color: black">Buscando facturas pendientes...</h4><br></br>
+                                            <p:graphicImage value="../../Images/search.gif" style="height: 100px; width: 100px"></p:graphicImage>
+                                        </p:blockUI>-->
+
+                    <p:growl id="mensaje" showSummary="true" showDetail="true"></p:growl>
+                    <p:messages id="messages" showSummary="true" showDetail="true" showIcon="true" closable="true" style="font-size: 14px"/>
+                    <!--Inicia diálogo para el reporte de la póliza-->
+                    <p:toolbar>                      
+                        <f:facet name="left">
+                            <table border="0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 600px">
+
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+
+                                        </th>
+                                        <th>
+                                            <p:selectOneMenu  required="false" style="width: 50px; font-size: 13px;" 
+                                                              label="Selecciona un folio" value="#{pagosBean.folioPoliza}">
+                                                <f:selectItem itemLabel="Seleciona folio" itemValue=""></f:selectItem>
+                                                <f:selectItems value="#{pagosBean.listaFolioPoliza}"></f:selectItems>
+                                                <p:ajax event="change" update="todas"></p:ajax>
+                                            </p:selectOneMenu> 
+
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+
+                                            <p:commandButton id="todas" disabled="#{pagosBean.folioPoliza ==null}" style="height: 35px; width: 35px; 
+                                                             background-image: url('../..//Images/bus.png');
+                                                             background-size: 35px; background-repeat: no-repeat" 
+                                                             title="Buscar pólizas generadas" value=""
+                                                             actionListener="#{pagosBean.listarTodo()}">
+
+                                            </p:commandButton>
+                                        </th>
+                                        <th>
+                                            <h:commandLink id="xls"
+                                                           target="_blank"
+                                                           actionListener="#{pagosBean.descargarReporte()}">
+                                                <p:graphicImage  title="Exportar a Excel"
+                                                      
+                                                                 url="../..//Images/Excel-2-icon.png" height="60" width="60" />
+                                                <p:dataExporter  type="xls" target="frmTest:ReportePagos"
+                                                                 fileName="Pagos"></p:dataExporter>
+                                            </h:commandLink>
+<!--                                            <h:commandLink id="reporte" 
+                                                           value=""
+                                                           target="_blank"
+                                                           disabled="{pagosBean.folioPoliza ==null}"
+                                                           style="height: 30px; font-size: 16px" 
+                                                           actionListener="{pagosBean.descargarReporte()}">
+                                                <h:graphicImage url="/Images/Excel-2-icon.png" style="height: 40px"/> 
+                                            </h:commandLink> -->
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </f:facet>
+                    </p:toolbar> 
+                    <p:layout id="reportePoliza" style="width: 1260px; height: 500px;">
+                        <p:layoutUnit id="datosConcepto" position="center" resizable="true" collapsible="true" style="padding: 5px; text-align: center;">
+                            <p:dataTable id="ReportePagos" paginator="true" paginatorPosition="top" 
+                                         sortMode="multiple" scrollable="true" 
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="10,50,100" resizableColumns="false"
+                                         rows="30" var="item" style="font-size: 9px" editable="true" value="#{pagosBean.listarRepPol}">
+                                <p:column  headerText="voucherNo">
+                                    <h:outputText value="#{item.voucherNo}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="entryDate">
+                                    <h:outputText value="#{item.entryDate}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="transactionDate">
+                                    <h:outputText value="#{item.transactionDate}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="currency">
+                                    <h:outputText value="#{item.currency}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="rate">
+                                    <h:outputText value="#{item.rate}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="remarks">
+                                    <h:outputText value="#{item.remarks}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="drcr">
+                                    <h:outputText value="#{item.drcr}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="unit">
+                                    <h:outputText value="#{item.unit}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="account">
+                                    <h:outputText value="#{item.account}"></h:outputText>
+                                </p:column>                                   
+                                <p:column headerText="taxCode">
+                                    <h:outputText value="#{item.taxCode}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="tf">
+                                    <h:outputText value="#{item.tf}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="subAccount">
+                                    <h:outputText value="#{item.subAccount}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="contractNo">
+                                    <h:outputText value="#{item.contractNo}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="referenceNo">
+                                    <h:outputText value="#{item.referenceNo}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="dueDate">
+                                    <h:outputText value="#{item.dueDate}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="amount">
+                                    <h:outputText value="#{item.amount}"></h:outputText>
+                                </p:column>
+                                <p:column style="width: 1px" headerText="">
+                                    <h:outputText value=""></h:outputText>
+                                </p:column>
+                                <p:column style="width: 1px" headerText="">
+                                    <h:outputText value=""></h:outputText>
+                                </p:column>
+                                <p:column style="width: 1px" headerText="">
+                                    <h:outputText value=""></h:outputText>
+                                </p:column>
+                                <p:column headerText="localAmount">
+                                    <h:outputText value="#{item.currency eq'USD1' ? item.amount * item.rate :0.0}">
+                                        <f:convertNumber pattern="###,###.0000" currencySymbol="$" type="currency" locale="es_MX"/>
+                                    </h:outputText>
+                                </p:column>
+                            </p:dataTable>
+                        </p:layoutUnit>                              
+                    </p:layout>
+                </h:form>
+                <!--Fin diálogo para el reporte de la póliza-->
+
+
+
+            </ui:define>
+
+        </ui:composition>        
+
+    </h:body>    
+</html>

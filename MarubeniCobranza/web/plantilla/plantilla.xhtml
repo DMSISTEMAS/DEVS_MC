@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="css/default1.css"/>
+        <h:outputStylesheet name="css/cssLayout1.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="http://www.boi.go.th/tir/issue/200712_17_12/images/3-1.jpg" />
+        <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="http://www.boi.go.th/tir/issue/200712_17_12/images/3-1.jpg" />
+        <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'></link>
+        <title>Marubeni</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top"></ui:insert>
+
+            <h1><br></br><h:graphicImage  url="/Images/marubeni-logo.png"  height="35" width="250"/><br></br>SISTEMA DE COBRANZA</h1>
+            <div id="menuPrincipal">
+                <h:form> 
+                    <p:growl id="messages" showDetail="false"/>
+                    <p:menubar model="#{permisosBean.model}">
+                    </p:menubar>                   
+                </h:form>
+
+            </div>
+
+        </div>
+
+        <div id="content" class="center_content">
+            <div id="sessionUsuario">
+                <span>
+                    <h:form>
+                        <p:outputLabel>MARUBENI MÉXICO</p:outputLabel><br></br>
+                        <p:outputLabel value="#{loginBean.usuario.nombre}"></p:outputLabel><br></br>
+                        <p:outputLabel value="#{loginBean.usuario.correo}"></p:outputLabel><br></br>
+                        <p:outputLabel value="#{loginBean.usuario.codigoPerfil}"></p:outputLabel><br></br>
+                        <p:commandLink id="salir" 
+                                       action="/index?faces-redirect=true" 
+                                       actionListener="#{loginBean.cerrarSesion()}"
+                                       style="color: #ffffff; font-family: Questrial; font-size: 12px;">
+                            <h:graphicImage url="/Images/logout.png" style="height: 35px"/> </p:commandLink>
+                        <p:tooltip id="toolTipTrack2" for="salir" value="Cerrar sesión" trackMouse="true" />
+                    </h:form>                       
+                </span>
+            </div>
+            <ui:insert name="content">
+
+            </ui:insert>
+        </div>
+
+        <div id="bottom">
+            <br></br>
+            <ui:insert name="bottom">&copy; Marubeni México-TRIA 2020</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

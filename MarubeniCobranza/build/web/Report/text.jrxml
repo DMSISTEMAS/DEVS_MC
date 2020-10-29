@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportePoliza" pageWidth="752" pageHeight="572" orientation="Landscape" columnWidth="752" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="40d6c89f-bb13-455d-86d9-d9603062ba3c">
+	<property name="ireport.zoom" value="8.0"/>
+	<property name="ireport.x" value="4881"/>
+	<property name="ireport.y" value="161"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="nombreReporte" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreFolio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     poliza."idVoucher" AS poliza_idVoucher,
+     poliza."voucherNo" AS poliza_voucherNo,
+     poliza."entryDate" AS poliza_entryDate,
+     poliza."transactionDate" AS poliza_transactionDate,
+     poliza."currency" AS poliza_currency,
+     poliza."rate" AS poliza_rate,
+     poliza."remarks" AS poliza_remarks,
+     poliza."drcr" AS poliza_drcr,
+     poliza."unit" AS poliza_unit,
+     poliza."account" AS poliza_account,
+     poliza."taxCode" AS poliza_taxCode,
+     poliza."tf" AS poliza_tf,
+     poliza."subAccount" AS poliza_subAccount,
+     poliza."contractNo" AS poliza_contractNo,
+     poliza."referenceNo" AS poliza_referenceNo,
+     poliza."dueDate" AS poliza_dueDate,
+     poliza."amount" AS poliza_amount,
+     poliza."userFolio" AS poliza_userFolio,
+     poliza."userName" AS poliza_userName
+FROM
+     "dbo"."poliza" poliza
+WHERE poliza.userFolio=$P{nombreFolio} AND poliza.userName=$P{nombreReporte}]]>
+	</queryString>
+	<field name="poliza_idVoucher" class="java.lang.Integer"/>
+	<field name="poliza_voucherNo" class="java.lang.String"/>
+	<field name="poliza_entryDate" class="java.lang.String"/>
+	<field name="poliza_transactionDate" class="java.lang.String"/>
+	<field name="poliza_currency" class="java.lang.String"/>
+	<field name="poliza_rate" class="java.lang.String"/>
+	<field name="poliza_remarks" class="java.lang.String"/>
+	<field name="poliza_drcr" class="java.lang.String"/>
+	<field name="poliza_unit" class="java.lang.String"/>
+	<field name="poliza_account" class="java.lang.String"/>
+	<field name="poliza_taxCode" class="java.lang.String"/>
+	<field name="poliza_tf" class="java.lang.String"/>
+	<field name="poliza_subAccount" class="java.lang.String"/>
+	<field name="poliza_contractNo" class="java.lang.String"/>
+	<field name="poliza_referenceNo" class="java.lang.String"/>
+	<field name="poliza_dueDate" class="java.lang.String"/>
+	<field name="poliza_amount" class="java.lang.String"/>
+	<field name="poliza_userFolio" class="java.lang.String"/>
+	<field name="poliza_userName" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="8" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="1" y="0" width="29" height="8" forecolor="#000000" uuid="415cc30d-bdfc-4d75-866d-9690faa71308"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[VOUCHER NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="30" y="0" width="49" height="8" forecolor="#000000" uuid="e1ee9c85-1387-426e-b489-323f0477c4dd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[ENTRY DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="79" y="0" width="49" height="8" forecolor="#000000" uuid="2767e8de-e9d3-4d94-909c-e2861a61e8b8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[TRANSACTION DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="152" y="0" width="32" height="8" forecolor="#000000" uuid="8ba1c7b0-583a-401e-8395-71243f52004d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[RATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="184" y="0" width="91" height="8" forecolor="#000000" uuid="5cf1fd84-4b7b-4f18-b87a-5775cf9ae220"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[REMARKS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="275" y="0" width="42" height="8" forecolor="#000000" uuid="c41db99d-c956-4575-bfac-1085f3bfe851"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[DR/CR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="317" y="0" width="26" height="8" forecolor="#000000" uuid="ae5e7e3d-36b1-4687-bb66-bb00664c8113"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[UNIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="343" y="0" width="42" height="8" forecolor="#000000" uuid="43b91fa8-8ea4-4779-9e31-cd6727217cbc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[ACCOUNT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="385" y="0" width="42" height="8" forecolor="#000000" uuid="116cd0a7-5544-42e6-894e-31d9845c4dd0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[TAX CODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="427" y="0" width="25" height="8" forecolor="#000000" uuid="62f9be9a-84e0-4512-bb57-fa4f6fce23cd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[TF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="452" y="0" width="42" height="8" forecolor="#000000" uuid="11bf8fc4-be6a-4871-b3a1-287857b91c03"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[SUB ACCOUNT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="494" y="0" width="42" height="8" forecolor="#000000" uuid="b5e341d5-2753-47df-8ce6-1fdccbd412f2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[CONTRACT NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="536" y="0" width="86" height="8" forecolor="#000000" uuid="8f5987c8-2e3c-491a-b200-f0ca44ad1a51"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[REFERENCE NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="622" y="0" width="42" height="8" forecolor="#000000" uuid="4078f4b3-bb27-4f88-a31a-f62c960b07cf"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[DUE DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="664" y="0" width="42" height="8" forecolor="#000000" uuid="89a27d7a-3781-4dfd-8451-634a9f3eb9bd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[AMOUNT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="128" y="0" width="24" height="8" forecolor="#000000" uuid="8ba1c7b0-583a-401e-8395-71243f52004d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<text><![CDATA[CURRENCY]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="8" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="1" y="0" width="29" height="8" uuid="e3f81948-393e-4884-847f-6509d0e11858"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_voucherNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="d.M.yyyy">
+				<reportElement style="Detail" x="30" y="0" width="49" height="8" uuid="b3685a2e-1659-4969-855d-79d939140592"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_entryDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="d.M.yyyy" isBlankWhenNull="false">
+				<reportElement style="Detail" mode="Transparent" x="79" y="0" width="49" height="8" forecolor="#000000" backcolor="#FFFFFF" uuid="7c208bfe-599e-4f7b-952f-6f11baeed688"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="3" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_transactionDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="128" y="0" width="24" height="8" uuid="9866eb78-fd8e-4924-98f7-94d82da91432"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_currency}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="152" y="0" width="32" height="8" uuid="1282e05d-8209-486c-b405-803600da2642"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_rate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="184" y="0" width="91" height="8" uuid="a729545a-d169-4f29-af29-1b89be779825"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_remarks}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="275" y="0" width="42" height="8" uuid="07ceb1f3-7c88-47c3-b8ab-64994bafb308"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_drcr}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="317" y="0" width="26" height="8" uuid="ca32acf9-2e6c-44cc-9e74-761b5b398d8f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_unit}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="343" y="0" width="42" height="8" uuid="85df96c1-4896-4cc0-aab9-1d06b77558cc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_account}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="385" y="0" width="42" height="8" uuid="102af2fe-2362-4e3a-b7ce-39a508f849ad"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_taxCode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="427" y="0" width="25" height="8" uuid="242ea90c-b075-4776-b3f5-125e46cd2ae1"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_tf}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="452" y="0" width="42" height="8" uuid="64f658b6-33c8-4215-88c5-39f56455f80c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_subAccount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="494" y="0" width="42" height="8" uuid="d82d9dbc-5c2d-4833-a867-8e9d2dd44c41"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_contractNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="536" y="0" width="86" height="8" uuid="e4cc296a-80b2-4312-af7b-f6f5a8269be6"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_referenceNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="622" y="0" width="42" height="8" uuid="53b5e724-9740-48c2-a06a-4c7d6ba2b04b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_dueDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="664" y="0" width="42" height="8" uuid="fc46cce6-9575-42a7-8b08-c79de171475e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poliza_amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="27">
+			<subreport>
+				<reportElement x="622" y="0" width="84" height="10" uuid="a2687fe8-7676-42d3-a61a-a96c09eba89f"/>
+				<subreportParameter name="nombreReporte">
+					<subreportParameterExpression><![CDATA[$P{nombreReporte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nombreFolio">
+					<subreportParameterExpression><![CDATA[$P{nombreFolio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\img\\suma_dr.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="622" y="10" width="84" height="10" uuid="f322f1e6-8f8c-4d2a-93f7-80e3f2769b64"/>
+				<subreportParameter name="nombreReporte">
+					<subreportParameterExpression><![CDATA[$P{nombreReporte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nombreFolio">
+					<subreportParameterExpression><![CDATA[$P{nombreFolio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\img\\suma_cr.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

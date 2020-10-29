@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+
+        <ui:composition template="./../../plantilla/plantilla.xhtml">
+
+            <ui:define name="content">
+                <h2>Datos de usuario</h2>
+                <br></br>
+
+                <h:form id="frmNuevoUsuario">
+                    <p:growl id="mensaje" showSummary="true" showDetail="true"></p:growl>
+                    
+                        <p:panelGrid columns="1" style="margin: 0 auto">
+                            <p:outputLabel value="Nombre *"></p:outputLabel>
+                            <p:inputText style="width: 200px;" value="#{RegistroBean.usuario.nombre}"
+                                         required="true" placeholder="Ingrese nombre y apellidos"
+                                         onkeyup="javascript:this.value = this.value.toUpperCase();">
+                            </p:inputText>                           
+                            <p:outputLabel value="Correo"></p:outputLabel>
+                            <p:inputText style="width: 150px;" value="#{RegistroBean.usuario.correo}"
+                                         required="true" placeholder="Ingrese correo">
+                            </p:inputText>
+                            <p:outputLabel value="Perfil"></p:outputLabel>
+                            <p:selectOneMenu required="true" style="width: 200px;" value="#{RegistroBean.usuario.codigoPerfil}">
+                                <f:selectItem itemLabel="Usuario" itemValue="Usuario"></f:selectItem>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Password"></p:outputLabel>
+                            <p:password style="width: 150px;" value="#{RegistroBean.usuario.clave}" required="true" weakLabel="Contraseña débil" 
+                                        strongLabel="Contraseña fuerte" requiredMessage="Campo contraseña requerida"
+                                        feedback="true" promptLabel="Ingrese clave" placeholder="Ingrese contraseña">
+                            </p:password>
+                        </p:panelGrid>
+                        <p:commandButton  value="Guardar" actionListener="#{RegistroBean.nuevoUsuario()}" 
+                                          update="mensaje" 
+                                          oncomplete="PF('dialogNuevoUsuario').hide();">
+                        </p:commandButton>
+                        <p:commandButton value="Cancelar" update="mensaje"                                        
+                                         oncomplete="PF('dialogNuevoUsuario').hide();">                                             
+                        </p:commandButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

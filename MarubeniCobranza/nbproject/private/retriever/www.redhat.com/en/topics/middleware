@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <!--[if IE]><![endif]-->
+
+<script id="ddo" type="text/javascript">
+<!--//--><![CDATA[//><!--
+    var digitalData = {"cart":[],"event":[],"listing":{"browseFilter":"","query":"","queryMethod":"","refinementType":"","refinementValue":"","resultCount":"","searchType":""},"page":{"attributes":{"queryParameters":"","referringSearchEngine":"","taxonomyPageSubType":["18371"],"taxonomyBusinessChallenge":["151","131"],"taxonomyProduct":["22571","4561","1961","2021","4571","1971","4581","1931","8441","1991","2001","4911","8431","1951"],"taxonomyProductLine":["851"],"taxonomyRegion":["4521"],"taxonomySolution":["1081"],"taxonomyTopic":["27051","17391"],"taxonomyMetaHreflang":["29051"]},"category":{"contentType":"","keyPage":"false","keyPageType":"","pageType":"pattern_template","primaryCategory":"topics","subCategories":["middleware"]},"pageInfo":{"cms":"RH CMS 9.16","contentFindingMethod":"","contentID":"242861","contentPortal":"","destinationURL":"https:\/\/www.redhat.com\/en\/topics\/middleware","errorMessage":"","errorType":"","language":"en","pageName":"","referringDomain":"","referringURL":"","sysEnv":"","template":"","title":"Understanding middleware"}},"product":[],"user":[{"profile":[{"profileInfo":{"daysSinceLastPurchase":"","demandbaseSID":"","eloquaGUID":"","lastLoginDate":"","lastPurchaseDate":"","loggedIn":"false","profileID":"","subscriptionFrequency":"","subscriptionLevel":""}}]}]};
+    !function(a,b,c){"use strict";function d(a){var c="; "+b.cookie,d=c.split("; "+a+"=");if(2===d.length)return d.pop().split(";").shift()}if(b.referrer){var e=b.createElement("a");e.href=b.referrer,c.page.pageInfo.referringDomain=e.hostname,c.page.pageInfo.referringURL=e.href}c.page.pageInfo.sysEnv=a.innerWidth<=768?"tablet":"desktop";var f=c.user[0].profile[0].profileInfo,g=d("rh_elqCustomerGUID");g&&(f.eloquaGUID=g);var h=d("rh_user");if(h){var i=h.split("\\|");i[0]&&(f.loggedIn="true")}var j=d("s_dmdbase");j&&(f.demandbaseSID=j)}(window,document,digitalData);
+//--><!]]>
+</script>
+<script id="dpal" type="text/javascript" src="//www.redhat.com/dtm.js"></script><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="taxonomy-product" content="Red Hat JBoss Enterprise Application Platform" />
+<meta name="taxonomy-product" content="Red Hat Fuse" />
+<meta name="taxonomy-product" content="Red Hat JBoss Frameworks" />
+<meta name="taxonomy-product" content="Red Hat JBoss Operations Network" />
+<meta name="taxonomy-product" content="Red Hat Developer Studio" />
+<meta name="taxonomy-product" content="Red Hat Data Virtualization" />
+<meta name="taxonomy-product" content="Red Hat 3scale API Management" />
+<meta name="taxonomy-business-challenge" content="Cloud-native application development" />
+<meta name="taxonomy-product" content="Red Hat AMQ" />
+<meta name="taxonomy-product" content="Red Hat Data Grid" />
+<meta name="taxonomy-product" content="Red Hat JBoss Portal" />
+<meta name="taxonomy-product" content="Red Hat Decision Manager" />
+<meta name="taxonomy-product" content="Red Hat JBoss Web Server" />
+<meta name="taxonomy-topic" content="Integration" />
+<meta name="taxonomy-page-sub-type" content="Topic page" />
+<meta name="taxonomy-topic" content="Open source" />
+<meta name="taxonomy-meta-hreflang" content="en" />
+<link rel="shortcut icon" href="https://www.redhat.com/profiles/rh/themes/redhatdotcom/favicon.ico" type="image/x-icon" />
+<meta name="taxonomy-solution" content="Application integration and development" />
+<meta name="taxonomy-region" content="Global" />
+<meta name="taxonomy-business-challenge" content="Agile integration" />
+<meta name="taxonomy-product" content="Red Hat Middleware" />
+<meta name="taxonomy-product" content="Red Hat Process Automation Manager" />
+<meta name="taxonomy-product-line" content="Middleware" />
+<meta property="og:description" content="Middleware is software that provides services to applications outside of what’s offered by the operating system." />
+<meta name="node-type" content="pattern_template" />
+<link href="https://www.redhat.com/ja/topics/middleware" rel="alternate" hreflang="ja" />
+<link href="https://www.redhat.com/it/topics/middleware" rel="alternate" hreflang="it" />
+<link href="https://www.redhat.com/ko/topics/middleware" rel="alternate" hreflang="ko" />
+<meta name="rhdc_key" content="a356de1991788ced697d62fb741941ca" />
+<link href="https://www.redhat.com/pt-br/topics/middleware" rel="alternate" hreflang="pt-br" />
+<link href="https://www.redhat.com/fr/topics/middleware" rel="alternate" hreflang="fr" />
+<link href="https://www.redhat.com/es/topics/middleware" rel="alternate" hreflang="es" />
+<meta name="last-publish-date" content="Wed, 21 Mar 2018 04:00:00 GMT" />
+<meta name="source" content="rhdc_drupal" />
+<meta http-equiv="content-language" content="en" />
+<link href="https://www.redhat.com/de/topics/middleware" rel="alternate" hreflang="de" />
+<link href="https://www.redhat.com/en/topics/middleware" rel="alternate" hreflang="en" />
+<link href="https://www.redhat.com/zh/topics/middleware" rel="alternate" hreflang="zh" />
+<meta name="description" content="Middleware is software that provides services to applications outside of what’s offered by the operating system." />
+<meta name="generator" content="Drupal 7 (http://drupal.org)" />
+<link rel="image_src" href="https://www.redhat.com/cms/managed-files/social-middleware-pipes-500x500.png" />
+<link rel="canonical" href="https://www.redhat.com/en/topics/middleware" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.redhat.com/en/topics/middleware" />
+<meta property="og:title" content="Understanding middleware" />
+<meta property="og:image" content="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/red-hat-social-share.png" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Understanding middleware" />
+<meta name="twitter:image" content="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/red-hat-social-share.png" />
+
+    <title>Understanding middleware</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__Tw4ylPtcZe8zdqMV271ySNIAV6ozNJ2IY-9GQLRZRE8__N4G8GLHifOgOVVvki6D63pPrSo3VM8ppBqL0aR-np34__uaCwYofnUZLAnB7x3Q6WyVKHfqU6f9iB6Wi31ydea6c.css" media="all" />
+<link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__wpajrf8pWA19ifT2xQXPB3J1TByoCXqZVtt6kXfl4Ow__sGCXvGYDXIx30wszzDWQZG5g5_tcQQKN0KaxBr5IYLg__uaCwYofnUZLAnB7x3Q6WyVKHfqU6f9iB6Wi31ydea6c.css" media="print" />
+<link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__ZloDXyuKi46aF9xOn6fSeL5dF4P2uN9xiQxQchwFyB4__-oMPMcnhVkraN1MzrN-vtcw-7gY4JF3eN80MQBYMZGE__uaCwYofnUZLAnB7x3Q6WyVKHfqU6f9iB6Wi31ydea6c.css" media="all" />
+<link type="text/css" rel="stylesheet" href="/files/webux/css/topic-page/middleware.css?pn8xo8" media="all" />
+
+    <!--[if lt IE 9]>
+      <script src="/profiles/rh/themes/redhatdotcom/js/selectivizr-min.js" type="text/javascript"></script>
+      <script src="/profiles/rh/themes/redhatdotcom/js/nwmatcher-min.js" type="text/javascript"></script>
+      <script src="/profiles/rh/themes/redhatdotcom/js/respond.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="/sites/default/files/advagg_js/js__9S8CULstXScbHTq4UhUaEWiEqiYrxsYpvEMJje6yKfs__vXkgyQEnC5XVkDNg3iQod3fMBa0UUmg3zRliyu_hHco__uaCwYofnUZLAnB7x3Q6WyVKHfqU6f9iB6Wi31ydea6c.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+document.createElement( "picture" );
+//--><!]]>
+</script>
+<script type="text/javascript" src="/sites/default/files/advagg_js/js__HrShe95BdNd2LBCPjqH7sI8NtY1qspCEQguOCm1Khp8__6tZ-sSyXhmfYso8iy031mmDcGLaofulrlp6uk2DkNhE__uaCwYofnUZLAnB7x3Q6WyVKHfqU6f9iB6Wi31ydea6c.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"en\/","ajaxPageState":{"theme":"redhatdotcom","theme_token":"ZeDYoaKVN4S4ONJLo4ljSNdyzllMprztK32I2ouXuU4","css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"misc\/ui\/jquery.ui.core.css":1,"misc\/ui\/jquery.ui.theme.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"sites\/all\/modules\/picture\/picture_wysiwyg.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ckeditor\/css\/ckeditor.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/node_embed\/plugins\/node_embed\/node_embed.css":1,"sites\/all\/libraries\/rh_iconfont\/dist\/files\/rh-iconfont.css":1,"sites\/all\/libraries\/rh_iconfont\/dist\/files\/rh-web-iconfont.css":1,"profiles\/rh\/themes\/redhatdotcom\/css\/chrome.css":1,"profiles\/rh\/themes\/redhatdotcom\/css\/overpass.css":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.selectBoxIt\/jquery.selectBoxIt.css":1,"profiles\/rh\/themes\/redhatdotcom\/css\/print.css":1,"sites\/all\/libraries\/webrh\/dist\/css\/webrh.css":1,"files\/webux\/css\/topic-page\/middleware.css":1},"js":{"sites\/all\/modules\/picture\/picturefill2\/picturefill.min.js":1,"sites\/all\/modules\/picture\/picture.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/jquery\/1.10\/jquery.min.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"profiles\/rh\/modules\/redhat_www_ddo\/dist\/post-jquery.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.core.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.widget.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.effect.min.js":1,"sites\/all\/libraries\/webrh\/dist\/js\/webrh.vendor.js":1,"sites\/all\/libraries\/webrh\/dist\/js\/webrh.webcomponents.js":1,"sites\/all\/libraries\/webrh\/dist\/js\/webrh.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.effect-slide.min.js":1,"profiles\/rh\/modules\/redhat_www_menu\/js\/rh_nav.js":1,"profiles\/rh\/modules\/redhat_www_share\/js\/rh_share.js":1,"sites\/all\/libraries\/jquery-cookie\/jquery.cookie-1.4.1.min.js":1,"profiles\/rh\/modules\/redhat_www_solr\/js\/rh_solr.js":1,"profiles\/rh\/modules\/redhat_www_solr\/js\/redhat_www_solr_suggestions.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/modernizr.min.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.pushmenu.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery-scrolltofixed.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/waypoints.min.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/sass-bootstrap.min.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/rh-chrome.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.fitvids.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.switchIt.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.selectBoxIt\/jquery.selectBoxIt.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.viewport\/jquery.viewport.min.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/script.js":1}},"redhat_www_menu":{"path":"node\/242861"},"rh_analytics_enabled":false,"urlIsAjaxTrusted":{"\/en\/search\/node":true}});
+//--><!]]>
+</script>
+  </head>
+  <body class="bands-index html not-front not-logged-in no-sidebars page-node page-node- page-node-242861 node-type-pattern-template i18n-en " >
+    <div class="page">
+      
+      <!-- Legacy migrated page support with body.migrated-page-hero -->
+<div class="header-background-image fts-migrated-bg">
+</div>
+
+  <div id="main-content">
+    <a id="main-content"></a>
+                      <div class="region region-content">
+    <div id="block-system-main" class="block block-system">
+
+      
+  <article class="node-242861 node node-pattern-template clearfix">
+
+  
+    
+        
+<div class="rh-band-group" data-rh-group-size="content" data-rh-unique-id="201061">
+                    <div class="rh-band-group-wrapper">
+                <div class="rh-band-group-background" data-rh-bq="https://www.redhat.com/cms/managed-files/styles/max_size/s3/bkgd-middleware-topic-pipes-2000x950.png?itok=dmWLauax" data-rh-background-align="left-center" data-rh-background="black"></div><div class="rh-band-group-header">
+<div class="rh-raw"        >
+        
+
+
+<div class="header-background-image">
+</div>
+
+
+
+<header class="main-header">
+
+  <div id="main-nav-wrap">
+    <div id="main-menu" class="clearfix">
+      <div class="container">
+        <div class="logo-mobile-wrap">
+          <div id="logo">
+            <a href="/en"><img src="/profiles/rh/themes/redhatdotcom/img/logo.svg" class="screen" title="Red Hat" /></a>
+            <a href="/en"><img src="/profiles/rh/themes/redhatdotcom/img/logo-reverse.svg" class="print" title="" /></a>
+          </div>
+          <div id="mobile-nav">
+            <ul>
+              <li class="mobile-search">
+                <a class="expand-mobile-search" href="#">Search</a>
+              </li>
+              <li class="mobile-drop">
+                <a class="expand-mobile-nav" href=""></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div id="mobile-utility-nav">
+          <ul class="main">
+            <li class="trigger"><a href="#account-tray" class="account">Log in<i class="web-icon web-icon-user"></i></a>
+            </li>
+            <li class="trigger"><a href="#global-tray" class="global">Global preferences<i class="web-icon web-icon-globe"></i></a></li>
+          </ul>
+          <ul class="tray account-tray" id="account-tray">
+                          <li class="first rh-user-loggedout"><a href="https://sso.redhat.com/auth/realms/redhat-external/protocol/saml/clients/legacy-idp-servlets" id="redhat-account-login-link" class="account-login-link utility-user-login-link">Log in</a></li>
+                                      <li class="last rh-user-loggedout"><a href="https://www.redhat.com/wapps/ugc/register.html" class="account-register-link">Register</a></li>
+                                      <li class="first rh-user-loggedin"><a href="https://www.redhat.com/wapps/ugc/protected/account.html" class="account-edit-link">Edit your profile and preferences</a></li>
+                                      <li class="last rh-user-loggedin"><a href="https://sso.redhat.com/auth/realms/redhat-external/logout" id="redhat-account-logout-link" class="account-logout-link">Log out</a></li>
+                      </ul>
+          <div class="tray global-tray" id="global-tray"></div>
+        </div>
+        <nav id="main-nav">
+          <ul>
+            <li class="first expanded nav-links top-level-wrapper"><a href="/en/technologies">Products</a></li>
+<li class="expanded active-trail nav-links top-level-wrapper"><a href="/en/challenges" class="active-trail">Solutions</a></li>
+<li class="expanded nav-links top-level-wrapper"><a href="/en/services">Services &amp; support</a></li>
+<li class="last expanded nav-links top-level-wrapper"><a href="/en/about">Red Hat &amp; open source</a></li>
+          </ul>
+        </nav>
+        <div id="to-top">
+          <a class="btn_slideto" href="">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="main-subnav">
+      <div class="container">
+      </div>
+    </div>
+  </div>
+  <div id="second-menu">
+    <div class="container">
+      <nav id="secondary-nav">
+        <ul class="menu"><li class="first leaf"><a href="//access.redhat.com/">Customers</a></li>
+<li class="leaf"><a href="/en/partners">Partners</a></li>
+<li class="leaf"><a href="//developers.redhat.com/">Developers</a></li>
+<li class="leaf"><a href="/en/about/open-source">Open source</a></li>
+<li class="last leaf"><a href="//www.redhat.com/en/store">Red Hat Store</a></li>
+</ul>      </nav>
+      <nav id="utility-nav">
+        <div class="item-list"><ul><li id="utility-search" class="switch first" title="Search"><a href="/en/search" class="expand" onclick="return false;">Search</a></li>
+<li id="utility-account" class="switch" title="Accounts"><a href="https://sso.redhat.com/auth/realms/redhat-external/protocol/saml/clients/legacy-idp-servlets" class="expand" onclick="return false;">Log in</a></li>
+<li id="utility-globe" class="switch last" title="Global Preferences"><a href="/en/about/around-the-world" class="expand" onclick="return false;">English</a></li>
+</ul></div>      </nav>
+    </div>
+  </div>
+
+  <div id="sliding-utility-panel">
+    <div id="search-panel" class="utility-panel">
+      <div class="utility-content">
+        <form class="search-form" autocomplete="off" action="/en/search/node" method="post" id="redhat-www-solr-search-box" accept-charset="UTF-8"><div><div class="container-inline form-wrapper" id="edit-basic"><div class="form-item form-type-textfield form-item-keys">
+  <label class="element-invisible" for="edit-keys">Enter your keywords </label>
+ <input maxlength="128" size="15" placeholder="Enter your search term" type="text" id="edit-keys" name="keys" value="" class="form-text" />
+</div>
+<div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Search" class="form-submit" /></div></div><input type="hidden" name="form_build_id" value="form-FrFtdz3XBJKYAj0_EIQywIKyufWoS7vjK0-MWn0AD8M" />
+<input type="hidden" name="form_id" value="redhat_www_solr_search_box" />
+</div></form>      </div>
+    </div>
+    <div id="account-panel" class="utility-panel">
+        <div class="utility-content">
+                      <section class="account-tray">
+  <header>
+    <div class="container">
+              <p class="rh-login-heading rh-user-loggedin">Welcome, <span class='rh-name'></span></p>
+                    <p class="rh-login-heading rh-user-loggedout">Log in to your Red Hat account</p>
+          </div>
+  </header>
+  <div class="content">
+    <div class="container">
+      <section class="account-login rh-user-loggedout">
+        <div class="account-login-wrapper">
+                      <a href="https://sso.redhat.com/auth/realms/redhat-external/protocol/saml/clients/legacy-idp-servlets" id="redhat-account-login-link" class="account-login-link utility-user-login-link">Log in</a>                                <p>Your Red Hat account gives you access to your member profile and preferences, and the following services based on your customer status:</p>
+                                <div class="utility-user-additional-links"><div class="item-list"><ul><li class="first">Customer Portal</li>
+<li class="last">Red Hat Connect for Business Partners</li>
+</ul></div><div class="item-list"><ul><li class="first">User management</li>
+<li class="last">Certification Central</li>
+</ul></div></div>                  </div>
+        <div class="account-register-wrapper">
+                      <a href="https://www.redhat.com/wapps/ugc/register.html" class="account-register-link">Register</a>                                <h2>Not registered yet? Here are a few reasons why you should be:</h2><div class="item-list"><ul><li class="first">Browse Knowledgebase articles, manage support cases and subscriptions, download updates, and more from one place.</li>
+<li>View users in your organization, and edit their account information, preferences, and permissions.</li>
+<li class="last">Manage your Red Hat certifications, view exam history, and download certification-related logos and documents.</li>
+</ul></div>                  </div>
+      </section>
+      <section class="account-logout rh-user-loggedin">
+        <div class="account-welcome-wrapper">
+                      <a href="https://www.redhat.com/wapps/ugc/protected/account.html" class="account-edit-link">Edit your profile and preferences</a>                                <p>Your Red Hat account gives you access to your member profile, preferences, and other services depending on your customer status.</p>
+                            </div>
+        <div class="account-logout-wrapper">
+                      <p>For your security, if you&#039;re on a public computer and have finished using your Red Hat services, please be sure to log out.</p>
+                                <a href="https://sso.redhat.com/auth/realms/redhat-external/logout" id="redhat-account-logout-link" class="account-logout-link">Log out</a>                  </div>
+      </section>
+    </div>
+  </div>
+</section>
+                  </div>
+    </div>
+    <div id="globe-panel" class="utility-panel">
+        <div class="utility-content"></div>
+    </div>
+  </div>
+
+</header>
+
+    </div></div><div class="rh-band-group-body"><!-- Pattern | hero_header -->
+<div class="rh-band--layout" data-rh-band-collapse="top"  data-rh-background="transparent"><div class="rh-band-container"data-rh-layout="stacked"><section class="rh-band-main"    data-rh-layout="stacked"
+><div class="rh-band-content"                                         data-rh-theme="dark desaturated"><div class="rh-band-header--component"  ><p class="rh-band-header-title">Topic</p><h1 class="rh-band-header-hero-headline">Understanding middleware</h1><p class="rh-band-header-hero-summary">Give&nbsp;your team the foundational technology needed for modern infrastructure. Middleware provides services to applications outside of what’s offered by the operating system.&nbsp;
+</p></div></div></section></div></div></div></div><div class="rh-band-group-footer"><!-- Pattern | secondary_nav_bar -->
+
+
+
+
+    
+    
+    
+
+
+
+
+
+
+<section class="rh-menu" aria-hidden    data-rh-menu="dynamic"     data-rh-collapse="full"    data-rh-menu-id="2ok9b"
+    data-rh-background="dark-gray">
+        <div class="rh-menu-mobile"    data-rh-hidden="sm md lg"
+>
+        <div class="rh-menu-mobile-bar"    data-rh-toggle-open="click"
+    data-rh-toggle-id="2ok9b"
+    data-rh-state="closed" aria-expanded=false
+>
+            <div class="rh-menu-mobile-bar-top" data-rh-menu-context="top-mobile"     data-rh-background="dark-gray"
+    data-rh-layout="flex-right-end"
+    data-rh-theme="light">
+                                    
+    <ul class="rh-navigation-link--component"        data-rh-nav-type="utility"
+            >
+            
+                    <li class="rh-navigation-link-container">
+                              <a class="rh-navigation-link-icon"                            data-rh-icon-type="web-icon-mobile-menu"
+                                    >
+                    <span class="rh-navigation-link-label">Menu</span><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M27.43 24v2.286q0 .464-.34.804t-.804.34H1.143q-.464 0-.804-.34T0 26.286V24q0-.464.34-.804t.803-.34h25.143q.464 0 .804.34t.34.804zm0-9.143v2.286q0 .464-.34.804t-.804.34H1.143q-.464 0-.804-.34T0 17.143v-2.286q0-.464.34-.804t.803-.34h25.143q.464 0 .804.34t.34.804zm0-9.143V8q0 .464-.34.804t-.804.34H1.143q-.464 0-.804-.34T0 8V5.714q0-.464.34-.804t.803-.34h25.143q.464 0 .804.34t.34.804z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M30 16.67v-1.332c0-.363-.13-.675-.394-.938s-.575-.394-.938-.394h-10.67V3.356c0-.362-.13-.675-.393-.938s-.575-.394-.938-.394h-1.33c-.364 0-.676.13-.94.394s-.393.575-.393.938V14H3.33c-.363 0-.676.13-.94.394s-.393.575-.393.938v1.33c0 .364.13.676.394.94s.576.393.94.393h10.668V28.64c0 .362.13.674.394.937.262.262.575.394.938.394h1.33c.364 0 .676-.13.94-.393s.393-.575.393-.938V18h10.67c.362 0 .674-.13.937-.394.27-.262.4-.575.4-.938z"/></svg>                </a>
+                            </li>
+                    </ul>
+            </div>
+            <nav class="rh-menu-mobile-dropdown" data-rh-menu-context="dropdown-mobile" id="2ok9b"     data-rh-background="gray"
+    data-rh-theme="light"    data-rh-state="closed" aria-expanded=false
+    data-rh-toggle-target="xxs xs sm md lg"
+></nav>
+                    </div>
+    </div>
+
+    <div class="rh-menu-desktop"data-rh-hidden="xxs xs">
+        <div class="rh-menu-desktop-container">
+                                        <nav class="rh-menu-main-nav" data-rh-theme="light"    data-rh-menu-main-type="secondary" data-rh-dynamic>
+                                                            <div class="rh-menu-main-nav-links" data-rh-menu-context="main-links">
+                            
+    <ul class="rh-navigation-link--component"        data-rh-nav-type="secondary-navigation-bar"
+        aria-label="template" aria-hidden    >
+                        <li class="rh-navigation-link-container" aria-template=true>
+            <a class="rh-navigation-link-item" href="" title=""></a>
+        </li>
+        </ul>
+                    </div>
+                                                        </nav>
+                    </div>
+    </div>
+</section>
+</div></div>  <!-- Pattern | custom_band -->
+    
+
+
+        
+
+    
+
+<div class="rh-band--layout"      data-rh-unique-id="200951" data-rh-background-align="center-center" data-rh-background="white"    ><div class="rh-band-container"data-rh-layout="stacked"><section class="rh-band-main"    data-rh-layout="stacked"
+><header class="rh-band-header" data-rh-theme=""><div class="rh-band-header--component"  ><h2 class="rh-band-header-headline">What is middleware?</h2></div></header><div class="rh-band-content"                         data-rh-layout="8 4 flex"                ><!-- Subpattern | standard_text --><div class="rh-group--layout"          data-rh-layout="stacked"            data-eq-pts="xxs-group: 0, xs-group: 220, sm-group: 320, md-group: 420"
+><div class="rh-group-body"         ><div class="rh-generic--component"
+                 data-rh-align="left"    ><p>Middleware is multipurpose software that provides services to applications outside of what’s offered by the operating system. Any software between the kernel and user apps can be middleware. Middleware doesn’t offer the functions of a traditional app, it connects software to other software. Because middleware allows data to flow from one app to another it can best be thought of as plumbing.</p><p><div class="media media-element-container media-default"><img class="media-element file-default" data-delta="1" src="https://www.redhat.com/cms/managed-files/graphic-middleware-plumbing-701x142.png" width="701" height="142" alt="Plumbing evolution diagram" title="Moving water is a lot like moving data" /></div></p><h5>Moving water is a lot like moving data</h5></div></div><div class="rh-group-footer"         ><div class="rh-cta--component"                  data-rh-align="left"                data-rh-cta-type="secondary"
+    ><a class="rh-cta-link"                 href="https://www.redhat.com/en/topics/middleware/what-is-middleware"        title="What is middleware?"            >Keep reading</a></div></div></div><!-- Subpattern | standard_text --><div class="rh-card--layout"    data-rh-background="gray"
+            data-rh-theme="light"
+    
+        data-rh-bg-align="cover"
+    
+        data-rh-layout="stacked"
+
+            data-eq-pts="xxs-box: 0, xs-box: 202, sm-box: 302, md-box: 402, lg-box: 502, xl-box: 602, xxl-box: 702"
+    data-rh-justify="justify"><div class="rh-card-content"    data-rh-layout="stacked"
+    ><div class="rh-generic--component"
+                 data-rh-align="left"    ><h3>The history of middleware is the history of software</h3><p>The term middleware first appeared in a report following the <a href="http://homepages.cs.ncl.ac.uk/brian.randell/NATO/nato1968.PDF">1968 NATO Software Engineering conference</a> in Garmisch-Partenkirchen, Germany. The conference, which sought to define the field of software engineering, assembled to discuss topics including software design, production, and distribution.</p></div></div></div></div></section></div></div>  <!-- Pattern | raw_html -->
+
+<div class="rh-raw"         data-rh-unique-id="359261">
+        <!--promo-->
+  <section class="rh-carousel--layout" id="mi3c2"                ><div class="rh-carousel-navigation" aria-label="carousel buttons" aria-controls="carousel"><button class="rh-carousel-previous" value="previous" aria-label="previous" tabindex="0">Previous</button><button class="rh-carousel-next" value="next" aria-label="next" tabindex="0">Next</button></div><div class="rh-carousel-body"><!-- Pattern | promo_band --><div class="rh-carousel-slide--layout"data-eq-pts="xxs-box: 0, xs-box: 202, sm-box: 302, md-box: 402, lg-box: 502, xl-box: 602, xxl-box: 702"data-rh-theme="dark desaturated"id="jiye7"
+        data-rh-background="blue"data-rh-bq="https://www.redhat.com/cms/managed-files/styles/max_size/s3/rh-summiti-promo-band-background-2000x365-us200236sw-201902-01_0.png?itok=dL4ndFE7"><div class="rh-carousel-slide-body"><article class="rh-promo--component"><div class="rh-promo-content"><h4 class="rh-promo-headline">Early bird gets the worm</h4><p class="rh-promo-text">Join us in Boston for the premier open source event</p></div><div class="rh-promo-cta"><a class="rh-promo-cta-link" href="https://reg.summit.redhat.com?intcmp=701f2000001D785AAC">REGISTER &amp; SAVE</a></div></article></div></div><!-- Pattern | promo_band --><div class="rh-carousel-slide--layout"data-eq-pts="xxs-box: 0, xs-box: 202, sm-box: 302, md-box: 402, lg-box: 502, xl-box: 602, xxl-box: 702"data-rh-theme="dark desaturated"id="pn53f"
+        data-rh-background="blue"><div class="rh-carousel-slide-body"><article class="rh-promo--component"><div class="rh-promo-content"><h4 class="rh-promo-headline">Modernize and innovate across hybrid cloud environments </h4><p class="rh-promo-text">Red Hat Apex partners help organizations accelerate app dev and delivery; integrate apps, data, and devices; and automate business processes </p></div><div class="rh-promo-cta"><a class="rh-promo-cta-link" href="https://www.redhat.com/en/blog/strengthening-our-partner-ecosystem-north-america-partner-conference?intcmp=701f2000001OLn1AAG">Learn more</a></div></article></div></div><!-- Pattern | promo_band --><div class="rh-carousel-slide--layout"data-eq-pts="xxs-box: 0, xs-box: 202, sm-box: 302, md-box: 402, lg-box: 502, xl-box: 602, xxl-box: 702"data-rh-theme="dark desaturated"id="snzzo"
+        data-rh-background="blue"><div class="rh-carousel-slide-body"><article class="rh-promo--component"><div class="rh-promo-content"><h4 class="rh-promo-headline">Gartner names Red Hat a Magic Quadrant leader in API management </h4><p class="rh-promo-text">For the second time in a row, Gartner has named Red Hat 3scale API Management a leader in its Magic Quadrant for Full Life Cycle API Management.</p></div><div class="rh-promo-cta"><a class="rh-promo-cta-link" href="https://www.redhat.com/en/resources/magic-quadrant-full-life-cycle-api-management-gartner-report">LEARN MORE</a></div></article></div></div></div></section>
+    </div>  <!-- Pattern | custom_band -->
+    
+
+
+        
+
+    
+
+<div class="rh-band--layout"      data-rh-unique-id="200981"data-rh-bq="https://www.redhat.com/cms/managed-files/styles/max_size/s3/bkgd-middleware-topic-pipes-alt-2000x950.png?itok=6JzLsRft, https://www.redhat.com/cms/managed-files/styles/max_size/s3/bkgd-middleware-topic-pipes-alt-mobile-500x950.png?itok=m-B3kKtE" data-rh-background-align="center-center" data-rh-background="gray"    ><div class="rh-band-container"data-rh-layout="stacked"><section class="rh-band-main"    data-rh-layout="stacked"
+><header class="rh-band-header" data-rh-theme=""><div class="rh-band-header--component"  ><h3 class="rh-band-header-headline">What can you do with middleware?</h3></div></header><div class="rh-band-content"                         data-rh-layout="8 4 flex"                ><!-- Subpattern | standard_text --><div class="rh-group--layout"          data-rh-layout="stacked"            data-eq-pts="xxs-group: 0, xs-group: 220, sm-group: 320, md-group: 420"
+><div class="rh-group-body"         ><div class="rh-generic--component"
+                 data-rh-align="left"    ><p>Middleware is the technological foundation for <a href="/en/topics/integration">enterprise application integration</a>. You can implement middleware to <a href="/en/challenges/integration">connect your legacy apps to your modern apps</a>, your modern apps to each other, and anything to everything else. You can also optimize how your <a href="/en/topics/data-storage">data is stored</a> and retrieved or <a href="/en/challenges/modern-application-development">improve the ways you develop apps</a>.</p><p>Here's an example: Let's say you want your applications to act on streams of data in real-time, rather than acting on historical data? <a href="/en/topics/integration/what-is-apache-kafka">Apache Kafka</a> is open source middleware that can do that.</p><p>Combined with our <a href="/en/services/training/courses-by-curriculum#Red-Hat-JBoss-Enterprise-Application-Platform-EAP">training curriculum</a>, middleware gives your team the foundational technology needed for a modern infrastructure.</p></div></div></div></div></section></div></div>  <!-- Pattern | custom_band -->
+    
+
+
+        
+
+    
+
+<div class="rh-band--layout"      data-rh-unique-id="201001" data-rh-background-align="center-center" data-rh-background="white"    ><div class="rh-band-container"data-rh-layout="stacked"><section class="rh-band-main"    data-rh-layout="stacked"
+><header class="rh-band-header" data-rh-theme=""><div class="rh-band-header--component"  ><h2 class="rh-band-header-headline">Why choose Red Hat?</h2></div></header><div class="rh-band-content"                         data-rh-layout="8 4 flex"                ><!-- Subpattern | standard_text --><div class="rh-group--layout"          data-rh-layout="stacked"            data-eq-pts="xxs-group: 0, xs-group: 220, sm-group: 320, md-group: 420"
+><div class="rh-group-body"         ><div class="rh-generic--component"
+                 data-rh-align="left"    ><p>Red Hat<sup>®</sup> does a lot of work with the greater open source community on middleware technologies. Our engineers help <a href="https://www.redhat.com/en/technologies/guide/it-security">improve features, reliability, and security</a> to make sure your middleware performs well while <a href="https://www.redhat.com/en/topics/security">remaining stable and more secure.</a></p><p>As with all <a href="//redhat.com/en/open-source">open source</a> projects, Red Hat contributes code and improvements back to the upstream codebase—sharing advancements along the way. Of course, collaborating with a community is about more than developing code. Collaboration is the freedom to ask questions and offer improvements. That’s the open source way and the power of the <a href="/en/explore/the-open-organization-book">open organization</a>. This is why Red Hat has been a <a href="/en/about/trusted">trusted</a> provider of enterprise infrastructure for over 20 years.</p></div></div><div class="rh-group-footer"         ><div class="rh-cta--component"                  data-rh-align="left"                data-rh-cta-type="secondary"
+    ><a class="rh-cta-link"                 href="https://www.redhat.com/en/topics/middleware/why-choose-red-hat-middleware"        title="Why choose Red Hat for middleware?"            >Keep reading</a></div></div></div></div></section></div></div>  <!-- Pattern | raw_html -->
+
+<div class="rh-raw"         data-rh-unique-id="201041">
+        <section class="ux-band" data-ux-band-background="gray">
+    <div class="ux-band-container">
+        <div class="ux-band-header">
+            <h2 class="ux-band-header-headline">Keep exploring middleware</h2>
+        </div>
+        <div class="ux-band-body" data-ux-layout="3 3 3 3 flex">
+            <div class="ux-card" data-ux-justify="justify" data-ux-theme="dark" data-ux-card-background="medium-teal">
+                <div class="ux-card-header" data-ux-align="bleed" data-ux-section-theme="dark teal">
+                    <h3 class="ux-card-header-label">
+                        <span class="rh-icon-increase-productivity"></span> Case study
+                    </h3>
+                </div> <!--end ux-card-header-->
+                <div class="ux-card-body">
+                    <div class="ux-generic">
+                        <h5><a href="/en/resources/amsterdam-airport-schiphol-case-study">Amsterdam Airport Schiphol builds agile cloud with Red Hat</a></h5>
+                    </div>
+                </div>
+                <div class="ux-card-footer">
+                    <div class="ux-cta">
+                        <a href="/en/resources/amsterdam-airport-schiphol-case-study" class="ux-cta-link" data-ux-cta-type="secondary">Read the case study</a>
+                    </div>
+                </div>
+            </div>           
+            <div class="ux-card" data-ux-justify="justify" data-ux-theme="dark" data-ux-card-background="medium-teal">
+                <div class="ux-card-header" data-ux-align="bleed" data-ux-section-theme="dark teal">
+                    <h3 class="ux-card-header-label">
+                        <span class="rh-icon-paper-lined"></span> Analyst paper
+                    </h3>
+                </div> <!--end ux-card-header-->
+                <div class="ux-card-body">
+                    <div class="ux-generic">
+                        <h5><a href="/en/engage/cloud-enabled-enterprise-20171107?intcmp=701f2000001OMH6AAO">Agile integration for today's cloud enabled enterprise</a></h5>
+                    </div>
+                </div>
+                <div class="ux-card-footer">
+                    <div class="ux-cta">
+                        <a href="/en/engage/cloud-enabled-enterprise-20171107?intcmp=701f2000001OMH6AAO" class="ux-cta-link" data-ux-cta-type="secondary">Read the analyst paper</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ux-card" data-ux-justify="justify" data-ux-theme="dark" data-ux-card-background="medium-teal">
+                <div class="ux-card-header" data-ux-align="bleed" data-ux-section-theme="dark teal">
+                    <h3 class="ux-card-header-label">
+                        <span class="rh-icon-control-panel"></span> Tech detail
+                    </h3>
+                </div> <!--end ux-card-header-->
+                <div class="ux-card-body">
+                    <div class="ux-generic">
+                        <h5><a href="/en/resources/subscription-guide-red-hat-jboss-middleware">Subscription guide for Red Hat JBoss Middleware</a></h5>
+                    </div>
+                </div>
+                <div class="ux-card-footer">
+                    <div class="ux-cta">
+                        <a href="/en/resources/subscription-guide-red-hat-jboss-middleware" class="ux-cta-link" data-ux-cta-type="secondary">See the details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ux-card" data-ux-justify="justify" data-ux-theme="dark" data-ux-card-background="medium-teal">
+                <div class="ux-card-header" data-ux-align="bleed" data-ux-section-theme="dark teal">
+                    <h3 class="ux-card-header-label">
+                        <span class="rh-icon-video"></span> Video
+                    </h3>
+                </div> <!--end ux-card-header-->
+                <div class="ux-card-body">
+                    <div class="ux-generic">
+                        <h5><a href="/en/about/videos/agile-integration-christina-lin">Agile Integration with Christina Lin</a></h5>
+                    </div>
+                </div>
+                <div class="ux-card-footer">
+                    <div class="ux-cta">
+                        <a href="/en/about/videos/agile-integration-christina-lin" class="ux-cta-link" data-ux-cta-type="secondary">Watch the video</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    </div>  <!-- Pattern | raw_html -->
+
+<div class="rh-raw"         data-rh-unique-id="201051">
+        <section class="ux-band" data-ux-band-background="black">
+  <div class="ux-band-container">
+    <div class="ux-band-header" data-ux-theme="dark">
+      <h2 class="ux-band-header-headline">Featured middleware products</h2>
+    </div>
+    <div class="ux-band-body" data-ux-layout="gallery2">
+      <div class="ux-card" data-ux-theme="light" data-ux-justify="justify">
+        <div class="ux-card-body">
+            <div class="ux-image-embed" data-ux-image-embed-size="sm">
+                <div class="ux-image-embed-container">
+                    <div class="ux-image-embed-container">
+                        <a href="/en/technologies/jboss-middleware/application-platform-old">
+                        <div class="media media-element-container media-default"><img class="media-element file-default" src="https://www.redhat.com/cms/managed-files/logo-eap-288x55.png" width="288" height="55" alt="" /></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ux-generic">
+                <p>A fully certified Java<sup>&trade;</sup> EE 7 container that includes everything needed to build, run, manage, and integrate internal and external apps.</p>
+            </div>
+        </div>
+        <div class="ux-card-footer">
+            <div class="ux-cta">
+                <a class="ux-cta-link" data-ux-cta-type="secondary" href="/en/technologies/jboss-middleware/application-platform-old">Learn more</a>
+            </div>
+        </div>
+      </div>
+
+      <div class="ux-card" data-ux-theme="light" data-ux-justify="justify">
+          <div class="ux-card-body">
+            <div class="ux-image-embed" data-ux-image-embed-size="sm">
+                <div class="ux-image-embed-container">
+                    <a href="/en/technologies/jboss-middleware/decision-manager">
+                      <div class="media media-element-container media-default"><img class="media-element file-default" src="https://www.redhat.com/cms/managed-files/logo-decision-manager-288x55-green.png" width="288" height="55" alt="Red Hat Decision Manager" title="Red Hat Decision Manager" /></div>
+                    </a>
+                </div>
+            </div>
+            <div class="ux-generic">
+                <p>A comprehensive platform for business rules management, business resource optimization, and complex event processing.</p>
+            </div>
+          </div>
+          <div class="ux-card-footer">
+              <div class="ux-cta">
+                  <a class="ux-cta-link" data-ux-cta-type="secondary" href="/en/technologies/jboss-middleware/decision-manager">Learn more</a>
+              </div>
+          </div>
+      </div>
+      <div class="ux-card" data-ux-theme="light" data-ux-justify="justify">
+            <div class="ux-card-body">
+              <div class="ux-image-embed" data-ux-image-embed-size="sm">
+                  <div class="ux-image-embed-container">
+                      <a href="/en/technologies/jboss-middleware/fuse">
+  <div class="media media-element-container media-default"><img class="media-element file-default" src="https://www.redhat.com/cms/managed-files/logo-red-hat-fuse-288x55-green.png" width="288" height="55" alt="Red Hat Fuse" title="Red Hat Fuse" /></div>
+                      </a>
+                  </div>
+              </div>
+                <div class="ux-generic">
+                    <p>An enterprise integration platform that connects environments—on premise, in the cloud, and anywhere in between.</p>
+                </div>
+            </div>
+            <div class="ux-card-footer">
+                <div class="ux-cta">
+                    <a class="ux-cta-link" data-ux-cta-type="secondary" href="/en/technologies/jboss-middleware/fuse">Learn more</a>
+                </div>
+            </div>
+      </div>
+      <div class="ux-card" data-ux-theme="light" data-ux-justify="justify">
+          <div class="ux-card-body">
+            <div class="ux-image-embed" data-ux-image-embed-size="sm">
+                <div class="ux-image-embed-container">
+                    <a href="/en/technologies/jboss-middleware/process-automation-manager">
+                      <div class="media media-element-container media-default"><img class="media-element file-default" src="https://www.redhat.com/cms/managed-files/logo-pam-288x55-green.png" width="288" height="55" alt="Red Hat Process Automation Manager" title="Red Hat Process Automation Manager" /></div>
+                    </a>
+                </div>
+            </div>
+              <div class="ux-generic">
+                  <p>A platform for developing cloud-native applications that automate business decisions and processes.</p>
+              </div>
+          </div>
+          <div class="ux-card-footer">
+              <div class="ux-cta">
+                  <a class="ux-cta-link" data-ux-cta-type="secondary" href="/en/technologies/jboss-middleware/process-automation-manager">Learn more</a>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="ux-cta" data-ux-align="horizontal">
+      <a class="ux-cta-link" data-ux-cta-type="primary" href="/en/technologies/all-products#middleware-products">See all middleware products</a>
+  </div>
+</section>
+    </div>  <!-- Pattern | custom_band -->
+    
+
+
+        
+
+
+
+<div class="rh-band--layout"      data-rh-unique-id="201021"data-rh-bq="https://www.redhat.com/cms/managed-files/styles/max_size/s3/bkgd-middleware-topic-pipes-footer-2000x454.png?itok=BCr3NRkW" data-rh-background-align="center-center" data-rh-background="white"    ><div class="rh-band-container"data-rh-layout="stacked"><section class="rh-band-main"    data-rh-layout="stacked"
+><div class="rh-band-content"                         data-rh-layout="stacked"                ><!-- Pattern | raw_html --><div class="ux-group" data-ux-layout="stacked" data-ux-text-align="center"><div class="ux-band-header"><h2 class="ux-band-header-headline">There’s a lot more to do with middleware</h2></div><div class="ux-group" data-ux-special-layout="gallery-flex"><div class="ux-cta"><a class="ux-cta-link" data-ux-cta-type="ghost" href="//middlewareblog.redhat.com">Read the blog</a></div><div class="ux-cta"><a class="ux-cta-link" data-ux-cta-type="primary" href="/en/about/contact/sales">Talk to a Red Hatter</a></div></div></div></div></section></div></div>
+  
+  
+</article>
+
+</div>
+  </div>
+        
+  </div>
+
+  <footer>
+      <section class="rc-footer-menu" data-rc-toggle-id="footer-extended" >
+      <div class="container rc-footer-menu-container">
+        <nav class="row rc-footer-menu-about-items"><div class="rc-footer-menu-about-col foot-about foot-about"><div class="rc-footer-menu-list-header"><h3 class="rc-footer-menu-list-header-title">About</h3></div><p class="rc-footer-menu-about-description">We’re the world’s leading provider of enterprise open source solutions, using a community-powered approach to deliver high-performing Linux, cloud, container, and Kubernetes technologies. We help you standardize across environments, develop cloud-native applications, and integrate, automate, secure, and manage complex environments with award-winning support, training, and consulting services.</p><ul class="rc-footer-menu-about-list"><li><a href="/en/about/company">Company information</a></li>
+<li><a href="https://investors.redhat.com">Investor relations</a></li>
+<li><a href="/en/about/office-locations">Locations</a></li>
+<li><a href="/en/blog">Blog</a></li>
+<li><a href="/en/about/newsroom">Newsroom</a></li>
+<li><a href="/en/about/development-model">Development model</a></li>
+<li><a href="/en/events">Events</a></li>
+<li><a href="/en/jobs">Jobs</a></li>
+</ul><div class="rc-footer-menu-social-links"><nav id="foot-social"><ul><li class="first leaf"><a href="https://plus.google.com/+RedHat" class="icon-google-plus"></a></li>
+<li class="leaf"><a href="http://www.linkedin.com/company/red-hat" class="icon-linkedin-sign"></a></li>
+<li class="leaf"><a href="http://www.youtube.com/user/RedHatVideos" class="icon-youtube"></a></li>
+<li class="leaf"><a href="https://www.facebook.com/redhatinc" class="icon-facebook"></a></li>
+<li class="last leaf"><a href="https://twitter.com/RedHat" class="icon-twitter"></a></li>
+</ul></nav></div></div>
+</nav>        <nav class="row rc-footer-menu-items"><div class="rc-footer-menu-col foot-featured"><div class="rc-footer-menu-list-header" data-rc-state="closed" data-rc-toggle-visuals="xxs xs sm " aria-expanded="false" tabindex="0"><span class="rc-footer-menu-list-header-indicator" data-rc-indicator-symbol="plus" data-rc-hidden-at="lg "></span><h3 class="rc-footer-menu-list-header-title">Featured</h3></div><ul class="rc-footer-menu-list" data-rc-toggle-target="xxs xs sm" data-rc-state="closed" data-rc-toggle="hide" aria-expanded="false"><li><a href="/en/technologies/linux-platforms/enterprise-linux">Red Hat Enterprise Linux</a></li>
+<li><a href="/en/technologies/storage/old-gluster">Red Hat Gluster Storage</a></li>
+<li><a href="/en/technologies/management/old-satellite">Red Hat Satellite</a></li>
+<li><a href="/en/technologies/cloud-computing/openshift">Red Hat OpenShift Container Platform</a></li>
+<li><a href="/en/technologies/linux-platforms/openstack-platform">Red Hat  OpenStack Platform</a></li>
+</ul></div>
+<div class="rc-footer-menu-col foot-tools"><div class="rc-footer-menu-list-header" data-rc-state="closed" data-rc-toggle-visuals="xxs xs sm " aria-expanded="false" tabindex="0"><span class="rc-footer-menu-list-header-indicator" data-rc-indicator-symbol="plus" data-rc-hidden-at="lg "></span><h3 class="rc-footer-menu-list-header-title">Tools</h3></div><ul class="rc-footer-menu-list" data-rc-toggle-target="xxs xs sm" data-rc-state="closed" data-rc-toggle="hide" aria-expanded="false"><li><a href="https://www.redhat.com/wapps/sso/login.html">My account</a></li>
+<li><a href="https://access.redhat.com">For customers</a></li>
+<li><a href="https://www.redhat.com/en/partners">For partners</a></li>
+<li><a href="http://developers.redhat.com/">For developers</a></li>
+<li><a href="https://access.redhat.com/certification">Hardware catalog</a></li>
+<li><a href="/en/resources">Resource library</a></li>
+</ul></div>
+<div class="rc-footer-menu-col foot-purchase"><div class="rc-footer-menu-list-header" data-rc-state="closed" data-rc-toggle-visuals="xxs xs sm " aria-expanded="false" tabindex="0"><span class="rc-footer-menu-list-header-indicator" data-rc-indicator-symbol="plus" data-rc-hidden-at="lg "></span><h3 class="rc-footer-menu-list-header-title">Purchase</h3></div><ul class="rc-footer-menu-list" data-rc-toggle-target="xxs xs sm" data-rc-state="closed" data-rc-toggle="hide" aria-expanded="false"><li><a href="//www.redhat.com/en/store">Red Hat Store</a></li>
+<li><a href="/en/about/japan-buy">Buy online (Japan)</a></li>
+<li><a href="https://redhat.corpmerchandise.com/">Red Hat merchandise</a></li>
+<li><a href="/en/contact">Contact sales</a></li>
+<li><a href="/en/services/training/contact">Contact training</a></li>
+<li><a href="/en/services/consulting#contact-form">Contact consulting</a></li>
+<li><a href="http://redhat.force.com/finder/">Find a partner</a></li>
+</ul></div>
+<div class="rc-footer-menu-col foot-communicate"><div class="rc-footer-menu-list-header" data-rc-state="closed" data-rc-toggle-visuals="xxs xs sm " aria-expanded="false" tabindex="0"><span class="rc-footer-menu-list-header-indicator" data-rc-indicator-symbol="plus" data-rc-hidden-at="lg "></span><h3 class="rc-footer-menu-list-header-title">Communicate</h3></div><ul class="rc-footer-menu-list" data-rc-toggle-target="xxs xs sm" data-rc-state="closed" data-rc-toggle="hide" aria-expanded="false"><li><a href="/en/contact">Contact us</a></li>
+<li><a href="/en/about/feedback">Feedback</a></li>
+<li><a href="/en/about/social">Social</a></li>
+<li><a href="https://engage.redhat.com/red-hat-shares?intcmp=7016000000154xCAAQ">Red Hat newsletter</a></li>
+</ul></div>
+<div class="rc-footer-menu-col foot-about"><div class="rc-footer-menu-list-header" data-rc-state="closed" data-rc-toggle-visuals="xxs xs sm " aria-expanded="false" tabindex="0"><span class="rc-footer-menu-list-header-indicator" data-rc-indicator-symbol="plus" data-rc-hidden-at="lg "></span><h3 class="rc-footer-menu-list-header-title">About</h3></div><ul class="rc-footer-menu-list" data-rc-toggle-target="xxs xs sm" data-rc-state="closed" data-rc-toggle="hide" aria-expanded="false"><li><a href="/en/about/newsroom">Newsroom</a></li>
+<li><a href="/en/events">Events</a></li>
+<li><a href="/en/all-blogs">Blogs</a></li>
+<li><a href="/en/about/videos">Videos</a></li>
+<li><a href="/en/about/around-the-world">Around the world</a></li>
+<li><a href="/en/topics">Topics</a></li>
+<li><a href="https://investors.redhat.com/">Investor Relations</a></li>
+<li><a href="/en/jobs">Jobs @ Red Hat</a></li>
+<li><a href="http://www.redhat.corpmerchandise.com/">Cool Stuff Store</a></li>
+</ul></div>
+</nav>      </div>
+    </section>
+        <section class="rc-footer-traditional">
+      <div class="container rc-footer-traditional-container">
+        <section class="rc-footer-traditional-section">
+          <div class="rc-footer-traditional-logo">
+            <div class="row">
+              <h3>Red Hat</h3>
+            </div>
+          </div>
+          <div id="legal" class="rc-footer-traditional-legal">
+            <div class="row">
+              <div class="copyright">Copyright ©2019 Red Hat, Inc.</div>
+              <div >
+                <ul class="menu"><li class="first leaf"><a href="/en/about/privacy-policy">Privacy statement</a></li>
+<li class="leaf"><a href="/en/about/terms-use">Terms of use</a></li>
+<li class="last leaf"><a href="/en/about/all-policies-guidelines">All policies and guidelines</a></li>
+</ul>              </div>
+            </div>
+                      </div>
+          <div class="rc-footer-traditional-event-logo">
+            <div id="block-block-5" class="block block-block block-footer-promote">
+
+      
+  <a href="http://www.redhat.com/summit/"><img src="/profiles/rh/themes/redhatdotcom/img/logo-summit.png" alt="Red Hat Summit" style="float: right;"></a>
+
+</div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </footer>
+  
+      <script type="text/javascript" src="/sites/default/files/advagg_js/js__Dx87WVqe4v5JxdO5NQXWuqi4N2DXrrivAJ5F7KUcBCY__qAl84FcCv2jyN22yFGS5Oc85cjd9zKX6p_cFNLGhe-M__uaCwYofnUZLAnB7x3Q6WyVKHfqU6f9iB6Wi31ydea6c.js" async="async"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+  if (("undefined" !== typeof _satellite) && ("function" === typeof _satellite.pageBottom)) {
+      _satellite.pageBottom();
+  }
+//--><!]]>
+</script>
+    </div>
+  </body>
+</html>

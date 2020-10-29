@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TestPDF" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aa9ba233-65d1-4f61-9d80-a5eb026e0713">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     concepto."nombreConcepto" AS concepto_nombreConcepto,
+     concepto."importe" AS concepto_importe,
+     concepto."iva" AS concepto_iva,
+     concepto."tua" AS concepto_tua,
+     concepto."factura" AS concepto_factura,
+     concepto."uuid" AS concepto_uuid,
+     concepto."rfc" AS concepto_rfc,
+     concepto."nombre" AS concepto_nombre,
+     concepto."totalmxn" AS concepto_totalmxn,
+     concepto."fecha" AS concepto_fecha,
+     concepto."tipo" AS concepto_tipo,
+     concepto."rfcreceptor" AS concepto_rfcreceptor,
+     concepto."nombreReceptor" AS concepto_nombreReceptor,
+     concepto."lugarExpedicion" AS concepto_lugarExpedicion,
+     concepto."ish" AS concepto_ish,
+     concepto."estatus" AS concepto_estatus
+FROM
+     "dbo"."concepto" concepto]]>
+	</queryString>
+	<field name="concepto_nombreConcepto" class="java.lang.String"/>
+	<field name="concepto_importe" class="java.math.BigDecimal"/>
+	<field name="concepto_iva" class="java.math.BigDecimal"/>
+	<field name="concepto_tua" class="java.math.BigDecimal"/>
+	<field name="concepto_factura" class="java.lang.String"/>
+	<field name="concepto_uuid" class="java.lang.String"/>
+	<field name="concepto_rfc" class="java.lang.String"/>
+	<field name="concepto_nombre" class="java.lang.String"/>
+	<field name="concepto_totalmxn" class="java.math.BigDecimal"/>
+	<field name="concepto_fecha" class="java.sql.Date"/>
+	<field name="concepto_tipo" class="java.lang.String"/>
+	<field name="concepto_rfcreceptor" class="java.lang.String"/>
+	<field name="concepto_nombreReceptor" class="java.lang.String"/>
+	<field name="concepto_lugarExpedicion" class="java.lang.String"/>
+	<field name="concepto_ish" class="java.math.BigDecimal"/>
+	<field name="concepto_estatus" class="java.lang.String"/>
+	<group name="concepto_uuid">
+		<groupExpression><![CDATA[$F{concepto_uuid}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement style="SubTitle" x="47" y="13" width="506" height="24" forecolor="#006600" uuid="edf2326a-5616-4aef-a3d1-88e510548947"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{concepto_uuid}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="1a8b0f79-3311-44a7-b56e-6607b0748312"/>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="88" splitType="Stretch">
+			<image>
+				<reportElement x="163" y="13" width="100" height="50" uuid="30054b40-633a-4e28-9f84-efb7ca31a5db"/>
+				<imageExpression><![CDATA[new java.net.URL("https://www.cerotec.net/gen_barcode.php?c=" + $F{concepto_uuid} + "&t=code128")]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

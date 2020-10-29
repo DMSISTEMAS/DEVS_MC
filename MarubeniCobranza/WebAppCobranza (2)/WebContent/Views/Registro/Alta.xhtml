@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Registro</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:form id="frmInsertar">
+            <p:panelGrid columns="2" style="margin: auto;">
+                <p:outputLabel value="Nombre"></p:outputLabel>
+                <p:inputText value="#{registrodBean.alta.nombre}"></p:inputText>
+                <p:outputLabel value="Correo"></p:outputLabel>
+                <p:inputText value="#{registrodBean.alta.correo}"></p:inputText>
+                <p:outputLabel value="Perfil"></p:outputLabel> 
+                <p:inputText value="#{registrodBean.alta.password}"></p:inputText>
+                <p:commandButton value="Guardar" actionListener="#{registrodBean.nuevoUsuario()}"></p:commandButton>
+                <p:commandButton value="Cancelar"></p:commandButton>
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+</html>

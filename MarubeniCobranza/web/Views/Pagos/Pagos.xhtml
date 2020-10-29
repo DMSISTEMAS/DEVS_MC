@@ -1,0 +1,269 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+
+
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../../plantilla/plantilla.xhtml">
+            <ui:define name="content">
+                <p:idleMonitor  onactive="PF('sessionTimeOutDialog').show()" timeout="600000" />
+                <p:dialog style="font-size: 15px;" header="Sistema de Pagos Marubeni México" widgetVar="sessionTimeOutDialog" 
+                          modal="true" closable="false" width="775" height="280" resizable="false" visible="false">                    
+                    <img src="../../Images/expired.png" style="width: 160px; height: 160px" alt=""/><br></br><br></br><br></br>
+                    <h:outputText style="color: #CC0505; font-size: 16px; " value="Tu sesión actual ha expirado, para continuar cierra esta ventana o presiona F5 y vuelve a iniciar sesión." />
+                </p:dialog>
+                <h2>
+                    <img src="../../Images/price3.png" style="width: 90px; height: 90px" alt=""/>
+                    CONTROL DE PAGOS
+                </h2>
+
+                <h:form id="frmPrincipal">
+                    <p:blockUI block="toolBar" trigger="track">   
+                        <h4 style="font-size: 15px; color: black">Buscando facturas pendientes...</h4><br></br>
+                        <p:graphicImage value="../../Images/search.gif" style="height: 100px; width: 100px"></p:graphicImage>
+                    </p:blockUI>
+                    <p:blockUI block="toolBar" trigger="tra">   
+                        <h4 style="font-size: 15px; color: black">Procesando, por favor espere...</h4><br></br>
+                        <p:graphicImage value="../../Images/robot.gif" style="height: 140px; width: 150px"></p:graphicImage>
+                    </p:blockUI>
+                    <p:blockUI block="toolBar" trigger="tramul">   
+                        <h4 style="font-size: 15px; color: black">Procesando, por favor espere...</h4><br></br>
+                        <p:graphicImage value="../../Images/robot.gif" style="height: 140px; width: 150px"></p:graphicImage>
+                    </p:blockUI>
+                    <p:toolbar id="toolBar">                      
+                        <f:facet name="left">
+                            <table border="0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 200px">
+
+                                        </th>
+                                        <th>
+                                            <p:commandButton id="track" style="height: 35px; width: 40px; 
+                                                             background-image: url('../..//Images/db.png');
+                                                             background-size: 33px; background-repeat: no-repeat" 
+                                                             title="Buscar facturas pendientes" value=""
+                                                             actionListener="#{procesoBean.listarFacturas()}" update="frmPrincipal">
+                                            </p:commandButton>
+                                        </th>
+                                        <th>
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+                                            <p:selectOneMenu  required="false" style="width: 200px; font-size: 13px;" 
+                                                              label="Selecciona un banco" value="#{procesoBean.f.banco}">
+                                                <f:selectItem itemLabel="Seleciona un banco" itemValue=""></f:selectItem>
+                                                <f:selectItems value="#{procesoBean.listaBancos}"></f:selectItems>
+                                            </p:selectOneMenu> 
+                                        </th>
+                                        <th>
+                                            <p:commandButton id="tra" style="height: 35px; width: 40px; 
+                                                             background-image: url('../..//Images/process1.png');
+                                                             background-size: 33px; background-repeat: no-repeat" 
+                                                             title="Procesar facturas seleccionadas" value=""
+                                                             actionListener="#{procesoBean.actualizarProceso()}" update="frmPrincipal">
+                                                <!--                                                             actionListener="{procesoBean.actualizarProceso()}" update="frmPrincipal">-->
+                                            </p:commandButton>
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <h:outputText style="font-size: 13px" value="¿Es pago múltiple? " />
+                                            <p:selectBooleanCheckbox title="Pago múltiple" value="#{procesoBean.mulpitlePago}" >
+
+                                            </p:selectBooleanCheckbox>     
+                                        </th>
+                                        <th>
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+                                            <h:outputText style="font-size: 13px" value="Fecha de pago "></h:outputText>                                       
+                                            <p:selectBooleanCheckbox title="" value="#{procesoBean.fechaPago}">
+                                                <p:ajax event="change" update="c1"></p:ajax>
+                                            </p:selectBooleanCheckbox>
+                                            <p:spacer width="20px"></p:spacer>
+                                            <p:calendar id="c1" disabled="#{procesoBean.fechaPago eq false}" placeholder="Nueva fecha de pago" pattern="yyyy-MM-dd"
+                                                        style="font-size: 15px" value="#{procesoBean.fechaCierre}"></p:calendar>
+                                        </th>
+                                        <th>
+                                            <p:dialog id="dlg" style="font-size: 14px" widgetVar="dlg1" closable="false" header="Resumen de importes del pago múltiple">
+                                                <br></br>
+                                                <p:outputLabel id="mxn" style="font-size: 12px" value="Importe MXN $: #{procesoBean.impmxn}"></p:outputLabel><br></br>
+                                                <p:outputLabel id="usd" style="font-size: 12px" value="Importe USD $: #{procesoBean.impusd}"></p:outputLabel><br></br>
+                                                <p:outputLabel id="fact" style="font-size: 12px" value="Facturas: #{procesoBean.facturas}"></p:outputLabel><br></br><br></br>
+                                                <p:outputLabel style="font-size: 13px" value="¿Son correctos los importes?"></p:outputLabel><br></br><br></br>
+                                                <p:commandButton id="tramul" style="font-size: 13px; height: 35px; width: 40px;background-image: url('../..//Images/palomita.png');background-size: 30px; background-repeat: no-repeat" value="" 
+                                                                 title="Sí, estoy 100% seguro por favor procesa."
+                                                                 actionListener="#{procesoBean.actualizarProceso2()}" oncomplete="PF('dlg1').hide();"></p:commandButton>
+                                                <p:spacer height="10" width="20"></p:spacer>
+                                                <p:commandButton style="font-size: 13px; height: 35px; width: 40px;background-image: url('../..//Images/tache.png');background-size: 30px; background-repeat: no-repeat" value="" 
+                                                                 oncomplete="PF('dlg1').hide()" title="No, deseo rectificar."></p:commandButton><br></br>
+                                            </p:dialog>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </f:facet>
+                    </p:toolbar>                  
+                    <p:growl id="mensaje" showSummary="true" showDetail="true"></p:growl>
+                    <p:messages id="messages" showSummary="true" showDetail="true" showIcon="true" closable="true" style="font-size: 14px"/>
+                    <p:panel id="pnl" header="" style="margin: 0 auto; text-align: center; font-size: 9.5px">
+                        <p:layout id="capaDatosViaje" style="width: 100%; height: 500px;">
+                            <p:layoutUnit id="datosConcepto" position="center" resizable="true" collapsible="true" style="padding: 5px; text-align: center;">
+                                <p:dataTable id="tblPagos" paginator="true" paginatorPosition="top" 
+                                             sortMode="multiple" scrollable="true" scrollHeight="400"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="10,50,100" resizableColumns="false"
+                                             rows="10" var="item" editable="true" value="#{procesoBean.lF}">
+                                    <p:ajax event="rowEdit" listener="#{procesoBean.onRowEdit}" update="frmPrincipal:tblPagos, frmPrincipal:mensaje" />
+                                    <p:ajax event="rowEditCancel" listener="#{procesoBean.onRowCancel}" update="frmPrincipal:tblPagos, frmPrincipal:mensaje" />
+                                    <p:column  filterBy="#{item.noFactura}" sortBy="#{item.noFactura}" headerText="Factura">
+                                        <h:outputText value="#{item.noFactura}"></h:outputText>
+                                    </p:column>
+                                    <p:column filterBy="#{item.nombreClie}" sortBy="#{item.nombreClie}" headerText="Nombre">
+                                        <h:outputText value="#{item.nombreClie}"></h:outputText>
+                                    </p:column>
+                                    <!--                                    <p:column filterBy="{item.numMoned}" sortBy="{item.numMoned}" headerText="Moneda origen">
+                                                                            <h:outputText value="#{item.numMoned eq'1' ? 'MXN':'USD'}"></h:outputText>
+                                                                        </p:column>-->
+                                    <p:column filterBy="#{item.importe}" sortBy="#{item.importe}" headerText="Importe MXN">
+                                        <h:outputText style="font-weight: bold" value="#{item.importe}">
+                                            <f:convertNumber pattern="###,###.0000" currencySymbol="$" type="currency" locale="es_MX"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column filterBy="#{item.impmonExt}" sortBy="#{item.impmonExt}" headerText="Importe USD">
+                                        <h:outputText style="font-weight: bold" value="#{item.impmonExt}">
+                                            <f:convertNumber pattern="###,###.0000" currencySymbol="$" type="currency" locale="es_MX"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column filterBy="#{item.saldo}" sortBy="#{item.saldo}" headerText="Saldo">
+                                        <h:outputText style="color: #CC0505" value="#{item.saldo}">
+                                            <f:convertNumber pattern="###,###.0000" currencySymbol="$" type="currency" locale="es_MX"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Nuevo Importe">
+                                        <p:cellEditor >
+                                            <f:facet name="output">
+                                                <h:outputText style="color: #045491" value="#{item.nuevoImporte}" >
+                                                    <f:convertNumber pattern="###,###.0000" currencySymbol="$" type="currency" locale="es_MX"/>
+                                                </h:outputText>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{item.nuevoImporte}">
+                                                    <p:ajax listener="#{procesoBean.validarDatos()}" event="keyup" />
+                                                </p:inputText>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="T. Cambio" style="width: 50px">
+                                        <p:cellEditor >
+                                            <f:facet name="output"><h:outputText value="#{item.nuevoTcambio}" /></f:facet>
+                                            <f:facet name="input"><p:inputText required="true"  requiredMessage="Tipo de cambio requerido" value="#{item.nuevoTcambio}">
+                                                </p:inputText>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="Nueva moneda" style="width: 50px">
+                                        <p:cellEditor >
+                                            <f:facet name="output"><h:outputText value="#{item.numMoned eq'1' ? 'MXN':'USD'}" /></f:facet>
+                                            <f:facet name="input">
+
+                                                <h:selectOneMenu value="#{item.numMoned}" style="width:100%">
+                                                    <f:selectItem itemLabel="Seleciona" itemValue=""></f:selectItem>
+                                                    <f:selectItem itemLabel="MXN" itemValue="1"></f:selectItem>
+                                                    <f:selectItem itemLabel="USD" itemValue="2"></f:selectItem>
+                                                </h:selectOneMenu>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="Tipo Pago">
+                                        <p:cellEditor >
+                                            <f:facet name="output"><h:outputText value="#{item.tipoPago}" /></f:facet>
+                                            <f:facet name="input">
+
+                                                <h:selectOneMenu value="#{item.tipoPago}" style="width:100%">
+                                                    <f:selectItem itemLabel="Seleciona" itemValue=""></f:selectItem>
+                                                    <f:selectItem itemLabel="Efectivo" itemValue="Efectivo"></f:selectItem>
+                                                    <f:selectItem itemLabel="Cheque" itemValue="Cheque"></f:selectItem>
+                                                    <f:selectItem itemLabel="Transferencia" itemValue="Transferencia"></f:selectItem>
+                                                </h:selectOneMenu>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column style="width: 90px" headerText="Fecha pago">
+                                        <p:cellEditor>
+                                            <f:facet name="input" >
+                                                <p:calendar id="mask1" value="#{item.fechaPago}" pattern="yyyy-MM-dd" mask="true"  pages="3"/>
+                                            </f:facet>
+                                            <f:facet name="output">
+                                                <p:calendar id="mask" disabled="#{item.procesado eq false}"  value="#{item.fechaPago}" pattern="yyyy-MM-dd" mask="true" />
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="Departamento">
+                                        <p:cellEditor >
+                                            <f:facet name="output"><h:outputText value="#{item.depto}" /></f:facet>
+                                            <f:facet name="input">
+                                                <h:selectOneMenu required="true" requiredMessage="Selecciona departamento" value="#{item.depto}" style="width:100%">
+                                                    <f:selectItem itemLabel="Seleciona" itemValue=""/>
+                                                    <f:selectItem itemLabel="CA1M" itemValue="CA1M"/>
+                                                    <f:selectItem itemLabel="CA2M" itemValue="CA2M"/>
+                                                    <f:selectItem itemLabel="CA3M" itemValue="CA3M"/>
+                                                    <f:selectItem itemLabel="CA4M" itemValue="CA4M"/>
+                                                    <f:selectItem itemLabel="CA5M" itemValue="CA5M"/>
+                                                    <f:selectItem itemLabel="CA6M" itemValue="CA6M"/>
+                                                    <f:selectItem itemLabel="CA7M" itemValue="CA7M"/>
+                                                    <f:selectItem itemLabel="GM2M" itemValue="GM2M"/>
+                                                    <f:selectItem itemLabel="GM3M" itemValue="GM3M"/>
+                                                    <f:selectItem itemLabel="HQ0M" itemValue="HQ0M"/>
+                                                    <f:selectItem itemLabel="MA1M" itemValue="MA1M"/>
+                                                    <f:selectItem itemLabel="MA2M" itemValue="MA2M"/>
+                                                    <f:selectItem itemLabel="MA3M" itemValue="MA3M"/>
+                                                    <f:selectItem itemLabel="MA4M" itemValue="MA4M"/>
+                                                    <f:selectItem itemLabel="MA5M" itemValue="MA5M"/>
+                                                    <f:selectItem itemLabel="MA6M" itemValue="MA6M"/>
+                                                    <f:selectItem itemLabel="MA7M" itemValue="MA7M"/>
+                                                    <f:selectItem itemLabel="MA8M" itemValue="MA8M"/>
+                                                    <f:selectItem itemLabel="MA9M" itemValue="MA9M"/>
+                                                    <f:selectItem itemLabel="SB1M" itemValue="SB1M"/>
+                                                    <f:selectItem itemLabel="SB2M" itemValue="SB2M"/>
+                                                    <f:selectItem itemLabel="SB3M" itemValue="SB3M"/>
+                                                    <f:selectItem itemLabel="ZS0M" itemValue="ZS0M"/>
+                                                </h:selectOneMenu>
+                                                <!--                                                <h:inputText required="true"  requiredMessage="Departamento requerido" value="{item.depto}" onkeyup="javascript:this.value = this.value.toUpperCase();" />-->
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="Editar" style="width:25px">
+                                        <p:rowEditor  rendered="#{item.procesado eq true}">
+                                        </p:rowEditor>
+                                    </p:column>
+                                    <p:column headerText="Seleccionar" style="width: 55px">
+                                        <p:selectBooleanCheckbox value="#{item.procesado}" >
+                                            <p:ajax event="change" update="tblPagos"/>
+                                        </p:selectBooleanCheckbox>                                    
+                                    </p:column>
+
+                                </p:dataTable>
+                            </p:layoutUnit>                              
+                        </p:layout>
+                    </p:panel>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>        
+
+    </h:body>    
+</html>

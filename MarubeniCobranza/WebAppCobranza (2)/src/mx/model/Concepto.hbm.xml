@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 7/09/2018 12:22:45 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="mx.model.Concepto" table="concepto" schema="dbo" catalog="gastos" optimistic-lock="version">
+        <id name="idConcepto" type="int">
+            <column name="idConcepto" />
+            <generator class="native" />
+        </id>
+        <property name="nombreConcepto" type="string">
+            <column name="nombreConcepto" length="50" />
+        </property>
+        <property name="importe" type="big_decimal">
+            <column name="importe" scale="4" />
+        </property>
+        <property name="iva" type="big_decimal">
+            <column name="iva" scale="4" />
+        </property>
+        <property name="tua" type="big_decimal">
+            <column name="tua" scale="4" />
+        </property>
+        <property name="factura" type="string">
+            <column name="factura" length="50" />
+        </property>
+        <property name="uuid" type="string">
+            <column name="uuid" length="100" />
+        </property>
+        <property name="rfc" type="string">
+            <column name="rfc" length="50" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="250" />
+        </property>
+        <property name="estatus" type="string">
+            <column name="estatus" length="50" />
+        </property>
+        <property name="totalmxn" type="big_decimal">
+            <column name="totalmxn" scale="4" />
+        </property>
+        <property name="totalusd" type="big_decimal">
+            <column name="totalusd" scale="4" />
+        </property>
+        <property name="comentario" type="string">
+            <column name="comentario" length="250" />
+        </property>
+        <property name="nombreUsuario" type="string">
+            <column name="nombreUsuario" length="150" />
+        </property>
+        <property name="folioUsuario" type="string">
+            <column name="folioUsuario" length="2" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="fecha" length="10" />
+        </property>
+        <property name="tipo" type="string">
+            <column name="tipo" length="50" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="30" />
+        </property>
+        <property name="rfcreceptor" type="string">
+            <column name="rfcreceptor" length="50" />
+        </property>
+        <property name="nombreReceptor" type="string">
+            <column name="nombreReceptor" length="250" />
+        </property>
+        <property name="tarjeta" type="string">
+            <column name="tarjeta" length="2" />
+        </property>
+        <property name="rutaXml" type="string">
+            <column name="rutaXML" length="250" />
+        </property>
+        <property name="rutaImagen" type="string">
+            <column name="rutaImagen" length="250" />
+        </property>
+        <property name="rutaPdf" type="string">
+            <column name="rutaPDF" length="250" />
+        </property>
+        <property name="modificarArchivo" type="string">
+            <column name="modificarArchivo" length="2" />
+        </property>
+        <property name="propina" type="big_decimal">
+            <column name="propina" scale="4" />
+        </property>
+        <property name="ish" type="big_decimal">
+            <column name="ish" scale="4" />
+        </property>
+        <property name="tarjetaGasolina" type="string">
+            <column name="tarjetaGasolina" length="2" />
+        </property>
+        <property name="departamento" type="string">
+            <column name="departamento" length="50" />
+        </property>
+        <property name="lugarExpedicion" type="string">
+            <column name="lugarExpedicion" length="250" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="250" />
+        </property>
+        <property name="selloCfd" type="string">
+            <column name="selloCFD" length="500" />
+        </property>
+        <property name="selloSat" type="string">
+            <column name="selloSAT" length="500" />
+        </property>
+        <property name="fechaTimbrado" type="string">
+            <column name="fechaTimbrado" length="50" />
+        </property>
+        <property name="noCertificadoSat" type="string">
+            <column name="noCertificadoSAT" length="50" />
+        </property>
+        <property name="veruuid" type="string">
+            <column name="veruuid" length="10" />
+        </property>
+        <property name="noCertificado" type="string">
+            <column name="noCertificado" length="50" />
+        </property>
+        <property name="tipoCambio" type="big_decimal">
+            <column name="tipoCambio" scale="4" />
+        </property>
+        <property name="moneda" type="string">
+            <column name="moneda" length="25" />
+        </property>
+        <property name="tipoComprobante" type="string">
+            <column name="tipoComprobante" length="50" />
+        </property>
+        <property name="metodoPago" type="string">
+            <column name="metodoPago" length="50" />
+        </property>
+        <property name="formaPago" type="string">
+            <column name="formaPago" length="100" />
+        </property>
+        <property name="impuestoRetenido" type="big_decimal">
+            <column name="impuestoRetenido" scale="4" />
+        </property>
+    </class>
+</hibernate-mapping>

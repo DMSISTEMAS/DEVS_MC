@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../../plantilla/plantilla.xhtml">
+            <ui:define name="content">
+                <p:idleMonitor  onactive="PF('sessionTimeOutDialog').show()" timeout="600000" />
+                <p:dialog style="font-size: 15px;" header="Sistema de Pagos Marubeni México" widgetVar="sessionTimeOutDialog" 
+                          modal="true" closable="false" width="775" height="280" resizable="false" visible="false">                    
+                    <img src="../../Images/expired.png" style="width: 160px; height: 160px" alt=""/><br></br><br></br><br></br>
+                    <h:outputText style="color: #CC0505; font-size: 16px; " value="Tu sesión actual ha expirado, para continuar cierra esta ventana o presiona F5 y vuelve a iniciar sesión." />
+                </p:dialog>
+                <h2>
+                    <img src="../../Images/reportes.png" style="width: 140px; height: 120px" alt=""/>
+                    REPORTE DE PAGOS
+                </h2>
+
+                <h:form id="frmPrincipal">
+                    <p:blockUI block="ReportePagos" trigger="track">   
+                        <h4 style="font-size: 15px; color: black">Buscando facturas pendientes...</h4><br></br>
+                        <p:graphicImage value="../../Images/search.gif" style="height: 100px; width: 100px"></p:graphicImage>
+                    </p:blockUI>
+                    <p:toolbar>                      
+                        <f:facet name="left">
+                            <table border="0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 500px">
+
+                                        </th>
+
+                                        <th>
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+                                            <p:selectOneMenu title="Seleccione un año" style="font-size: 13px; width: 10px" value="#{pagosBean.año}">
+                                                <f:selectItem itemLabel="año" itemValue=""></f:selectItem>
+                                                <f:selectItem itemLabel="2018" itemValue="2018"></f:selectItem>
+                                                <f:selectItem itemLabel="2019" itemValue="2019"></f:selectItem>
+                                                <f:selectItem itemLabel="2020" itemValue="2020"></f:selectItem>
+                                                <f:selectItem itemLabel="2021" itemValue="2021"></f:selectItem>
+                                                <f:selectItem itemLabel="2022" itemValue="2022"></f:selectItem>
+                                                <f:selectItem itemLabel="2023" itemValue="2023"></f:selectItem>
+                                                <f:selectItem itemLabel="2024" itemValue="2024"></f:selectItem>
+                                                <f:selectItem itemLabel="2025" itemValue="2025"></f:selectItem>
+                                                <p:ajax event="change" update="p1"></p:ajax>
+                                            </p:selectOneMenu>
+                                                <p:spacer width="5px"></p:spacer>
+                                            <p:selectOneMenu id="p1" title="Seleccione mes" disabled="#{pagosBean.año ==null}" style="font-size: 13px; width: 10px" value="#{pagosBean.mes}">
+                                                <f:selectItem itemLabel="mes" itemValue=""></f:selectItem>
+                                                <f:selectItem itemLabel="Enero" itemValue="01"></f:selectItem>
+                                                <f:selectItem itemLabel="Febrero" itemValue="02"></f:selectItem>
+                                                <f:selectItem itemLabel="Marzo" itemValue="03"></f:selectItem>
+                                                <f:selectItem itemLabel="Abril" itemValue="04"></f:selectItem>
+                                                <f:selectItem itemLabel="Mayo" itemValue="05"></f:selectItem>
+                                                <f:selectItem itemLabel="Junio" itemValue="06"></f:selectItem>
+                                                <f:selectItem itemLabel="Julio" itemValue="07"></f:selectItem>
+                                                <f:selectItem itemLabel="Agosto" itemValue="08"></f:selectItem>
+                                                <f:selectItem itemLabel="Septiembre" itemValue="09"></f:selectItem>
+                                                <f:selectItem itemLabel="Octubre" itemValue="10"></f:selectItem>
+                                                <f:selectItem itemLabel="Noviembre" itemValue="11"></f:selectItem>
+                                                <f:selectItem itemLabel="Diciembre" itemValue="12"></f:selectItem>
+                                                <p:ajax event="change" update="track"></p:ajax>
+                                            </p:selectOneMenu>
+                                        </th>
+                                        <th>
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+                                            <p:commandButton id="track" style="height: 35px; width: 40px; 
+                                                             background-image: url('../..//Images/search-icon-th.png');
+                                                             background-size: 33px; background-repeat: no-repeat" 
+                                                             title="Buscar facturas pagadas" value=""
+                                                             actionListener="#{pagosBean.buscarPagos()}" disabled="#{pagosBean.mes ==null}" update="frmPrincipal">
+                                            </p:commandButton>
+                                        </th>
+                                        <th>
+                                            <h:commandLink id="xls">
+                                                <p:graphicImage  title="Exportar a Excel"
+                                                                 url="../..//Images/Excel-2-icon.png" height="40" width="45" />
+                                                <p:dataExporter  type="xls" target="ReportePagos"
+                                                                 fileName="Pagos"></p:dataExporter>
+                                            </h:commandLink>
+
+                                        </th>
+                                        <th>
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </f:facet>
+                    </p:toolbar>                  
+                    <p:growl id="mensaje" showSummary="true" showDetail="true"></p:growl>
+                    <p:messages id="messages" showSummary="true" showDetail="true" showIcon="true" closable="true" style="font-size: 14px"/>
+
+                    <p:layout id="capaDatosViaje" style="width: 100%; height: 500px;">
+                        <p:layoutUnit id="datosConcepto" position="center" resizable="true" collapsible="true" style="padding: 5px; text-align: center;">
+                            <p:dataTable id="ReportePagos" paginator="true" paginatorPosition="top" 
+                                         sortMode="multiple" scrollable="true" scrollHeight="400"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="10,50,100" resizableColumns="false"
+                                         rows="10" var="item" editable="true" value="#{pagosBean.listarFolios}">
+                                <p:column   headerText="Facturas">
+                                    <h:outputText value="#{item.noFactura}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="Importe mxn">
+                                    <h:outputText value="#{item.importe}">
+                                        <f:convertNumber pattern="###,###.0000" currencySymbol="$" type="currency" locale="es_MX"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Importe usd">
+                                    <h:outputText value="#{item.importeusd}">
+                                        <f:convertNumber pattern="###,###.0000" currencySymbol="$" type="currency" locale="es_MX"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Tipo de cambio">
+                                    <h:outputText value="#{item.tcambio}">
+                                        <f:convertNumber pattern="###,###.0000" currencySymbol="$" type="currency" locale="es_MX"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Moneda">
+                                    <h:outputText value="#{item.moneda eq'1' ? 'MXN':'USD1'}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="Fecha de pago">
+                                    <h:outputText value="#{item.fechaPago}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="Banco">
+                                    <h:outputText value="#{item.banco}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="Depto">
+                                    <h:outputText value="#{item.depto}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="Subcuenta">
+                                    <h:outputText value="#{item.subcuenta}"></h:outputText>
+                                </p:column>                                   
+                                <p:column headerText="Cta cliente">
+                                    <h:outputText value="#{item.ctaclientesap}"></h:outputText>
+                                </p:column>
+                                <p:column headerText="Cliente">
+                                    <h:outputText value="#{item.cliente}"></h:outputText>
+                                </p:column>
+                            </p:dataTable>
+                        </p:layoutUnit>                              
+                    </p:layout>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>        
+
+    </h:body>    
+</html>

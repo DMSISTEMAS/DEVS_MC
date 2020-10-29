@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 7/09/2018 12:22:45 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="mx.model.Cuenm01" table="cuenm01" schema="dbo" catalog="gastos" optimistic-lock="version">
+        <id name="noFactura" type="string">
+            <column name="NO_FACTURA" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="cveClie" type="string">
+            <column name="CVE_CLIE" length="10" />
+        </property>
+        <property name="rfc" type="string">
+            <column name="RFC" length="50" />
+        </property>
+        <property name="nombreClie" type="string">
+            <column name="NOMBRE_CLIE" length="200" />
+        </property>
+        <property name="importe" type="java.lang.Double">
+            <column name="IMPORTE" precision="53" scale="0" />
+        </property>
+        <property name="fechaApli" type="timestamp">
+            <column name="FECHA_APLI" length="23" />
+        </property>
+        <property name="numMoned" type="java.lang.Integer">
+            <column name="NUM_MONED" />
+        </property>
+        <property name="tcambio" type="java.lang.Double">
+            <column name="TCAMBIO" precision="53" scale="0" />
+        </property>
+        <property name="impmonExt" type="java.lang.Double">
+            <column name="IMPMON_EXT" precision="53" scale="0" />
+        </property>
+        <property name="strcvevend" type="string">
+            <column name="STRCVEVEND" length="5" />
+        </property>
+        <property name="nombreVend" type="string">
+            <column name="NOMBRE_VEND" length="150" />
+        </property>
+        <property name="pagoParcial" type="java.lang.Boolean">
+            <column name="PAGO_PARCIAL" />
+        </property>
+        <property name="nuevoImporte" type="java.lang.Double">
+            <column name="NUEVO_IMPORTE" precision="53" scale="0" />
+        </property>
+        <property name="nuevoTcambio" type="java.lang.Double">
+            <column name="NUEVO_TCAMBIO" precision="53" scale="0" />
+        </property>
+        <property name="nuevoMoneda" type="java.lang.Integer">
+            <column name="NUEVO_MONEDA" />
+        </property>
+        <property name="tipoPago" type="string">
+            <column name="TIPO_PAGO" length="50" />
+        </property>
+        <property name="aviso" type="java.lang.Integer">
+            <column name="AVISO" />
+        </property>
+        <property name="procesado" type="java.lang.Boolean">
+            <column name="PROCESADO" />
+        </property>
+        <property name="fechaIngreso" type="timestamp">
+            <column name="FECHA_INGRESO" length="23" />
+        </property>
+        <property name="fechaEnvio" type="timestamp">
+            <column name="FECHA_ENVIO" length="23" />
+        </property>
+        <property name="completado" type="java.lang.Boolean">
+            <column name="COMPLETADO" />
+        </property>
+        <property name="banco" type="string">
+            <column name="BANCO" length="150" />
+        </property>
+        <property name="fechaPago" type="timestamp">
+            <column name="FECHA_PAGO" length="23" />
+        </property>
+        <property name="pagoMultiple" type="java.lang.Integer">
+            <column name="PAGO_MULTIPLE" />
+        </property>
+        <property name="depto" type="string">
+            <column name="DEPTO" length="150" />
+        </property>
+        <property name="saldo" type="java.lang.Double">
+            <column name="SALDO" precision="53" scale="0" />
+        </property>
+        <property name="proParcial" type="java.lang.Boolean">
+            <column name="PRO_PARCIAL" />
+        </property>
+    </class>
+</hibernate-mapping>

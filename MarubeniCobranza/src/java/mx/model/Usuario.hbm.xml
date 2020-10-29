@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 7/09/2018 12:22:45 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="mx.model.Usuario" table="usuario" schema="dbo" catalog="gastos" optimistic-lock="version">
+        <id name="nombre" type="string">
+            <column name="nombre" length="50" />
+            <generator class="native" />
+        </id>
+        <property name="correo" type="string">
+            <column name="correo" length="50" />
+        </property>
+        <property name="codigoPerfil" type="string">
+            <column name="codigoPerfil" length="30" />
+        </property>
+        <property name="codigoDepartamento" type="string">
+            <column name="codigoDepartamento" length="250" />
+        </property>
+        <property name="codigoSap" type="string">
+            <column name="codigoSap" length="50" />
+        </property>
+        <property name="folioUsuario" type="string">
+            <column name="folioUsuario" length="2" />
+        </property>
+        <property name="clave" type="string">
+            <column name="clave" length="250" />
+        </property>
+        <property name="asignacion" type="string">
+            <column name="asignacion" length="50" />
+        </property>
+        <property name="asignacionusd" type="string">
+            <column name="asignacionusd" length="50" />
+        </property>
+        <property name="fechaAlta" type="date">
+            <column name="fechaAlta" length="10" />
+        </property>
+        <property name="vigencia" type="java.lang.Integer">
+            <column name="vigencia" />
+        </property>
+        <property name="tarjetaCoorporativa" type="string">
+            <column name="tarjetaCoorporativa" length="4" />
+        </property>
+        <property name="estatus" type="string">
+            <column name="estatus" length="50" />
+        </property>
+        <property name="tarjetaGasolina" type="string">
+            <column name="tarjetaGasolina" length="4" />
+        </property>
+        <property name="admonPoliza" type="string">
+            <column name="admonPoliza" length="2" />
+        </property>
+        <property name="fechaAcceso" type="date">
+            <column name="fechaAcceso" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

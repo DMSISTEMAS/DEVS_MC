@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1AvisoPago" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5e9381ba-59a4-4b05-b8c0-02f9af657745">
+	<property name="ireport.zoom" value="3.305785123966945"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="162"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="vendedor" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT SUM(pagos.IMPORTE) AS IMPORTE, pagos.TCAMBIO, pagos.MONEDA, pagos.FECHA_PAGO, pagos.PAGO_MULTIPLE,
+pagos.BANCO, pagos.DEPTO, pagos.ESTADO, pagos.SUBCUENTA, pagos.CTACLIENTESAP,
+SUM(pagos.IMPORTEUSD)AS IMPORTEUSD, pagos.CLIENTE,pagos.TIPOPAGO, pagos.PAGO_MULTIPLE, fpmultiple.FACTURAS
+FROM dbo.pagos
+INNER JOIN dbo.fpmultiple ON pagos.PAGO_MULTIPLE=dbo.fpmultiple.ID
+WHERE pagos.DEPTO LIKE '%$P!{vendedor}%' AND pagos.ENVIADO='NO'
+GROUP BY pagos.PAGO_MULTIPLE, pagos.BANCO,pagos.TCAMBIO,pagos.MONEDA,pagos.FECHA_PAGO,pagos.DEPTO,pagos.ESTADO,pagos.SUBCUENTA,pagos.CTACLIENTESAP,pagos.CLIENTE,pagos.TIPOPAGO,fpmultiple.FACTURAS]]>
+	</queryString>
+	<field name="IMPORTE" class="java.lang.Double"/>
+	<field name="TCAMBIO" class="java.lang.Double"/>
+	<field name="MONEDA" class="java.lang.Integer"/>
+	<field name="FECHA_PAGO" class="java.sql.Timestamp"/>
+	<field name="PAGO_MULTIPLE" class="java.lang.Integer"/>
+	<field name="BANCO" class="java.lang.String"/>
+	<field name="DEPTO" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="SUBCUENTA" class="java.lang.String"/>
+	<field name="CTACLIENTESAP" class="java.lang.String"/>
+	<field name="IMPORTEUSD" class="java.lang.Double"/>
+	<field name="CLIENTE" class="java.lang.String"/>
+	<field name="TIPOPAGO" class="java.lang.Integer"/>
+	<field name="FACTURAS" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="0" y="52" width="138" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="6b5337ba-12c0-417d-bcb1-63d0bf8928d8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[IMPORTE PAGADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" mode="Opaque" x="138" y="52" width="664" height="15" forecolor="#FFFFFF" backcolor="#CC0033" uuid="ec8bab5f-6888-4839-8e16-739c46f16ecc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE PAGOS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="292" y="12" width="192" height="23" uuid="07ed629b-adce-4374-ba5c-856448ff01fc"/>
+				<imageExpression><![CDATA["C:\\img\\marubeni-logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="603" y="0" width="199" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="90a09a8e-b4d8-47ea-8004-624e8e334ea0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="443" y="0" width="160" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="fc9a38a4-c98c-4899-9ddc-a1fbdf93e26e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[BANCO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="387" y="0" width="56" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="57e6b2a6-512b-4c62-bf6b-c26bb3495344"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="true" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FECHA PAGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="139" y="0" width="50" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="f1516bad-de51-4003-a555-249e1be0e2eb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[T. CAMBIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="0" y="0" width="70" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="f6ed9d7a-b95b-41c4-8032-1ac5b1794183"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[MXN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="69" y="0" width="70" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="50fb7056-cdc4-4d66-98f5-dd0e5e34c914"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[USD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="188" y="0" width="50" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="d92e21a1-ce9a-4e3d-9441-442b65ddc020"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PAGADO EN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="238" y="0" width="66" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="74954791-2d46-4623-9704-f412ee2bdcc8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FACTURA(S)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="334" y="0" width="53" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="9ee9a4d5-0ff8-4ad1-ab1f-65c63dedbf51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="304" y="0" width="30" height="15" forecolor="#FFFFFF" backcolor="#666666" uuid="0694576e-8da7-4932-8e8a-54456d12d996"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="5" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PAGO MÚLTIPLE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="17" uuid="006cf21e-aecb-4896-8fc4-dd787517af3e"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="236" y="0" width="68" height="17" forecolor="#000000" uuid="58f5c62c-704f-45c6-98bf-f5bce8d57946"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FACTURAS}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="¤ #,##0.0000">
+					<reportElement style="Detail" x="0" y="0" width="70" height="17" uuid="dfdb784a-75e0-49ac-b8e3-a07a5b97514d"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{IMPORTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="¤ #,##0.0000">
+					<reportElement style="Detail" x="138" y="0" width="50" height="17" uuid="52962092-c36c-4169-807e-35458d19593d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TCAMBIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="187" y="0" width="50" height="17" uuid="c2c80a76-0e30-4ea5-9f5e-a39cdc43d597"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MONEDA}==2 ? "USD" :$F{MONEDA}==1 ? "MXN":"EUROS"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="MMMMM dd, yyyy">
+					<reportElement style="Detail" x="387" y="0" width="57" height="17" uuid="ab047ea1-7209-4bb4-8092-83190ed1d50e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FECHA_PAGO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="443" y="0" width="160" height="17" uuid="65977585-3120-4527-8aba-1cb6665e284a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{BANCO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="¤ #,##0.0000">
+					<reportElement style="Detail" x="69" y="0" width="70" height="17" uuid="3c2b4b9d-f8ea-45c3-8e6b-7f658fd82e14"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="7" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{IMPORTEUSD}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="602" y="0" width="199" height="17" uuid="ddd5d1a0-05bf-4173-a640-b469a3ced31d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="6" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CLIENTE}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="334" y="0" width="53" height="17" forecolor="#000000" backcolor="#FFFFFF" uuid="708f4557-7fb7-41a1-a844-646851f7ae0c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="6" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TIPOPAGO}==10 ? "EFECTIVO" : $F{TIPOPAGO}==11 ? "CHEQUE":"TRANSFERENCIA"]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="304" y="0" width="30" height="17" forecolor="#000000" backcolor="#FFFFFF" uuid="be3d4b84-9307-4671-a024-cc720d3fbe8e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="6" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FACTURAS}.length()>6 ? "PM"+$F{PAGO_MULTIPLE} :""]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="f1ee8da7-8cdc-433e-bb6a-73ceed2791b9"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="fb3eeb25-cda9-4bb6-90f8-4f6b3e90e500"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="ff7a07a4-8574-413a-9487-de01fd4903f7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="68305df2-0c7e-4fe5-a264-de4d17e37405"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

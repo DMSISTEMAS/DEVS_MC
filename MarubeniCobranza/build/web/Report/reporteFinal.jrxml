@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteFinal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="822" leftMargin="0" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="02fb6f6a-afdd-4956-8162-e52514ea0f75">
+	<property name="ireport.zoom" value="2.8531167061100073"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.columns" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.rows" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.white.page.background" value="false"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="folio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from polizapagos where userFolio=$P{folio}]]>
+	</queryString>
+	<field name="idVoucher" class="java.lang.Integer"/>
+	<field name="voucherNo" class="java.lang.String"/>
+	<field name="entryDate" class="java.lang.String"/>
+	<field name="transactionDate" class="java.lang.String"/>
+	<field name="currency" class="java.lang.String"/>
+	<field name="rate" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="drcr" class="java.lang.String"/>
+	<field name="unit" class="java.lang.String"/>
+	<field name="account" class="java.lang.String"/>
+	<field name="taxCode" class="java.lang.String"/>
+	<field name="tf" class="java.lang.String"/>
+	<field name="subAccount" class="java.lang.String"/>
+	<field name="contractNo" class="java.lang.String"/>
+	<field name="referenceNo" class="java.lang.String"/>
+	<field name="dueDate" class="java.lang.String"/>
+	<field name="amount" class="java.lang.String"/>
+	<field name="userFolio" class="java.lang.String"/>
+	<field name="userName" class="java.lang.String"/>
+	<field name="processed" class="java.lang.Boolean"/>
+	<variable name="localAmount" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{currency}.equals("USD1") ? (new Double(Double.parseDouble($F{rate}))* (new Double(Double.parseDouble($F{amount})))):0)]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="1" y="0" width="32" height="15" forecolor="#000000" uuid="29fda87d-30ed-4e33-b473-dbfa1aa7c98a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[voucherNo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="33" y="0" width="47" height="15" forecolor="#000000" uuid="f8dde7f9-489c-4475-9b14-f946e21b1c63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[entryDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="80" y="0" width="47" height="15" forecolor="#000000" uuid="a784a5b8-a81e-40b6-9ee7-6f41a34b15f1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[transactionDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="127" y="0" width="47" height="15" forecolor="#000000" uuid="59463c06-84bb-4ea9-8267-0934b81bb721"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[currency]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="174" y="0" width="47" height="15" forecolor="#000000" uuid="8d057674-c9b0-4691-963f-fbafa16ef609"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="221" y="0" width="47" height="15" forecolor="#000000" uuid="a26b2a64-5e15-4ccf-92c2-913220117245"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[remarks]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="268" y="0" width="47" height="15" forecolor="#000000" uuid="bdcfa542-8f95-4e7f-b42e-4e885ca920a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[drcr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="315" y="0" width="47" height="15" forecolor="#000000" uuid="cbe39cc8-677d-4e8a-889f-6c72f5ab6eab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[unit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="362" y="0" width="47" height="15" forecolor="#000000" uuid="bdc60791-0f3b-4d42-9c01-9b4d5007f13c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[account]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="409" y="0" width="47" height="15" forecolor="#000000" uuid="01dc3dfa-1cf6-4a87-ac09-a64b1c5be038"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[taxCode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="456" y="0" width="19" height="15" forecolor="#000000" uuid="d6d8ebf5-3ad3-4f27-b5a0-828f2e3c6897"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[tf]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="475" y="1" width="47" height="15" forecolor="#000000" uuid="6015784b-7233-40cd-8df6-ad6bc656ac8b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[subAccount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="522" y="1" width="47" height="15" forecolor="#000000" uuid="b577ef4f-b9df-4021-b98f-e660c6da1a40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[contractNo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="569" y="1" width="47" height="15" forecolor="#000000" uuid="42c403d0-3396-4e85-864e-c22dba046910"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[referenceNo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="616" y="1" width="47" height="15" forecolor="#000000" uuid="64de61d6-55e4-4bb1-b1b0-e9c36ea41a75"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[dueDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="771" y="1" width="51" height="15" forecolor="#000000" uuid="b00608e1-d327-4d95-8a8c-b00525e6e439"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[localAmount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="726" y="1" width="15" height="15" forecolor="#000000" uuid="7d05486d-db0c-4a85-bcb8-68cda084041d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="741" y="1" width="15" height="15" forecolor="#000000" uuid="81d0b060-5590-42c9-b98c-ec19988e04bb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="756" y="1" width="15" height="15" forecolor="#000000" uuid="3a1a67bc-7994-4044-8672-f29a0386b4c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="663" y="1" width="63" height="15" forecolor="#000000" uuid="2c6121ed-7a67-4bca-816a-ecedab05947f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="1" y="0" width="32" height="12" uuid="5999c4b9-2f52-4fc2-9fb9-52c9fc4928ba"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{voucherNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="33" y="0" width="47" height="12" uuid="86f5d05d-34f0-4785-85c2-62ff5f171c6c"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entryDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="80" y="0" width="47" height="12" uuid="77d406dc-ad9d-4d91-b95d-dea9fd081639"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transactionDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="127" y="0" width="47" height="12" uuid="aed6c931-e69b-483b-972a-34b1df266c3b"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="174" y="0" width="47" height="12" uuid="b27756a5-2617-4c9b-b677-743b934821c2"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="221" y="0" width="47" height="12" uuid="d164539d-3f40-4285-ad16-550201bb3b26"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{remarks}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="268" y="0" width="47" height="12" uuid="c23ac2dd-57e8-4661-b473-d6d9867eca53"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{drcr}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="315" y="0" width="47" height="12" uuid="3e59a92f-5fc1-48cc-afc5-6dd0592a986f"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="362" y="0" width="47" height="12" uuid="2a6f4d0e-0fde-4cd2-a502-f72dcbfe684d"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{account}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="409" y="0" width="47" height="12" uuid="367fd9c8-dc45-4113-a90b-000892b436f1"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxCode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="456" y="0" width="19" height="12" uuid="05ec53bb-25a6-4c6e-9206-2eb811e06676"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tf}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="475" y="0" width="47" height="12" uuid="fe16f744-31a7-4184-9ee8-ec00034193f8"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subAccount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="522" y="0" width="47" height="12" uuid="040c8d8c-1245-40a3-8d51-f4143835f0bd"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contractNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="569" y="0" width="47" height="12" uuid="e935991c-1bfc-4583-881f-8cac0d75a5c5"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referenceNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="616" y="0" width="47" height="12" uuid="ecf1b410-6ba0-4b4d-8781-73df194e6a00"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dueDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="771" y="0" width="51" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="4aba23a9-d38d-44e0-8673-69ba8f1a355d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{localAmount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="741" y="0" width="15" height="12" forecolor="#000000" uuid="6aaf7965-f46f-471c-8f18-2e0d4ef51dc1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="756" y="0" width="15" height="12" forecolor="#000000" uuid="cc080bf0-aa36-4d74-b44b-27f21986b180"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="726" y="0" width="15" height="12" forecolor="#000000" uuid="8b93e3dd-960d-4a5a-bd56-2466edfa9813"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="###0.0000">
+				<reportElement style="Detail" x="663" y="0" width="63" height="12" uuid="21ee50c6-6585-4271-af53-e5581c018712"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
