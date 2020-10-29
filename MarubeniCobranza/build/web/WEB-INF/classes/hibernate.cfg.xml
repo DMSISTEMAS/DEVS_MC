@@ -3,7 +3,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-        <property name="hibernate.connection.url">jdbc:sqlserver://10.220.221.158\SQLEXPRESS;databaseName=dbqrsys</property>
+        <property name="hibernate.connection.url">jdbc:sqlserver://10.220.221.158\SQLEXPRESS;databaseName=gastos</property>
         <property name="hibernate.connection.username">gastos_usrdb</property>
         <property name="hibernate.connection.password">k1CruJ@raDix</property>
 <!--        <property name="hibernate.connection.url">jdbc:sqlserver://ASPEL;databaseName=gastos</property>

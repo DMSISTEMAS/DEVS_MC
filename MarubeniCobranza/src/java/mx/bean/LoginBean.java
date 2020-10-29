@@ -63,8 +63,8 @@ public class LoginBean extends mx.conexion.DAO implements java.io.Serializable {
             loggedIn = true;
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("nombre", this.usuario);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getNombre());
-           // ruta = "/Views/Pagos/Pagos.jsf";
-            ruta = "/WebAppCobranza/Views/Pagos/Pagos.jsf";
+              ruta = "/Views/Pagos/Pagos.jsf";
+            //ruta = "/WebAppCobranza/Views/Pagos/Pagos.jsf";
         } else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "¡Error de sesión!", "Usuario o password incorrectos...");

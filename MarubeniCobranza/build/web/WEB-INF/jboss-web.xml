@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web xmlns="http://www.jboss.com/xml/ns/javaee">
+    <!--    <context-root>/</context-root> -->
+    <!--  <security-domain>propsFile</security-domain> -->
+    <!--  <server-instance>default-server</server-instance> -->
+    <!-- does mapping to server -->
+    <context-root>/WebAppCobranza</context-root>
+    <virtual-host>cobranzas.marubeni.com.mx</virtual-host>
+    <!-- does mapping to host inside server -->
+</jboss-web>
