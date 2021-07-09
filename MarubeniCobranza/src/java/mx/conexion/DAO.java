@@ -52,7 +52,7 @@ public class DAO {
     public void ConectarSAE() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            this.cnSAE = DriverManager.getConnection("jdbc:sqlserver://10.130.22.211\\SQL2014;databaseName=SAE70Empre01", "sa", "aspel$2020");
+            this.cnSAE = DriverManager.getConnection("jdbc:sqlserver://10.130.22.211\\SQL2014;databaseName=SAE80Empre01", "sa", "aspel$2020");
             //this.cnSAE = DriverManager.getConnection("jdbc:sqlserver://ASPEL;databaseName=SAE70Empre01", "gastos", "k1CruJ@raDix");
             //this.cnSAE = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-557O6CE\\SQLEXPRESS;databaseName=SAE70Empre01", "sa", "dmsistemas");
         } catch (ClassNotFoundException | SQLException e) {
