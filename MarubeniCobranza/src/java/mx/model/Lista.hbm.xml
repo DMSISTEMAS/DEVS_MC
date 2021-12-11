@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 7/09/2018 12:22:45 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="mx.model.Lista" table="lista" schema="dbo" catalog="gastos" optimistic-lock="version">
+    <class name="mx.model.Lista" table="lista" schema="dbo" catalog="cobranza" optimistic-lock="version">
         <id name="conceptos" type="string">
             <column name="Conceptos" length="50" />
             <generator class="native" />

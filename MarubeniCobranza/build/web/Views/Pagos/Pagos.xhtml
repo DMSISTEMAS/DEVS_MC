@@ -15,7 +15,7 @@
         <ui:composition template="./../../plantilla/plantilla.xhtml">
             <ui:define name="content">
                 <p:idleMonitor  onactive="PF('sessionTimeOutDialog').show()" timeout="600000" />
-                <p:dialog style="font-size: 15px;" header="Sistema de Pagos Marubeni México" widgetVar="sessionTimeOutDialog" 
+                <p:dialog style="font-size: 15px;" header="Sistema de Cobranza Marubeni México" widgetVar="sessionTimeOutDialog" 
                           modal="true" closable="false" width="775" height="280" resizable="false" visible="false">                    
                     <img src="../../Images/expired.png" style="width: 160px; height: 160px" alt=""/><br></br><br></br><br></br>
                     <h:outputText style="color: #CC0505; font-size: 16px; " value="Tu sesión actual ha expirado, para continuar cierra esta ventana o presiona F5 y vuelve a iniciar sesión." />
@@ -45,6 +45,11 @@
                                     <tr>
                                         <th style="width: 200px">
 
+                                        </th>
+                                        <th>
+                                            <h:outputText style="font-size: 13px" value="Incluir facturas de SAE " />
+                                            <p:selectBooleanCheckbox title="INCLUIR DE SAE"  value="#{procesoBean.sae}"/> 
+                                            <h:outputText style="font-size: 13px" value="-->" />
                                         </th>
                                         <th>
                                             <p:commandButton id="track" style="height: 35px; width: 40px; 

@@ -265,10 +265,10 @@ public class AvisoPagoBean extends DAO implements Serializable {
         SimpleDateFormat formateador = new SimpleDateFormat("dd-MMMM-yyyy");
         this.fecPago = formateador.format(this.hoy.getTime());
         Properties props = new Properties();
-        props.put("mail.smtp.host", "mail.grupocomercialtria.com.mx");
+        props.put("mail.smtp.host", "smtp.office365.com");
         props.setProperty("mail.smtp.starttls.enable", "true");
         props.setProperty("mail.smtp.port", "587");
-        props.setProperty("mail.smtp.user", "alertas@grupocomercialtria.com.mx");
+        props.setProperty("mail.smtp.user", "portal@marubeni.com.mx");
         props.setProperty("mail.smtp.auth", "true");
         Session session = Session.getDefaultInstance(props, null);
         session.setDebug(true);
@@ -296,7 +296,7 @@ public class AvisoPagoBean extends DAO implements Serializable {
 
         MimeMessage message = new MimeMessage(session);
 
-        message.setFrom(new InternetAddress("alertas@grupocomercialtria.com.mx"));
+        message.setFrom(new InternetAddress("portal@marubeni.com.mx"));
 
         String address = this.listaCorreos.toString();
         String addressA = address.replace("[", "");
@@ -316,14 +316,14 @@ public class AvisoPagoBean extends DAO implements Serializable {
         message.addRecipients(Message.RecipientType.CC, "Solano-H@marubeni.com");
         message.addRecipients(Message.RecipientType.CC, "Nakasone-A@marubeni.com");
         message.addRecipients(Message.RecipientType.CC, "Balderas-F@marubeni.com");
-        message.addRecipients(Message.RecipientType.BCC, "alertas@grupocomercialtria.com.mx");
+        message.addRecipients(Message.RecipientType.BCC, "portal@marubeni.com.mx");
 
         message.setSubject("Sistema de Cobranza Marubeni");
 
         message.setContent(multiParte);
 
         Transport t = session.getTransport("smtp");
-        t.connect("alertas@grupocomercialtria.com.mx", "QiVDZ90chqmp");
+        t.connect("portal@marubeni.com.mx", "Gastos$0912");
         t.sendMessage(message, message.getAllRecipients());
         t.close();
     }

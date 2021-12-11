@@ -23,37 +23,50 @@ public class PermisosBean implements java.io.Serializable {
         this.model = new DefaultMenuModel();
 
         if (this.us.getCodigoPerfil().equals("Administrador")) {
-            DefaultSubMenu primerSubmenu = new DefaultSubMenu("Inicio");
+            DefaultSubMenu primerSubmenu = new DefaultSubMenu("INICIO");
 
-            DefaultMenuItem item = new DefaultMenuItem("Inicio");
+            DefaultMenuItem item = new DefaultMenuItem("INICIO");
             item.setOutcome("/Views/Pagos/Pagos.jsf");
             item.setIcon("ui-icon-home");
             primerSubmenu.addElement(item);
 
             this.model.addElement(primerSubmenu);
 
-            DefaultSubMenu quintoSubmenu = new DefaultSubMenu("Pagos");
-            item = new DefaultMenuItem("Control de pagos");
+            DefaultSubMenu segundoSubmenu = new DefaultSubMenu("PAGOS");
+            item = new DefaultMenuItem("CONTROL DE PAGOS");
             item.setIcon("ui-icon-disk");
             item.setOutcome("/Views/Pagos/Pagos.jsf");
-            quintoSubmenu.addElement(item);
+            segundoSubmenu.addElement(item);
+            this.model.addElement(segundoSubmenu);
 
-            item = new DefaultMenuItem("Reporte pagos");
+            DefaultSubMenu tercerSubmenu = new DefaultSubMenu("REPORTE");
+            item = new DefaultMenuItem("REPORTE DE PAGOS");
             item.setIcon("ui-icon-disk");
             item.setOutcome("/Views/Pagos/Reporte.jsf");
-            quintoSubmenu.addElement(item);
+            tercerSubmenu.addElement(item);
+            this.model.addElement(tercerSubmenu);
 
-            item = new DefaultMenuItem("Administrar pólizas");
+            DefaultSubMenu cuartoSubmenu = new DefaultSubMenu("PÓLIZAS");
+            item = new DefaultMenuItem("ADMINISTRAR PÓLIZAS");
             item.setIcon("ui-icon-disk");
             item.setOutcome("/Views/Pagos/ReportePol.jsf");
-            quintoSubmenu.addElement(item);
+            cuartoSubmenu.addElement(item);
+            this.model.addElement(cuartoSubmenu);
 
-            item = new DefaultMenuItem("Envío de correos");
+            DefaultSubMenu quintoSubmenu = new DefaultSubMenu("CORREOS");
+            item = new DefaultMenuItem("ENVIAR CORREOS");
             item.setIcon("ui-icon-disk");
             item.setOutcome("/Views/Pagos/Correos.jsf");
             quintoSubmenu.addElement(item);
-
             this.model.addElement(quintoSubmenu);
+
+            DefaultSubMenu sextoSubmenu = new DefaultSubMenu("MOVIMIENTOS");
+            item = new DefaultMenuItem("CANCELAR PAGOS");
+            item.setIcon("ui-icon-disk");
+            item.setOutcome("/Views/Pagos/Regresar.jsf");
+            sextoSubmenu.addElement(item);
+            this.model.addElement(sextoSubmenu);
+
         }
     }
 

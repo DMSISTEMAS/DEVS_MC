@@ -31,9 +31,11 @@ public class DAO {
     public void Conectar() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            this.cn = DriverManager.getConnection("jdbc:sqlserver://10.220.221.158\\SQLEXPRESS;databaseName=gastos", "gastos_usrdb", "k1CruJ@raDix");
+            //NY Server 
+            this.cn = DriverManager.getConnection("jdbc:sqlserver://10.220.221.158\\SQLEXPRESS;databaseName=cobranza", "gastos_usrdb", "k1CruJ@raDix");
+
             //this.cn = DriverManager.getConnection("jdbc:sqlserver://ASPEL;databaseName=gastos", "gastos", "k1CruJ@raDix");
-            //this.cn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-557O6CE\\SQLEXPRESS;databaseName=gastos", "sa", "dmsistemas");
+            //this.cn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-557O6CE\\SQLEXPRESS;databaseName=cobranza", "sa", "dmsistemas");
         } catch (ClassNotFoundException | SQLException e) {
         }
     }
@@ -52,9 +54,11 @@ public class DAO {
     public void ConectarSAE() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            //MX Server
             this.cnSAE = DriverManager.getConnection("jdbc:sqlserver://10.130.22.211\\SQL2014;databaseName=SAE80Empre01", "sa", "aspel$2020");
+
             //this.cnSAE = DriverManager.getConnection("jdbc:sqlserver://ASPEL;databaseName=SAE70Empre01", "gastos", "k1CruJ@raDix");
-            //this.cnSAE = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-557O6CE\\SQLEXPRESS;databaseName=SAE70Empre01", "sa", "dmsistemas");
+            //this.cnSAE = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-557O6CE\\SQLEXPRESS;databaseName=SAE80Empre01", "sa", "dmsistemas");
         } catch (ClassNotFoundException | SQLException e) {
         }
     }

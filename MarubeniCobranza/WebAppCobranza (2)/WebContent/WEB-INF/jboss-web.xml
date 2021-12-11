@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jboss-web>
-<!--    <context-root>/</context-root> -->
-    <!--  <security-domain>propsFile</security-domain> -->
-    <!--  <server-instance>default-server</server-instance> --> <!-- does mapping to server -->
-    <virtual-host>cobranzas.marubeni.com.mx</virtual-host>  <!-- does mapping to host inside server -->
-</jboss-web>

@@ -70,8 +70,9 @@ public class FacturaProcesoBean extends DAO implements Serializable {
     private Boolean mulpitlePago;
     private Double tCambio;
     private Importes importes;
-    private Double Impmxn = Double.valueOf(0.0D);
-    private Double Impusd = Double.valueOf(0.0D);
+    private Double Impmxn = 0.0D;
+    private Double Impusd = 0.0D;
+    private Boolean sae = Boolean.FALSE;
 
     private List<String> listaFacturas;
 
@@ -95,8 +96,8 @@ public class FacturaProcesoBean extends DAO implements Serializable {
     private List<SelectItem> listaBancos;
     private String subctabancos;
     private int monedaAnterior;
-    private Double montoMXN = Double.valueOf(0.0D);
-    private Double montoUSD = Double.valueOf(0.0D);
+    private Double montoMXN = 0.0D;
+    private Double montoUSD = 0.0D;
     private Boolean fechaPago = Boolean.FALSE;
     private Date fechaCierre;
     private Date now;
@@ -110,6 +111,14 @@ public class FacturaProcesoBean extends DAO implements Serializable {
         this.p = new Pagos();
         this.importes = new Importes();
         this.bancos = new Bancos();
+    }
+
+    public Boolean getSae() {
+        return sae;
+    }
+
+    public void setSae(Boolean sae) {
+        this.sae = sae;
     }
 
     public Cuenm01 getF() {
@@ -153,9 +162,15 @@ public class FacturaProcesoBean extends DAO implements Serializable {
     }
 
     public List<Cuenm01> listarFacturas() throws SQLException {
-        revisarFacturas();
-        CuenM01Dao fDao = new CuenM01DaoImpl();
-        this.lF = fDao.listaFactura();
+        if (this.sae.equals(true)) {
+            revisarFacturas();
+            CuenM01Dao fDao = new CuenM01DaoImpl();
+            this.lF = fDao.listaFactura();
+        } else {
+            CuenM01Dao fDao = new CuenM01DaoImpl();
+            this.lF = fDao.listaFactura();
+        }
+
         return this.lF;
     }
 
@@ -453,8 +468,8 @@ public class FacturaProcesoBean extends DAO implements Serializable {
                 imp.setRoundingMode(RoundingMode.CEILING);
                 this.f.setImporte(new Double(imp.format(rs.getDouble(3))));
                 this.f.setFechaApli(rs.getDate(4));
-                this.f.setNumMoned(Integer.valueOf(rs.getInt(5)));
-                this.f.setTcambio(Double.valueOf(rs.getDouble(6)));
+                this.f.setNumMoned(rs.getInt(5));
+                this.f.setTcambio(rs.getDouble(6));
                 DecimalFormat impExt = new DecimalFormat("#.##");
                 impExt.setRoundingMode(RoundingMode.CEILING);
                 this.f.setImpmonExt(new Double(impExt.format(rs.getDouble(7))));
@@ -504,8 +519,8 @@ public class FacturaProcesoBean extends DAO implements Serializable {
     public void validarDatos() throws SQLException {
         for (int i = 0; i < this.lF.size(); i++) {
             try {
-                revisarSaldos(((Cuenm01) this.lF.get(i)).getNoFactura(), ((Cuenm01) this.lF.get(i)).getNuevoMoneda().intValue());
-                if (((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() > ((Cuenm01) this.lF.get(i)).getImpmonExt().doubleValue() - this.saldo.doubleValue()) {
+                revisarSaldos(((Cuenm01) this.lF.get(i)).getNoFactura(), ((Cuenm01) this.lF.get(i)).getNuevoMoneda());
+                if (((Cuenm01) this.lF.get(i)).getNuevoImporte() > ((Cuenm01) this.lF.get(i)).getImpmonExt() - this.saldo) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "SISTEMA DE PAGOS", "El nuevo importe es superior al importe origen o saldo, favor de verificar"));
                     RequestContext.getCurrentInstance().update("frmPrincipal:messages");
                     break;
@@ -517,7 +532,7 @@ public class FacturaProcesoBean extends DAO implements Serializable {
 
     public void validar() {
         for (int i = 0; i < this.listarParciales.size(); i++) {
-            if (((Cuenm01) this.listarParciales.get(i)).getNuevoImporte().doubleValue() - 0.5D > ((Cuenm01) this.listarParciales.get(i)).getSaldo().doubleValue()) {
+            if (((Cuenm01) this.listarParciales.get(i)).getNuevoImporte() - 0.5D > ((Cuenm01) this.listarParciales.get(i)).getSaldo()) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "SISTEMA DE PAGOS", "El nuevo importe es superior al importe al saldo, favor de verificar"));
                 RequestContext.getCurrentInstance().update("frmPrincipal:messages");
                 break;
@@ -525,6 +540,7 @@ public class FacturaProcesoBean extends DAO implements Serializable {
         }
     }
 
+    /*PAGOS MÚLTIPLES*/
     public void actualizarProceso2()
             throws SQLException, MessagingException, ParseException {
         this.factPagoMult = new ArrayList();
@@ -547,6 +563,7 @@ public class FacturaProcesoBean extends DAO implements Serializable {
         }
 
         PagosDao pDao = new PagosDaoImpl();
+        DecimalFormat df = new DecimalFormat("#.0000");
         for (int i = 0; i < this.lF.size(); i++) {
             if ((((Cuenm01) this.lF.get(i)).getProcesado().equals(Boolean.TRUE)) && (this.mulpitlePago.equals(Boolean.TRUE))) {
                 if (((Cuenm01) this.lF.get(i)).getTipoPago().endsWith("Efectivo")) {
@@ -573,36 +590,39 @@ public class FacturaProcesoBean extends DAO implements Serializable {
                     this.fechaVar = formateador.format(this.now);
                     System.out.println(this.fechaVar);
 
-                    if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2))) {
+                    if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2)) {
                         st.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('"
-                                + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','PM" + this.folioPago + "', " + ((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue() + ",'" + this.fechaVar + "','" + this.fechaVar + "','" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
-                                + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + ",'" + this.fechaVar + "',0,'A',-1,0,'" + partidaFolio + "','UUID','" + this.fechaVar + "')");
+                                + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','PM" + this.folioPago + "', "
+                                + df.format(((Cuenm01) this.lF.get(i)).getNuevoImporte() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio()) + ",'" + this.fechaVar + "','" + this.fechaVar + "','" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "',"
+                                + df.format(((Cuenm01) this.lF.get(i)).getNuevoTcambio()) + "," + df.format(((Cuenm01) this.lF.get(i)).getNuevoImporte()) + ",'" + this.fechaVar + "',0,'A',-1,0,'" + partidaFolio + "','UUID','" + this.fechaVar + "')");
                     } else {
                         st.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('"
-                                + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','PM" + this.folioPago + "', " + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + ",'" + this.fechaVar + "','" + this.fechaVar + "','" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
-                                + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + ",'" + this.fechaVar + "',0,'A',-1,0,'" + partidaFolio + "','UUID','" + this.fechaVar + "')");
+                                + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','PM" + this.folioPago + "', "
+                                + df.format(((Cuenm01) this.lF.get(i)).getNuevoImporte()) + ",'" + this.fechaVar + "','" + this.fechaVar + "','" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
+                                + df.format(((Cuenm01) this.lF.get(i)).getNuevoImporte()) + ",'" + this.fechaVar + "',0,'A',-1,0,'" + partidaFolio + "','UUID','" + this.fechaVar + "')");
                     }
 
-                } else if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2))) {
+                } else if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2)) {
                     st.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('"
-                            + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','PM" + this.folioPago + "', " + ((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue() + ",CONVERT (DATE, GETDATE()),CONVERT (DATE, GETDATE()),'" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
-                            + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + ",CONVERT (DATE, GETDATE()),0,'A',-1,0,'" + partidaFolio + "','UUID',CONVERT (DATE, GETDATE()))");
+                            + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','PM" + this.folioPago + "', "
+                            + df.format(((Cuenm01) this.lF.get(i)).getNuevoImporte() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio()) + ",CONVERT (DATE, GETDATE()),CONVERT (DATE, GETDATE()),'" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
+                            + df.format(((Cuenm01) this.lF.get(i)).getNuevoImporte()) + ",CONVERT (DATE, GETDATE()),0,'A',-1,0,'" + partidaFolio + "','UUID',CONVERT (DATE, GETDATE()))");
                 } else {
                     st.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('"
-                            + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','PM" + this.folioPago + "', " + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + ",CONVERT (DATE, GETDATE()),CONVERT (DATE, GETDATE()),'" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
-                            + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + ",CONVERT (DATE, GETDATE()),0,'A',-1,0,'" + partidaFolio + "','UUID',CONVERT (DATE, GETDATE()))");
+                            + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','PM" + this.folioPago + "', " + df.format(((Cuenm01) this.lF.get(i)).getNuevoImporte()) + ",CONVERT (DATE, GETDATE()),CONVERT (DATE, GETDATE()),'" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
+                            + df.format(((Cuenm01) this.lF.get(i)).getNuevoImporte()) + ",CONVERT (DATE, GETDATE()),0,'A',-1,0,'" + partidaFolio + "','UUID',CONVERT (DATE, GETDATE()))");
                 }
 
                 this.p.setNoFactura(((Cuenm01) this.lF.get(i)).getNoFactura());
 
                 buscarMonedaAnterior(((Cuenm01) this.lF.get(i)).getNoFactura());
-                if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2)))) {
-                    this.p.setImporte(Double.valueOf(((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue()));
-                } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2)))) {
-                    this.p.setImporte(Double.valueOf(((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue()));
-                } else if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(1)))) {
+                if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2))) {
+                    this.p.setImporte(((Cuenm01) this.lF.get(i)).getNuevoImporte() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio());
+                } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2))) {
+                    this.p.setImporte(((Cuenm01) this.lF.get(i)).getNuevoImporte() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio());
+                } else if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(1))) {
                     this.p.setImporte(((Cuenm01) this.lF.get(i)).getNuevoImporte());
-                } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(1)))) {
+                } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(1))) {
                     this.p.setImporte(((Cuenm01) this.lF.get(i)).getNuevoImporte());
                 }
 
@@ -615,7 +635,7 @@ public class FacturaProcesoBean extends DAO implements Serializable {
                     this.p.setFechaPago(((Cuenm01) this.lF.get(i)).getFechaPago());
                 }
 
-                this.p.setPagoMultiple(Integer.valueOf(this.folioPago));
+                this.p.setPagoMultiple(this.folioPago);
                 this.p.setProcesado(Boolean.FALSE);
                 this.p.setBanco(this.f.getBanco());
                 this.p.setDepto(((Cuenm01) this.lF.get(i)).getDepto());
@@ -624,24 +644,26 @@ public class FacturaProcesoBean extends DAO implements Serializable {
                 this.p.setSubcuenta(this.subcta);
                 this.p.setCtaclientesap("");
 
-                if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2)))) {
+                if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2))) {
                     this.p.setImporteusd(((Cuenm01) this.lF.get(i)).getNuevoImporte());
-                } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2)))) {
+                } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2))) {
                     this.p.setImporteusd(((Cuenm01) this.lF.get(i)).getNuevoImporte());
-                } else if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(1)))) {
-                    this.p.setImporteusd(Double.valueOf(((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() / ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue()));
-                } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(1)))) {
-                    this.p.setImporteusd(Double.valueOf(((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() / ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue()));
+                } else if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(1))) {
+                    this.p.setImporteusd(((Cuenm01) this.lF.get(i)).getNuevoImporte() / ((Cuenm01) this.lF.get(i)).getNuevoTcambio());
+                } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(1))) {
+                    this.p.setImporteusd(((Cuenm01) this.lF.get(i)).getNuevoImporte() / ((Cuenm01) this.lF.get(i)).getNuevoTcambio());
                 }
 
-                this.p.setPagoMultiple(Integer.valueOf(this.folioPago));
+                this.p.setPagoMultiple(this.folioPago);
                 this.p.setCliente(((Cuenm01) this.lF.get(i)).getNombreClie());
                 buscarSubCtaBancos();
                 this.p.setSubctabancos(this.subctabancos);
                 this.p.setStrcvevend(((Cuenm01) this.lF.get(i)).getStrcvevend());
-                this.p.setTipopago(Integer.valueOf(this.tPago));
+                this.p.setTipopago(this.tPago);
                 this.p.setCvecliente(((Cuenm01) this.lF.get(i)).getCveClie());
+                this.p.setPartida(String.valueOf(partidaFolio));
                 pDao.insertFactf01(this.p);
+                partidaFolio = 0;
                 if (!((Cuenm01) this.lF.get(i)).getNuevoImporte().equals(((Cuenm01) this.lF.get(i)).getImpmonExt())) {
                     this.pagoParcial = Boolean.TRUE;
                 } else {
@@ -660,18 +682,29 @@ public class FacturaProcesoBean extends DAO implements Serializable {
                 this.tcam = ((Cuenm01) this.lF.get(i)).getNuevoTcambio();
                 this.tipoTrans = ((Cuenm01) this.lF.get(i)).getTipoPago();
 
-                this.saldo = Double.valueOf(0.0D);
-                revisarSaldos(((Cuenm01) this.lF.get(i)).getNoFactura(), ((Cuenm01) this.lF.get(i)).getNumMoned().intValue());
+                this.saldo = 0.0D;
+                revisarSaldos(((Cuenm01) this.lF.get(i)).getNoFactura(), ((Cuenm01) this.lF.get(i)).getNumMoned());
                 if (((Cuenm01) this.lF.get(i)).getImpmonExt().equals(this.saldo)) {
                     this.pro = Boolean.TRUE;
                 } else {
                     this.pro = Boolean.FALSE;
                 }
                 if (this.monedaAnterior == 2) {
-                    PreparedStatement ps = getCn().prepareStatement("UPDATE cuenm01 SET PROCESADO='" + this.pro + "', PAGO_PARCIAL='" + this.pagoParcial + "', NUEVO_IMPORTE='" + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + "', NUEVO_TCAMBIO='" + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + "', FECHA_ENVIO=GETDATE(), AVISO=2, BANCO='" + this.f.getBanco() + "', PAGO_MULTIPLE='" + this.folioPago + "', DEPTO='" + ((Cuenm01) this.lF.get(i)).getDepto() + "',SALDO='" + (((Cuenm01) this.lF.get(i)).getImpmonExt().doubleValue() - this.saldo.doubleValue()) + "', FECHA_PAGO=CONVERT(VARCHAR,'" + this.fechaVar + "',103) WHERE NO_FACTURA='" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "'");
+                    PreparedStatement ps = getCn().prepareStatement("UPDATE cuenm01 SET PROCESADO='" + this.pro + "', "
+                            + "PAGO_PARCIAL='" + this.pagoParcial + "', NUEVO_IMPORTE='" + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + "', "
+                            + "NUEVO_TCAMBIO='" + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + "', FECHA_ENVIO=GETDATE(), AVISO=2, "
+                            + "BANCO='" + this.f.getBanco() + "', PAGO_MULTIPLE='" + this.folioPago + "', DEPTO='" + ((Cuenm01) this.lF.get(i)).getDepto() + "',"
+                            + "SALDO='" + (((Cuenm01) this.lF.get(i)).getImpmonExt() - this.saldo) + "', FECHA_PAGO=CONVERT(VARCHAR,'" + this.fechaVar + "',103) "
+                            + "WHERE NO_FACTURA='" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "'");
                     ps.executeUpdate();
                 } else {
-                    PreparedStatement ps = getCn().prepareStatement("UPDATE cuenm01 SET PROCESADO='" + this.pro + "', PAGO_PARCIAL='" + this.pagoParcial + "', NUEVO_IMPORTE='" + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + "', NUEVO_TCAMBIO='" + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + "', FECHA_ENVIO=GETDATE(), AVISO=2, BANCO='" + this.f.getBanco() + "', PAGO_MULTIPLE='" + this.folioPago + "', DEPTO='" + ((Cuenm01) this.lF.get(i)).getDepto() + "',SALDO='" + (((Cuenm01) this.lF.get(i)).getImporte().doubleValue() - this.saldo.doubleValue()) + "', FECHA_PAGO=CONVERT(VARCHAR,'" + this.fechaVar + "',103) WHERE NO_FACTURA='" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "'");
+//                    buscarFacturasPagoMultiple(facturasPagoMultiple);
+//                    int partida = this.contarCoicidenciasFactura.size();
+                    PreparedStatement ps = getCn().prepareStatement("UPDATE cuenm01 SET PROCESADO='" + this.pro + "', PAGO_PARCIAL='" + this.pagoParcial + "', "
+                            + "NUEVO_IMPORTE='" + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + "', NUEVO_TCAMBIO='" + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + "', "
+                            + "FECHA_ENVIO=GETDATE(), AVISO=2, BANCO='" + this.f.getBanco() + "', PAGO_MULTIPLE='" + this.folioPago + "', DEPTO='" + ((Cuenm01) this.lF.get(i)).getDepto() + "',"
+                            + "SALDO='" + (((Cuenm01) this.lF.get(i)).getImporte() - this.saldo) + "', FECHA_PAGO=CONVERT(VARCHAR,'" + this.fechaVar + "',103) "
+                            + "WHERE NO_FACTURA='" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "'");
                     ps.executeUpdate();
                 }
             }
@@ -687,29 +720,30 @@ public class FacturaProcesoBean extends DAO implements Serializable {
         Cerrar();
     }
 
+    /*PAGOS NORMALES*/
     public void actualizarProceso()
             throws SQLException, MessagingException {
         if (this.mulpitlePago.equals(Boolean.TRUE)) {
-            this.Impmxn = Double.valueOf(0.0D);
-            this.Impusd = Double.valueOf(0.0D);
+            this.Impmxn = 0.0D;
+            this.Impusd = 0.0D;
             this.listaFacturas = new ArrayList();
             for (int i = 0; i < this.lF.size(); i++) {
                 if ((((Cuenm01) this.lF.get(i)).getProcesado().equals(Boolean.TRUE)) && (this.mulpitlePago.equals(Boolean.TRUE)) && (((Cuenm01) this.lF.get(i)).getNuevoTcambio() != null)) {
                     FacturaProcesoBean localFacturaProcesoBean;
-                    if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(1))) {
+                    if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(1)) {
                         localFacturaProcesoBean = this;
-                        localFacturaProcesoBean.Impmxn = Double.valueOf(localFacturaProcesoBean.Impmxn.doubleValue() + ((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue());
+                        localFacturaProcesoBean.Impmxn = localFacturaProcesoBean.Impmxn + ((Cuenm01) this.lF.get(i)).getNuevoImporte();
                     } else {
                         localFacturaProcesoBean = this;
-                        localFacturaProcesoBean.Impmxn = Double.valueOf(localFacturaProcesoBean.Impmxn.doubleValue() + ((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue());
+                        localFacturaProcesoBean.Impmxn = localFacturaProcesoBean.Impmxn + ((Cuenm01) this.lF.get(i)).getNuevoImporte() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio();
                     }
 
-                    if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2))) {
+                    if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2)) {
                         localFacturaProcesoBean = this;
-                        localFacturaProcesoBean.Impusd = Double.valueOf(localFacturaProcesoBean.Impusd.doubleValue() + ((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue());
+                        localFacturaProcesoBean.Impusd = localFacturaProcesoBean.Impusd + ((Cuenm01) this.lF.get(i)).getNuevoImporte();
                     } else {
                         localFacturaProcesoBean = this;
-                        localFacturaProcesoBean.Impusd = Double.valueOf(localFacturaProcesoBean.Impusd.doubleValue() + ((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() / ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue());
+                        localFacturaProcesoBean.Impusd = localFacturaProcesoBean.Impusd + ((Cuenm01) this.lF.get(i)).getNuevoImporte() / ((Cuenm01) this.lF.get(i)).getNuevoTcambio();
                     }
 
                     this.listaFacturas.add(((Cuenm01) this.lF.get(i)).getNoFactura());
@@ -755,13 +789,13 @@ public class FacturaProcesoBean extends DAO implements Serializable {
                     this.p.setNoFactura(((Cuenm01) this.lF.get(i)).getNoFactura());
 
                     buscarMonedaAnterior(((Cuenm01) this.lF.get(i)).getNoFactura());
-                    if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2)))) {
-                        this.p.setImporte(Double.valueOf(((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue()));
-                    } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2)))) {
-                        this.p.setImporte(Double.valueOf(((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue()));
-                    } else if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(1)))) {
+                    if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2))) {
+                        this.p.setImporte(((Cuenm01) this.lF.get(i)).getNuevoImporte() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio());
+                    } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2))) {
+                        this.p.setImporte(((Cuenm01) this.lF.get(i)).getNuevoImporte() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio());
+                    } else if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(1))) {
                         this.p.setImporte(((Cuenm01) this.lF.get(i)).getNuevoImporte());
-                    } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(1)))) {
+                    } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(1))) {
                         this.p.setImporte(((Cuenm01) this.lF.get(i)).getNuevoImporte());
                     }
                     this.montoMXN = this.p.getImporte();
@@ -783,24 +817,28 @@ public class FacturaProcesoBean extends DAO implements Serializable {
                     this.p.setSubcuenta(this.subcta);
                     this.p.setCtaclientesap("");
 
-                    if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2)))) {
+                    if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2))) {
                         this.p.setImporteusd(((Cuenm01) this.lF.get(i)).getNuevoImporte());
-                    } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2)))) {
+                    } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2))) {
                         this.p.setImporteusd(((Cuenm01) this.lF.get(i)).getNuevoImporte());
-                    } else if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(1)))) {
-                        this.p.setImporteusd(Double.valueOf(((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() / ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue()));
-                    } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(1)))) {
-                        this.p.setImporteusd(Double.valueOf(((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() / ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue()));
+                    } else if ((this.monedaAnterior == 2) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(1))) {
+                        this.p.setImporteusd(((Cuenm01) this.lF.get(i)).getNuevoImporte() / ((Cuenm01) this.lF.get(i)).getNuevoTcambio());
+                    } else if ((this.monedaAnterior == 1) && (((Cuenm01) this.lF.get(i)).getNumMoned().equals(1))) {
+                        this.p.setImporteusd(((Cuenm01) this.lF.get(i)).getNuevoImporte() / ((Cuenm01) this.lF.get(i)).getNuevoTcambio());
                     }
                     this.montoUSD = this.p.getImporteusd();
 
-                    this.p.setPagoMultiple(Integer.valueOf(this.folioPago));
+                    this.p.setPagoMultiple(this.folioPago);
                     this.p.setCliente(((Cuenm01) this.lF.get(i)).getNombreClie());
                     buscarSubCtaBancos();
                     this.p.setSubctabancos(this.subctabancos);
                     this.p.setStrcvevend(((Cuenm01) this.lF.get(i)).getStrcvevend());
-                    this.p.setTipopago(Integer.valueOf(this.tPago));
+                    this.p.setTipopago(this.tPago);
                     this.p.setCvecliente(((Cuenm01) this.lF.get(i)).getCveClie());
+
+                    buscarFacturasPagoMultiple(p.getNoFactura());
+                    int partidaFolio = this.contarCoicidenciasFactura.size();
+                    this.p.setPartida(String.valueOf(partidaFolio));
                     pDao.insertFactf01(this.p);
 
                     if (Objects.equals(this.fechaPago, Boolean.TRUE)) {
@@ -811,17 +849,17 @@ public class FacturaProcesoBean extends DAO implements Serializable {
                     SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
                     this.fechaVar = formateador.format(this.now);
 
-                    revisarSaldos(((Cuenm01) this.lF.get(i)).getNoFactura(), ((Cuenm01) this.lF.get(i)).getNumMoned().intValue());
+                    revisarSaldos(((Cuenm01) this.lF.get(i)).getNoFactura(), ((Cuenm01) this.lF.get(i)).getNumMoned());
                     if (((Cuenm01) this.lF.get(i)).getImpmonExt().equals(this.saldo)) {
                         this.pro = Boolean.TRUE;
                     } else {
                         this.pro = Boolean.FALSE;
                     }
                     if (this.monedaAnterior == 1) {
-                        PreparedStatement ps = getCn().prepareStatement("UPDATE cuenm01 SET PROCESADO='" + this.pro + "', PAGO_PARCIAL='" + this.pagoParcial + "', NUEVO_IMPORTE='" + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + "', NUEVO_TCAMBIO='" + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + "', FECHA_ENVIO=GETDATE(), AVISO=2, BANCO='" + this.f.getBanco() + "', PAGO_MULTIPLE='" + this.folioPago + "', DEPTO='" + ((Cuenm01) this.lF.get(i)).getDepto() + "',SALDO='" + (((Cuenm01) this.lF.get(i)).getImporte().doubleValue() - this.saldo.doubleValue()) + "', FECHA_PAGO=CONVERT(VARCHAR,'" + this.fechaVar + "',103) WHERE NO_FACTURA='" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "'");
+                        PreparedStatement ps = getCn().prepareStatement("UPDATE cuenm01 SET PROCESADO='" + this.pro + "', PAGO_PARCIAL='" + this.pagoParcial + "', NUEVO_IMPORTE='" + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + "', NUEVO_TCAMBIO='" + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + "', FECHA_ENVIO=GETDATE(), AVISO=2, BANCO='" + this.f.getBanco() + "', PAGO_MULTIPLE='" + this.folioPago + "', DEPTO='" + ((Cuenm01) this.lF.get(i)).getDepto() + "',SALDO='" + (((Cuenm01) this.lF.get(i)).getImporte() - this.saldo) + "', FECHA_PAGO=CONVERT(VARCHAR,'" + this.fechaVar + "',103) WHERE NO_FACTURA='" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "'");
                         ps.executeUpdate();
                     } else {
-                        PreparedStatement ps = getCn().prepareStatement("UPDATE cuenm01 SET PROCESADO='" + this.pro + "', PAGO_PARCIAL='" + this.pagoParcial + "', NUEVO_IMPORTE='" + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + "', NUEVO_TCAMBIO='" + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + "', FECHA_ENVIO=GETDATE(), AVISO=2, BANCO='" + this.f.getBanco() + "', PAGO_MULTIPLE='" + this.folioPago + "', DEPTO='" + ((Cuenm01) this.lF.get(i)).getDepto() + "',SALDO='" + (((Cuenm01) this.lF.get(i)).getImpmonExt().doubleValue() - this.saldo.doubleValue()) + "', FECHA_PAGO=CONVERT(VARCHAR,'" + this.fechaVar + "',103) WHERE NO_FACTURA='" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "'");
+                        PreparedStatement ps = getCn().prepareStatement("UPDATE cuenm01 SET PROCESADO='" + this.pro + "', PAGO_PARCIAL='" + this.pagoParcial + "', NUEVO_IMPORTE='" + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + "', NUEVO_TCAMBIO='" + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + "', FECHA_ENVIO=GETDATE(), AVISO=2, BANCO='" + this.f.getBanco() + "', PAGO_MULTIPLE='" + this.folioPago + "', DEPTO='" + ((Cuenm01) this.lF.get(i)).getDepto() + "',SALDO='" + (((Cuenm01) this.lF.get(i)).getImpmonExt() - this.saldo) + "', FECHA_PAGO=CONVERT(VARCHAR,'" + this.fechaVar + "',103) WHERE NO_FACTURA='" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "'");
                         ps.executeUpdate();
                     }
 
@@ -832,24 +870,24 @@ public class FacturaProcesoBean extends DAO implements Serializable {
 
                     if (Objects.equals(this.fechaPago, Boolean.TRUE)) {
                         this.now = this.fechaCierre;
-                       // SimpleDateFormat formato = new SimpleDateFormat("yyyy-dd-MM");//FORMATO ESPAÑOL ESPAÑA
+                        // SimpleDateFormat formato = new SimpleDateFormat("yyyy-dd-MM");//FORMATO ESPAÑOL ESPAÑA
                         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");//FORMATO INGLÉS
 
                         this.fechaVar = formato.format(this.now);
                         System.out.println(this.fechaVar);
 
-                        if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2))) {
+                        if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2)) {
                             stCue.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('"
-                                    + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "', " + ((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue() + ",'" + this.fechaVar + "','" + this.fechaVar + "','" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
+                                    + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "', " + ((Cuenm01) this.lF.get(i)).getNuevoImporte() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ",'" + this.fechaVar + "','" + this.fechaVar + "','" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
                                     + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + ",'" + this.fechaVar + "',0,'A',-1,0,'" + contarPartidaFolio + "','UUID','" + this.fechaVar + "')");
                         } else {
                             stCue.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('"
                                     + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "', " + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + ",'" + this.fechaVar + "','" + this.fechaVar + "','" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
                                     + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + ",'" + this.fechaVar + "',0,'A',-1,0,'" + contarPartidaFolio + "','UUID','" + this.fechaVar + "')");
                         }
-                    } else if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(Integer.valueOf(2))) {
+                    } else if (((Cuenm01) this.lF.get(i)).getNumMoned().equals(2)) {
                         stCue.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('"
-                                + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "', " + ((Cuenm01) this.lF.get(i)).getNuevoImporte().doubleValue() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio().doubleValue() + ",CONVERT (DATE, GETDATE()),CONVERT (DATE, GETDATE()),'" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
+                                + ((Cuenm01) this.lF.get(i)).getCveClie() + "', '" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "',1,'" + this.tPago + "',1,0,'" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "','" + ((Cuenm01) this.lF.get(i)).getNoFactura() + "', " + ((Cuenm01) this.lF.get(i)).getNuevoImporte() * ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ",CONVERT (DATE, GETDATE()),CONVERT (DATE, GETDATE()),'" + ((Cuenm01) this.lF.get(i)).getStrcvevend() + "','" + ((Cuenm01) this.lF.get(i)).getNumMoned() + "'," + ((Cuenm01) this.lF.get(i)).getNuevoTcambio() + ","
                                 + ((Cuenm01) this.lF.get(i)).getNuevoImporte() + ",CONVERT (DATE, GETDATE()),0,'A',-1,0,'" + contarPartidaFolio + "','UUID',CONVERT (DATE, GETDATE()))");
                     } else {
                         stCue.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('"
@@ -895,7 +933,7 @@ public class FacturaProcesoBean extends DAO implements Serializable {
         Properties props = new Properties();
         props.put("mail.smtp.host", "p3plcpnl0612.prod.phx3.secureserver.net");
         props.setProperty("mail.smtp.starttls.enable", "true");
-        props.setProperty("mail.smtp.port", "587");
+        props.setProperty("mail.smtp.port", "465");
         props.setProperty("mail.smtp.user", "alertas1@insoftec.com");
         props.setProperty("mail.smtp.auth", "true");
         Session session = Session.getDefaultInstance(props, null);
@@ -953,13 +991,13 @@ public class FacturaProcesoBean extends DAO implements Serializable {
         t.connect("alertas1@insoftec.com", "Pw*Tf+56");
         t.sendMessage(message, message.getAllRecipients());
         t.close();
-        this.montoMXN = Double.valueOf(0.0D);
-        this.montoUSD = Double.valueOf(0.0D);
+        this.montoMXN = 0.0D;
+        this.montoUSD = 0.0D;
     }
 
     public void onRowEdit(RowEditEvent event) {
         Cuenm01 dato = (Cuenm01) event.getObject();
-        if (dato.getNuevoImporte().doubleValue() > dato.getImporte().doubleValue()) {
+        if (dato.getNuevoImporte() > dato.getImporte()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "SISTEMA DE PAGOS", "Importe incorrecto"));
         }
     }
@@ -973,15 +1011,15 @@ public class FacturaProcesoBean extends DAO implements Serializable {
         Statement st = getCn().createStatement();
         ResultSet rs = st.executeQuery("SELECT SUM(IMPORTEUSD) AS IMPORTEUSD, SUM(IMPORTE) AS IMPORTE FROM pagos WHERE NO_FACTURA='" + factura + "'");
         if (!rs.isBeforeFirst()) {
-            this.saldo = Double.valueOf(0.0D);
+            this.saldo = 0.0D;
         } else {
             if (this.monedaAnterior == 1) {
                 while (rs.next()) {
-                    this.saldo = Double.valueOf(rs.getDouble("IMPORTE"));
+                    this.saldo = rs.getDouble("IMPORTE");
                 }
             }
             while (rs.next()) {
-                this.saldo = Double.valueOf(rs.getDouble("IMPORTEUSD"));
+                this.saldo = rs.getDouble("IMPORTEUSD");
             }
         }
     }
@@ -1030,40 +1068,41 @@ public class FacturaProcesoBean extends DAO implements Serializable {
     }
 
     public void guardarPagoMultiple(int folio, String datoFacturas, int partida) {
+        DecimalFormat df = new DecimalFormat("#.0000");
         try {
             Conectar();
             PreparedStatement ps = getCn().prepareStatement("SELECT ROUND(IMPORTE,4,2) AS IMPORTE, ROUND(IMPORTEUSD,4,2) AS IMPORTEUSD, FECHA_PAGO, MONEDA, TCAMBIO, TIPOPAGO,  CVECLIENTE, STRCVEVEND, NO_FACTURA FROM pagos WHERE ENVIADO IS NULL AND PAGO_MULTIPLE='" + folio + "'  GROUP BY PAGO_MULTIPLE, TCAMBIO, MONEDA, FECHA_PAGO, TIPOPAGO, CVECLIENTE, IMPORTE, IMPORTEUSD, STRCVEVEND, NO_FACTURA");
-            ResultSet rs = ps.executeQuery();
-            if (!rs.isBeforeFirst()) {
-                System.out.println("No hay datos");
-            } else {
-                while (rs.next()) {
-                    ConectarSAE();
-                    Statement st = getCnSAE().createStatement();
-                    if (rs.getString("MONEDA").equals("2")) {
-                        Date fecha1 = rs.getDate("FECHA_PAGO");
-                        System.out.println(rs.getDate("FECHA_PAGO"));
-                        SimpleDateFormat formato = new SimpleDateFormat("yyyy-dd-MM 00:00:00:00");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.isBeforeFirst()) {
+                    System.out.println("No hay datos");
+                } else {
+                    while (rs.next()) {
+                        ConectarSAE();
+                        Statement st = getCnSAE().createStatement();
+                        if (rs.getString("MONEDA").equals("2")) {
+                            Date fecha1 = rs.getDate("FECHA_PAGO");
+                            System.out.println(rs.getDate("FECHA_PAGO"));
+                            SimpleDateFormat formato = new SimpleDateFormat("yyyy-dd-MM 00:00:00:00");
 
-                        this.fechaSAE = formato.format(fecha1);
-                        System.out.println(this.fechaSAE);
-                        st.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('" + rs
-                                .getString("CVECLIENTE") + "', '" + rs.getString("NO_FACTURA") + "',1,'" + rs.getString("TIPOPAGO") + "',1,0,'" + rs.getString("NO_FACTURA") + "','PM" + folio + "', '" + rs.getString("IMPORTE") + "' ,'" + this.fechaSAE + "','" + this.fechaSAE + "','" + rs.getString("STRCVEVEND") + "','" + rs.getString("MONEDA") + "'," + rs
-                                .getString("TCAMBIO") + "," + rs.getString("IMPORTEUSD") + ",'" + this.fechaSAE + "',0,'A',-1,0,'" + partida + "','UUID','" + this.fechaSAE + "')");
-                    } else {
-                        Date fecha1 = rs.getDate("FECHA_PAGO");
-                        System.out.println(rs.getDate("FECHA_PAGO"));
+                            this.fechaSAE = formato.format(fecha1);
+                            System.out.println(this.fechaSAE);
+                            st.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('" + rs
+                                    .getString("CVECLIENTE") + "', '" + rs.getString("NO_FACTURA") + "',1,'" + rs.getString("TIPOPAGO") + "',1,0,'" + rs.getString("NO_FACTURA") + "','PM" + folio + "', '" + df.format(rs.getString("IMPORTE")) + "' ,'" + this.fechaSAE + "','" + this.fechaSAE + "','" + rs.getString("STRCVEVEND") + "','" + rs.getString("MONEDA") + "'," + rs
+                                    .getString("TCAMBIO") + "," + df.format(rs.getString("IMPORTEUSD")) + ",'" + this.fechaSAE + "',0,'A',-1,0,'" + partida + "','UUID','" + this.fechaSAE + "')");
+                        } else {
+                            Date fecha1 = rs.getDate("FECHA_PAGO");
+                            System.out.println(rs.getDate("FECHA_PAGO"));
 
-                        SimpleDateFormat formato = new SimpleDateFormat("yyyy-dd-MM 00:00:00:00");
-                        this.fechaSAE = formato.format(fecha1);
-                        st.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('" + rs
-                                .getString("CVECLIENTE") + "', '" + rs.getString("NO_FACTURA") + "',1,'" + rs.getString("TIPOPAGO") + "',1,0,'" + rs.getString("NO_FACTURA") + "','PM" + folio + "', '" + rs.getString("IMPORTE") + "' ,'" + this.fechaSAE + "','" + this.fechaSAE + "','" + rs.getString("STRCVEVEND") + "','" + rs.getString("MONEDA") + "'," + rs
-                                .getString("TCAMBIO") + "," + rs.getString("IMPORTE") + ",'" + this.fechaSAE + "',0,'A',-1,0,'" + partida + "','UUID','" + this.fechaSAE + "')");
+                            SimpleDateFormat formato = new SimpleDateFormat("yyyy-dd-MM 00:00:00:00");
+                            this.fechaSAE = formato.format(fecha1);
+                            st.executeUpdate("INSERT INTO CUEN_DET01 (CVE_CLIE,REFER,ID_MOV,NUM_CPTO,NUM_CARGO,CVE_OBS,NO_FACTURA,DOCTO,IMPORTE,FECHA_APLI,FECHA_VENC,STRCVEVEND,NUM_MONED,TCAMBIO,IMPMON_EXT,FECHAELAB,CTLPOL,TIPO_MOV,SIGNO,USUARIO,NO_PARTIDA,UUID,VERSION_SINC)VALUES ('" + rs
+                                    .getString("CVECLIENTE") + "', '" + rs.getString("NO_FACTURA") + "',1,'" + rs.getString("TIPOPAGO") + "',1,0,'" + rs.getString("NO_FACTURA") + "','PM" + folio + "', '" + df.format(rs.getString("IMPORTE")) + "' ,'" + this.fechaSAE + "','" + this.fechaSAE + "','" + rs.getString("STRCVEVEND") + "','" + rs.getString("MONEDA") + "'," + rs
+                                    .getString("TCAMBIO") + "," + df.format(rs.getString("IMPORTE")) + ",'" + this.fechaSAE + "',0,'A',-1,0,'" + partida + "','UUID','" + this.fechaSAE + "')");
+                        }
+                        CerrarSAE();
                     }
-                    CerrarSAE();
                 }
             }
-            rs.close();
             Cerrar();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
@@ -1074,15 +1113,15 @@ public class FacturaProcesoBean extends DAO implements Serializable {
         try {
             Conectar();
             PreparedStatement ps = getCn().prepareStatement("SELECT FACTURAS FROM fpmultiple WHERE FACTURAS LIKE '%" + buscarFacturas + "%'");
-            ResultSet rs = ps.executeQuery();
-            this.contarCoicidenciasFactura = new ArrayList();
-            if (rs.isBeforeFirst()) {
+            try (ResultSet rs = ps.executeQuery()) {
+                this.contarCoicidenciasFactura = new ArrayList();
+                if (rs.isBeforeFirst()) {
 
-                while (rs.next()) {
-                    this.contarCoicidenciasFactura.add(rs.getString("FACTURAS"));
+                    while (rs.next()) {
+                        this.contarCoicidenciasFactura.add(rs.getString("FACTURAS"));
+                    }
                 }
             }
-            rs.close();
             Cerrar();
         } catch (SQLException ex) {
             Logger.getLogger(FacturaProcesoBean.class.getName()).log(Level.SEVERE, null, ex);

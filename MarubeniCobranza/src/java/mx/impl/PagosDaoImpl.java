@@ -125,4 +125,21 @@ public class PagosDaoImpl implements mx.dao.PagosDao {
             t.rollback();
         }
     }
+
+    @Override
+    public List<Pagos> listaCancelarFacturas() {
+        List<Pagos> lista = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String hql = "FROM Pagos ORDER BY ID DESC";
+        try {
+            lista = session.createQuery(hql).setMaxResults(500).list();
+            transaction.commit();
+            session.close();
+        } catch (HibernateException e) {
+            transaction.rollback();
+        }
+        return lista;
+    }
 }

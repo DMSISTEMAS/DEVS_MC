@@ -24,15 +24,13 @@ public class Pagos implements java.io.Serializable {
     private String strcvevend;
     private Integer tipopago;
     private String cvecliente;
+    private Boolean bandera;
+    private String partida;
 
     public Pagos() {
     }
 
-    public Pagos(int id) {
-        this.id = id;
-    }
-
-    public Pagos(int id, String noFactura, Double importe, Double tcambio, Integer moneda, Date fechaPago, Integer pagoMultiple, Boolean procesado, String banco, String depto, String estado, String subcuenta, String ctaclientesap, Double importeusd, String cliente, String subctabancos, String enviado, String strcvevend, Integer tipopago, String cvecliente) {
+    public Pagos(int id, String noFactura, Double importe, Double tcambio, Integer moneda, Date fechaPago, Integer pagoMultiple, Boolean procesado, String banco, String depto, String estado, String subcuenta, String ctaclientesap, Double importeusd, String cliente, String subctabancos, String enviado, String strcvevend, Integer tipopago, String cvecliente, Boolean bandera, String partida) {
         this.id = id;
         this.noFactura = noFactura;
         this.importe = importe;
@@ -53,10 +51,12 @@ public class Pagos implements java.io.Serializable {
         this.strcvevend = strcvevend;
         this.tipopago = tipopago;
         this.cvecliente = cvecliente;
+        this.bandera = bandera;
+        this.partida = partida;
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
@@ -64,7 +64,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getNoFactura() {
-        return this.noFactura;
+        return noFactura;
     }
 
     public void setNoFactura(String noFactura) {
@@ -72,7 +72,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public Double getImporte() {
-        return this.importe;
+        return importe;
     }
 
     public void setImporte(Double importe) {
@@ -80,7 +80,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public Double getTcambio() {
-        return this.tcambio;
+        return tcambio;
     }
 
     public void setTcambio(Double tcambio) {
@@ -88,7 +88,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public Integer getMoneda() {
-        return this.moneda;
+        return moneda;
     }
 
     public void setMoneda(Integer moneda) {
@@ -96,7 +96,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public Date getFechaPago() {
-        return this.fechaPago;
+        return fechaPago;
     }
 
     public void setFechaPago(Date fechaPago) {
@@ -104,7 +104,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public Integer getPagoMultiple() {
-        return this.pagoMultiple;
+        return pagoMultiple;
     }
 
     public void setPagoMultiple(Integer pagoMultiple) {
@@ -112,7 +112,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public Boolean getProcesado() {
-        return this.procesado;
+        return procesado;
     }
 
     public void setProcesado(Boolean procesado) {
@@ -120,7 +120,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getBanco() {
-        return this.banco;
+        return banco;
     }
 
     public void setBanco(String banco) {
@@ -128,7 +128,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getDepto() {
-        return this.depto;
+        return depto;
     }
 
     public void setDepto(String depto) {
@@ -136,7 +136,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getEstado() {
-        return this.estado;
+        return estado;
     }
 
     public void setEstado(String estado) {
@@ -144,7 +144,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getSubcuenta() {
-        return this.subcuenta;
+        return subcuenta;
     }
 
     public void setSubcuenta(String subcuenta) {
@@ -152,7 +152,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getCtaclientesap() {
-        return this.ctaclientesap;
+        return ctaclientesap;
     }
 
     public void setCtaclientesap(String ctaclientesap) {
@@ -160,7 +160,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public Double getImporteusd() {
-        return this.importeusd;
+        return importeusd;
     }
 
     public void setImporteusd(Double importeusd) {
@@ -168,7 +168,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getCliente() {
-        return this.cliente;
+        return cliente;
     }
 
     public void setCliente(String cliente) {
@@ -176,7 +176,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getSubctabancos() {
-        return this.subctabancos;
+        return subctabancos;
     }
 
     public void setSubctabancos(String subctabancos) {
@@ -184,7 +184,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getEnviado() {
-        return this.enviado;
+        return enviado;
     }
 
     public void setEnviado(String enviado) {
@@ -192,7 +192,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getStrcvevend() {
-        return this.strcvevend;
+        return strcvevend;
     }
 
     public void setStrcvevend(String strcvevend) {
@@ -200,7 +200,7 @@ public class Pagos implements java.io.Serializable {
     }
 
     public Integer getTipopago() {
-        return this.tipopago;
+        return tipopago;
     }
 
     public void setTipopago(Integer tipopago) {
@@ -208,10 +208,27 @@ public class Pagos implements java.io.Serializable {
     }
 
     public String getCvecliente() {
-        return this.cvecliente;
+        return cvecliente;
     }
 
     public void setCvecliente(String cvecliente) {
         this.cvecliente = cvecliente;
     }
+
+    public Boolean getBandera() {
+        return bandera;
+    }
+
+    public void setBandera(Boolean bandera) {
+        this.bandera = bandera;
+    }
+
+    public String getPartida() {
+        return partida;
+    }
+
+    public void setPartida(String partida) {
+        this.partida = partida;
+    }
+
 }

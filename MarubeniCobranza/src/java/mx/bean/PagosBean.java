@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,8 +36,8 @@ public class PagosBean extends DAO implements Serializable {
 
     private Cuenm01 cuen;
     private Pagos pagos;
-    private Double importeMxn = Double.valueOf(0.0D);
-    private Double importeUsd = Double.valueOf(0.0D);
+    private Double importeMxn = 0.0D;
+    private Double importeUsd = 0.0D;
     private List<Pagos> listarFolios;
     private String facturas;
     private Polizapagos polPagos;
@@ -49,7 +50,7 @@ public class PagosBean extends DAO implements Serializable {
     private List<SelectItem> listaFolioPoliza;
     private String folioPoliza;
     private int contarFolios;
-    private Double importeTotal = Double.valueOf(0.0D);
+    private Double importeTotal = 0.0D;
     private int miFolio;
     private int miMoneda;
     private String miSubCta;
@@ -222,8 +223,8 @@ public class PagosBean extends DAO implements Serializable {
     }
 
     public List<Pagos> buscarPagos() throws SQLException {
-        this.importeMxn = Double.valueOf(0.0D);
-        this.importeUsd = Double.valueOf(0.0D);
+        this.importeMxn = 0.0D;
+        this.importeUsd = 0.0D;
         if (this.listarFolios != null) {
             this.listarFolios.clear();
         }
@@ -237,11 +238,13 @@ public class PagosBean extends DAO implements Serializable {
             this.listarFolios = null;
             this.listarFolios = new ArrayList();
             while (rs.next()) {
+                DecimalFormat df = new DecimalFormat("#.0000");
                 this.pagos = new Pagos();
-                this.pagos.setPagoMultiple(Integer.valueOf(rs.getInt("PAGO_MULTIPLE")));
-                this.pagos.setImporte(Double.valueOf(rs.getDouble("IMPORTE")));
-                this.pagos.setTcambio(Double.valueOf(rs.getDouble("TCAMBIO")));
-                this.pagos.setMoneda(Integer.valueOf(rs.getInt("MONEDA")));
+                this.pagos.setPagoMultiple(rs.getInt("PAGO_MULTIPLE"));
+                Double impmx = rs.getDouble("IMPORTE");
+                this.pagos.setImporte(new Double(df.format(impmx)));
+                this.pagos.setTcambio(rs.getDouble("TCAMBIO"));
+                this.pagos.setMoneda(rs.getInt("MONEDA"));
                 this.pagos.setFechaPago(rs.getDate("FECHA_PAGO"));
                 this.fechaComprobar = rs.getString("FECHA_PAGO");
                 this.pagos.setBanco(rs.getString("BANCO"));
@@ -249,7 +252,8 @@ public class PagosBean extends DAO implements Serializable {
                 this.pagos.setEstado(rs.getString("ESTADO"));
                 this.pagos.setSubcuenta(rs.getString("SUBCUENTA"));
                 this.pagos.setCtaclientesap(rs.getString("CTACLIENTESAP"));
-                this.pagos.setImporteusd(Double.valueOf(rs.getDouble("IMPORTEUSD")));
+                Double impusd = rs.getDouble("IMPORTEUSD");
+                this.pagos.setImporteusd(new Double(df.format(impusd)));
                 this.pagos.setCliente(rs.getString("CLIENTE"));
                 Conectar();
                 PreparedStatement ps2 = getCn().prepareStatement("SELECT FACTURAS FROM fpmultiple WHERE ID='" + this.pagos.getPagoMultiple() + "'");
@@ -290,13 +294,13 @@ public class PagosBean extends DAO implements Serializable {
                 this.polPagos.setTransactionDate(dia + "." + month + "." + year);
 
                 String Currency;
-                if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(Integer.valueOf(1))) {
+                if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(1)) {
                     Currency = "MXN";
                 } else {
                     Currency = "USD1";
                 }
                 this.polPagos.setCurrency(Currency);
-                if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(Integer.valueOf(2))) {
+                if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(2)) {
                     this.polPagos.setRate(((Pagos) this.listaPagosPol.get(i)).getTcambio().toString());
                 } else {
                     this.polPagos.setRate("");
@@ -313,7 +317,7 @@ public class PagosBean extends DAO implements Serializable {
                 this.polPagos.setReferenceNo(((Pagos) this.listaPagosPol.get(i)).getNoFactura());
                 this.polPagos.setDueDate(dia + "." + month + "." + year);
 
-                if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(Integer.valueOf(1))) {
+                if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(1)) {
                     this.polPagos.setAmount(((Pagos) this.listaPagosPol.get(i)).getImporte().toString());
                 } else {
                     this.polPagos.setAmount(((Pagos) this.listaPagosPol.get(i)).getImporteusd().toString());
@@ -323,7 +327,7 @@ public class PagosBean extends DAO implements Serializable {
                 pDao.newPolizas(this.polPagos);
                 this.polPagos = new Polizapagos();
 
-                listarFolios(((Pagos) this.listaPagosPol.get(i)).getPagoMultiple().intValue());
+                listarFolios(((Pagos) this.listaPagosPol.get(i)).getPagoMultiple());
                 String fecha2 = null;
                 if (this.contarFolios == 1) {
                     periodoFactura(((Pagos) this.listaPagosPol.get(i)).getNoFactura());
@@ -341,13 +345,13 @@ public class PagosBean extends DAO implements Serializable {
                     this.polPagos.setTransactionDate(dia2 + "." + mes2 + "." + año2);
 
                     String Currency2;
-                    if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(Integer.valueOf(1))) {
+                    if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(1)) {
                         Currency2 = "MXN";
                     } else {
                         Currency2 = "USD1";
                     }
                     this.polPagos.setCurrency(Currency2);
-                    if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(Integer.valueOf(2))) {
+                    if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(2)) {
                         this.polPagos.setRate(((Pagos) this.listaPagosPol.get(i)).getTcambio().toString());
                     } else {
                         this.polPagos.setRate("");
@@ -369,7 +373,7 @@ public class PagosBean extends DAO implements Serializable {
                     this.polPagos.setReferenceNo(((Pagos) this.listaPagosPol.get(i)).getSubcuenta());
                     this.polPagos.setDueDate(dia2 + "." + mes2 + "." + año2);
 
-                    if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(Integer.valueOf(1))) {
+                    if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(1)) {
                         this.polPagos.setAmount(((Pagos) this.listaPagosPol.get(i)).getImporte().toString());
                     } else {
                         this.polPagos.setAmount(((Pagos) this.listaPagosPol.get(i)).getImporteusd().toString());
@@ -380,12 +384,12 @@ public class PagosBean extends DAO implements Serializable {
                     pDao.newPolizas(this.polPagos);
                     this.polPagos = new Polizapagos();
 
-                } else if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(Integer.valueOf(1))) {
+                } else if (((Pagos) this.listaPagosPol.get(i)).getMoneda().equals(1)) {
 
-                    importeTotal = Double.valueOf(importeTotal.doubleValue() + ((Pagos) this.listaPagosPol.get(i)).getImporte().doubleValue());
+                    importeTotal = importeTotal + ((Pagos) this.listaPagosPol.get(i)).getImporte();
                 } else {
 
-                    importeTotal = Double.valueOf(importeTotal.doubleValue() + ((Pagos) this.listaPagosPol.get(i)).getImporteusd().doubleValue());
+                    importeTotal = importeTotal + ((Pagos) this.listaPagosPol.get(i)).getImporteusd();
                 }
 
                 actualizarEstado(((Pagos) this.listaPagosPol.get(i)).getNoFactura());

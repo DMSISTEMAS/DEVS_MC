@@ -3,15 +3,20 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-        <property name="hibernate.connection.url">jdbc:sqlserver://10.220.221.158\SQLEXPRESS;databaseName=gastos</property>
+
+        <!--        //ny  -->
+        <property name="hibernate.connection.url">jdbc:sqlserver://10.220.221.158\SQLEXPRESS;databaseName=cobranza</property>
         <property name="hibernate.connection.username">gastos_usrdb</property>
         <property name="hibernate.connection.password">k1CruJ@raDix</property>
-<!--        <property name="hibernate.connection.url">jdbc:sqlserver://ASPEL;databaseName=gastos</property>
+        
+        <!--        <property name="hibernate.connection.url">jdbc:sqlserver://ASPEL;databaseName=cobranza</property>
         <property name="hibernate.connection.username">gastos</property>
         <property name="hibernate.connection.password">k1CruJ@raDix</property>-->
-        <!--        <property name="hibernate.connection.url">jdbc:sqlserver://DESKTOP-557O6CE\SQLEXPRESS;databaseName=gastos</property>
+        
+        <!--        <property name="hibernate.connection.url">jdbc:sqlserver://DESKTOP-557O6CE\SQLEXPRESS;databaseName=cobranza</property>
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.connection.password">dmsistemas</property>-->
+        
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
         <mapping resource="mx/model/Bancos.hbm.xml"/>
